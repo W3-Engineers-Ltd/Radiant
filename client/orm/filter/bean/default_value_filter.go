@@ -37,7 +37,7 @@ type DefaultValueFilterChainBuilder struct {
 }
 
 // NewDefaultValueFilterChainBuilder will create an instance of DefaultValueFilterChainBuilder
-// In beego v1.x, the default value config looks like orm:default(xxxx)
+// In radiant v1.x, the default value config looks like orm:default(xxxx)
 // But the default value in 2.x is default:xxx
 // so if you want to be compatible with v1.x, please pass true as compatibleWithOldStyle
 func NewDefaultValueFilterChainBuilder(typeAdapters map[string]bean.TypeAdapter,

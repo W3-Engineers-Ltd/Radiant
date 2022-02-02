@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ func (builder *FilterChainBuilder) buildSpan(span opentracing.Span, ctx context.
 	span.SetTag("orm.insideTx", inv.InsideTx)
 	span.SetTag("orm.txName", ctx.Value(orm.TxNameKey))
 	span.SetTag("span.kind", "client")
-	span.SetTag("component", "beego")
+	span.SetTag("component", "radiant")
 
 	if builder.CustomSpanFunc != nil {
 		builder.CustomSpanFunc(span, ctx, inv)

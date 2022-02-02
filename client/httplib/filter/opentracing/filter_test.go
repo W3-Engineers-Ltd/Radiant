@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import (
 )
 
 func TestFilterChainBuilderFilterChain(t *testing.T) {
-	next := func(ctx context.Context, req *httplib.BeegoHTTPRequest) (*http.Response, error) {
+	next := func(ctx context.Context, req *httplib.radiantHTTPRequest) (*http.Response, error) {
 		time.Sleep(100 * time.Millisecond)
 		return &http.Response{
 			StatusCode: 404,
@@ -37,7 +37,7 @@ func TestFilterChainBuilderFilterChain(t *testing.T) {
 		TagURL: true,
 	}
 	filter := builder.FilterChain(next)
-	req := httplib.Get("https://github.com/notifications?query=repo%3Aastaxie%2Fbeego")
+	req := httplib.Get("https://github.com/notifications?query=repo%3Aastaxie%2Fradiant")
 	resp, err := filter(context.Background(), req)
 	assert.NotNil(t, resp)
 	assert.NotNil(t, err)

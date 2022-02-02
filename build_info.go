@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package beego
+package radiant
 
 var (
 	BuildVersion     string
@@ -27,6 +27,6 @@ var (
 )
 
 const (
-	// VERSION represent beego web framework version.
+	// VERSION represent radiant web framework version.
 	VERSION = "2.0.0"
 )

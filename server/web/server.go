@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package web
 
 import (
@@ -43,18 +29,18 @@ import (
 var BeeApp *HttpServer
 
 func init() {
-	// create beego application
+	// create radiant application
 	BeeApp = NewHttpSever()
 }
 
-// HttpServer defines beego application with a new PatternServeMux.
+// HttpServer defines radiant application with a new PatternServeMux.
 type HttpServer struct {
 	Handlers *ControllerRegister
 	Server   *http.Server
 	Cfg      *Config
 }
 
-// NewHttpSever returns a new beego application.
+// NewHttpSever returns a new radiant application.
 // this method will use the BConfig as the configure to create HttpServer
 // Be careful that when you update BConfig, the server's Cfg will be updated too
 func NewHttpSever() *HttpServer {
@@ -76,7 +62,7 @@ func NewHttpServerWithCfg(cfg *Config) *HttpServer {
 // MiddleWare function for http.Handler
 type MiddleWare func(http.Handler) http.Handler
 
-// Run beego application.
+// Run radiant application.
 func (app *HttpServer) Run(addr string, mws ...MiddleWare) {
 	initBeforeHTTPRun()
 
@@ -275,18 +261,18 @@ func RouterWithOpts(rootpath string, c ControllerInterface, opts ...ControllerOp
 // it's an alias method of HttpServer.Router.
 // usage:
 //  simple router
-//  beego.Router("/admin", &admin.UserController{})
-//  beego.Router("/admin/index", &admin.ArticleController{})
+//  radiant.Router("/admin", &admin.UserController{})
+//  radiant.Router("/admin/index", &admin.ArticleController{})
 //
 //  regex router
 //
-//  beego.Router("/api/:id([0-9]+)", &controllers.RController{})
+//  radiant.Router("/api/:id([0-9]+)", &controllers.RController{})
 //
 //  custom rules
-//  beego.Router("/api/list",&RestController{},"*:ListFood")
-//  beego.Router("/api/create",&RestController{},"post:CreateFood")
-//  beego.Router("/api/update",&RestController{},"put:UpdateFood")
-//  beego.Router("/api/delete",&RestController{},"delete:DeleteFood")
+//  radiant.Router("/api/list",&RestController{},"*:ListFood")
+//  radiant.Router("/api/create",&RestController{},"post:CreateFood")
+//  radiant.Router("/api/update",&RestController{},"put:UpdateFood")
+//  radiant.Router("/api/delete",&RestController{},"delete:DeleteFood")
 func (app *HttpServer) Router(rootPath string, c ControllerInterface, mappingMethods ...string) *HttpServer {
 	return app.RouterWithOpts(rootPath, c, WithRouterMethods(c, mappingMethods...))
 }
@@ -308,8 +294,8 @@ func UnregisterFixedRoute(fixedRoute string, method string) *HttpServer {
 // method type (e.g. "GET" or "POST") for selective removal.
 //
 // Usage (replace "GET" with "*" for all methods):
-//  beego.UnregisterFixedRoute("/yourpreviouspath", "GET")
-//  beego.Router("/yourpreviouspath", yourControllerAddress, "get:GetNewPage")
+//  radiant.UnregisterFixedRoute("/yourpreviouspath", "GET")
+//  radiant.Router("/yourpreviouspath", yourControllerAddress, "get:GetNewPage")
 func (app *HttpServer) UnregisterFixedRoute(fixedRoute string, method string) *HttpServer {
 	subPaths := splitPath(fixedRoute)
 	if method == "" || method == "*" {
@@ -386,9 +372,9 @@ func Include(cList ...ControllerInterface) *HttpServer {
 
 // Include will generate router file in the router/xxx.go from the controller's comments
 // usage:
-// beego.Include(&BankAccount{}, &OrderController{},&RefundController{},&ReceiptController{})
+// radiant.Include(&BankAccount{}, &OrderController{},&RefundController{},&ReceiptController{})
 // type BankAccount struct{
-//   beego.Controller
+//   radiant.Controller
 // }
 //
 // register the function
@@ -422,7 +408,7 @@ func RESTRouter(rootpath string, c ControllerInterface) *HttpServer {
 }
 
 // RESTRouter adds a restful controller handler to BeeApp.
-// its' controller implements beego.ControllerInterface and
+// its' controller implements radiant.ControllerInterface and
 // defines a param "pattern/:objectId" to visit each resource.
 func (app *HttpServer) RESTRouter(rootpath string, c ControllerInterface) *HttpServer {
 	app.Router(rootpath, c)
@@ -437,7 +423,7 @@ func AutoRouter(c ControllerInterface) *HttpServer {
 
 // AutoRouter adds defined controller handler to BeeApp.
 // it's same to HttpServer.AutoRouter.
-// if beego.AddAuto(&MainController{}) and MainController has methods List and Page,
+// if radiant.AddAuto(&MainController{}) and MainController has methods List and Page,
 // visit the url /main/list to exec List function or /main/page to exec Page function.
 func (app *HttpServer) AutoRouter(c ControllerInterface) *HttpServer {
 	app.Handlers.AddAuto(c)
@@ -451,7 +437,7 @@ func AutoPrefix(prefix string, c ControllerInterface) *HttpServer {
 
 // AutoPrefix adds controller handler to BeeApp with prefix.
 // it's same to HttpServer.AutoRouterWithPrefix.
-// if beego.AutoPrefix("/admin",&MainController{}) and MainController has methods List and Page,
+// if radiant.AutoPrefix("/admin",&MainController{}) and MainController has methods List and Page,
 // visit the url /admin/main/list to exec List function or /admin/main/page to exec Page function.
 func (app *HttpServer) AutoPrefix(prefix string, c ControllerInterface) *HttpServer {
 	app.Handlers.AddAutoPrefix(prefix, c)
@@ -625,7 +611,7 @@ func Get(rootpath string, f HandleFunc) *HttpServer {
 
 // Get used to register router for Get method
 // usage:
-//    beego.Get("/", func(ctx *context.Context){
+//    radiant.Get("/", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Get(rootpath string, f HandleFunc) *HttpServer {
@@ -640,7 +626,7 @@ func Post(rootpath string, f HandleFunc) *HttpServer {
 
 // Post used to register router for Post method
 // usage:
-//    beego.Post("/api", func(ctx *context.Context){
+//    radiant.Post("/api", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Post(rootpath string, f HandleFunc) *HttpServer {
@@ -655,7 +641,7 @@ func Delete(rootpath string, f HandleFunc) *HttpServer {
 
 // Delete used to register router for Delete method
 // usage:
-//    beego.Delete("/api", func(ctx *context.Context){
+//    radiant.Delete("/api", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Delete(rootpath string, f HandleFunc) *HttpServer {
@@ -670,7 +656,7 @@ func Put(rootpath string, f HandleFunc) *HttpServer {
 
 // Put used to register router for Put method
 // usage:
-//    beego.Put("/api", func(ctx *context.Context){
+//    radiant.Put("/api", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Put(rootpath string, f HandleFunc) *HttpServer {
@@ -685,7 +671,7 @@ func Head(rootpath string, f HandleFunc) *HttpServer {
 
 // Head used to register router for Head method
 // usage:
-//    beego.Head("/api", func(ctx *context.Context){
+//    radiant.Head("/api", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Head(rootpath string, f HandleFunc) *HttpServer {
@@ -701,7 +687,7 @@ func Options(rootpath string, f HandleFunc) *HttpServer {
 
 // Options used to register router for Options method
 // usage:
-//    beego.Options("/api", func(ctx *context.Context){
+//    radiant.Options("/api", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Options(rootpath string, f HandleFunc) *HttpServer {
@@ -716,7 +702,7 @@ func Patch(rootpath string, f HandleFunc) *HttpServer {
 
 // Patch used to register router for Patch method
 // usage:
-//    beego.Patch("/api", func(ctx *context.Context){
+//    radiant.Patch("/api", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Patch(rootpath string, f HandleFunc) *HttpServer {
@@ -731,7 +717,7 @@ func Any(rootpath string, f HandleFunc) *HttpServer {
 
 // Any used to register router for all methods
 // usage:
-//    beego.Any("/api", func(ctx *context.Context){
+//    radiant.Any("/api", func(ctx *context.Context){
 //          ctx.Output.Body("hello world")
 //    })
 func (app *HttpServer) Any(rootpath string, f HandleFunc) *HttpServer {
@@ -746,7 +732,7 @@ func Handler(rootpath string, h http.Handler, options ...interface{}) *HttpServe
 
 // Handler used to register a Handler router
 // usage:
-//    beego.Handler("/api", http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
+//    radiant.Handler("/api", http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
 //          fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
 //    }))
 func (app *HttpServer) Handler(rootpath string, h http.Handler, options ...interface{}) *HttpServer {
@@ -761,7 +747,7 @@ func InsertFilter(pattern string, pos int, filter FilterFunc, opts ...FilterOpt)
 
 // InsertFilter adds a FilterFunc with pattern condition and action constant.
 // The pos means action constant including
-// beego.BeforeStatic, beego.BeforeRouter, beego.BeforeExec, beego.AfterExec and beego.FinishRouter.
+// radiant.BeforeStatic, radiant.BeforeRouter, radiant.BeforeExec, radiant.AfterExec and radiant.FinishRouter.
 // The bool params is for setting the returnOnOutput value (false allows multiple filters to execute)
 func (app *HttpServer) InsertFilter(pattern string, pos int, filter FilterFunc, opts ...FilterOpt) *HttpServer {
 	app.Handlers.InsertFilter(pattern, pos, filter, opts...)
@@ -859,7 +845,7 @@ func printTree(resultList *[][]string, t *Tree) {
 	}
 	for _, l := range t.leaves {
 		if v, ok := l.runObject.(*ControllerInfo); ok {
-			if v.routerType == routerTypeBeego {
+			if v.routerType == routerTyperadiant {
 				result := []string{
 					template.HTMLEscapeString(v.pattern),
 					template.HTMLEscapeString(fmt.Sprintf("%s", v.methods)),

@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 // Package cors provides handlers to enable CORS support.
 // Usage
 //	import (
@@ -24,19 +10,19 @@
 //		// - PUT and PATCH methods
 //		// - Origin header
 //		// - Credentials share
-//		beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
+//		radiant.InsertFilter("*", radiant.BeforeRouter, cors.Allow(&cors.Options{
 //			AllowOrigins:     []string{"https://*.foo.com"},
 //			AllowMethods:     []string{"PUT", "PATCH"},
 //			AllowHeaders:     []string{"Origin"},
 //			ExposeHeaders:    []string{"Content-Length"},
 //			AllowCredentials: true,
 //		}))
-//		beego.Run()
+//		radiant.Run()
 //	}
 package cors
 
 import (
-	beego "github.com/W3-Engineers-Ltd/Radiant/adapter"
+	radiant "github.com/W3-Engineers-Ltd/Radiant/adapter"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/filter/cors"
@@ -62,7 +48,7 @@ func (o *Options) IsOriginAllowed(origin string) bool {
 }
 
 // Allow enables CORS for requests those match the provided options.
-func Allow(opts *Options) beego.FilterFunc {
+func Allow(opts *Options) radiant.FilterFunc {
 	f := cors.Allow((*cors.Options)(opts))
 	return func(c *context.Context) {
 		f((*beecontext.Context)(c))

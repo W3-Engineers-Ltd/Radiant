@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,9 +25,9 @@ import (
 type Client struct {
 	Name       string
 	Endpoint   string
-	CommonOpts []BeegoHTTPRequestOption
+	CommonOpts []radiantHTTPRequestOption
 
-	Setting BeegoHTTPSettings
+	Setting radiantHTTPSettings
 }
 
 // HTTPResponseCarrier If value implement HTTPResponseCarrier. http.Response will pass to SetHTTPResponse
@@ -70,7 +70,7 @@ func NewClient(name string, endpoint string, opts ...ClientOption) (*Client, err
 	return res, nil
 }
 
-func (c *Client) customReq(req *BeegoHTTPRequest, opts []BeegoHTTPRequestOption) {
+func (c *Client) customReq(req *radiantHTTPRequest, opts []radiantHTTPRequestOption) {
 	req.Setting(c.Setting)
 	opts = append(c.CommonOpts, opts...)
 	for _, o := range opts {
@@ -79,7 +79,7 @@ func (c *Client) customReq(req *BeegoHTTPRequest, opts []BeegoHTTPRequestOption)
 }
 
 // handleResponse try to parse body to meaningful value
-func (c *Client) handleResponse(value interface{}, req *BeegoHTTPRequest) error {
+func (c *Client) handleResponse(value interface{}, req *radiantHTTPRequest) error {
 	// make sure req.resp is not nil
 	_, err := req.Bytes()
 	if err != nil {
@@ -95,7 +95,7 @@ func (c *Client) handleResponse(value interface{}, req *BeegoHTTPRequest) error 
 }
 
 // handleCarrier set http data to value
-func (c *Client) handleCarrier(value interface{}, req *BeegoHTTPRequest) error {
+func (c *Client) handleCarrier(value interface{}, req *radiantHTTPRequest) error {
 	if value == nil {
 		return nil
 	}
@@ -133,14 +133,14 @@ func (c *Client) handleCarrier(value interface{}, req *BeegoHTTPRequest) error {
 }
 
 // Get Send a GET request and try to give its result value
-func (c *Client) Get(value interface{}, path string, opts ...BeegoHTTPRequestOption) error {
+func (c *Client) Get(value interface{}, path string, opts ...radiantHTTPRequestOption) error {
 	req := Get(c.Endpoint + path)
 	c.customReq(req, opts)
 	return c.handleResponse(value, req)
 }
 
 // Post Send a POST request and try to give its result value
-func (c *Client) Post(value interface{}, path string, body interface{}, opts ...BeegoHTTPRequestOption) error {
+func (c *Client) Post(value interface{}, path string, body interface{}, opts ...radiantHTTPRequestOption) error {
 	req := Post(c.Endpoint + path)
 	c.customReq(req, opts)
 	if body != nil {
@@ -150,7 +150,7 @@ func (c *Client) Post(value interface{}, path string, body interface{}, opts ...
 }
 
 // Put Send a Put request and try to give its result value
-func (c *Client) Put(value interface{}, path string, body interface{}, opts ...BeegoHTTPRequestOption) error {
+func (c *Client) Put(value interface{}, path string, body interface{}, opts ...radiantHTTPRequestOption) error {
 	req := Put(c.Endpoint + path)
 	c.customReq(req, opts)
 	if body != nil {
@@ -160,14 +160,14 @@ func (c *Client) Put(value interface{}, path string, body interface{}, opts ...B
 }
 
 // Delete Send a Delete request and try to give its result value
-func (c *Client) Delete(value interface{}, path string, opts ...BeegoHTTPRequestOption) error {
+func (c *Client) Delete(value interface{}, path string, opts ...radiantHTTPRequestOption) error {
 	req := Delete(c.Endpoint + path)
 	c.customReq(req, opts)
 	return c.handleResponse(value, req)
 }
 
 // Head Send a Head request and try to give its result value
-func (c *Client) Head(value interface{}, path string, opts ...BeegoHTTPRequestOption) error {
+func (c *Client) Head(value interface{}, path string, opts ...radiantHTTPRequestOption) error {
 	req := Head(c.Endpoint + path)
 	c.customReq(req, opts)
 	return c.handleResponse(value, req)

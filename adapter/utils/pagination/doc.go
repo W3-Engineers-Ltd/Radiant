@@ -4,14 +4,14 @@ context of a http request.
 
 Usage
 
-In your beego.Controller:
+In your radiant.Controller:
 
  package controllers
 
  import "github.com/W3-Engineers-Ltd/Radiant/server/web/pagination"
 
  type PostsController struct {
-   beego.Controller
+   radiant.Controller
  }
 
  func (this *PostsController) ListAllPosts() {
@@ -52,7 +52,7 @@ In your view templates:
 
 See also
 
-http://beego.me/docs/mvc/view/page.md
+http://radiant.me/docs/mvc/view/page.md
 
 */
 package pagination

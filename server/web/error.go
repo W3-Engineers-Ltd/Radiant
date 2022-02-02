@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package web
 
 import (
@@ -38,7 +24,7 @@ var tpl = `
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>beego application error</title>
+    <title>radiant application error</title>
     <style>
         html, body, body * {padding: 0; margin: 0;}
         #header {background:#ffd; border-bottom:solid 2px #A31515; padding: 20px 10px;}
@@ -75,7 +61,7 @@ var tpl = `
         </div>
     </div>
     <div id="footer">
-        <p>beego {{ .BeegoVersion }} (beego framework)</p>
+        <p>radiant {{ .radiantVersion }} (radiant framework)</p>
         <p>golang version: {{.GoVersion}}</p>
     </div>
 </body>
@@ -84,15 +70,15 @@ var tpl = `
 
 // render default application error page with error and stack string.
 func showErr(err interface{}, ctx *context.Context, stack string) {
-	t, _ := template.New("beegoerrortemp").Parse(tpl)
+	t, _ := template.New("radianterrortemp").Parse(tpl)
 	data := map[string]string{
-		"AppError":      fmt.Sprintf("%s:%v", BConfig.AppName, err),
-		"RequestMethod": ctx.Input.Method(),
-		"RequestURL":    ctx.Input.URI(),
-		"RemoteAddr":    ctx.Input.IP(),
-		"Stack":         stack,
-		"BeegoVersion":  beego.VERSION,
-		"GoVersion":     runtime.Version(),
+		"AppError":       fmt.Sprintf("%s:%v", BConfig.AppName, err),
+		"RequestMethod":  ctx.Input.Method(),
+		"RequestURL":     ctx.Input.URI(),
+		"RemoteAddr":     ctx.Input.IP(),
+		"Stack":          stack,
+		"radiantVersion": radiant.VERSION,
+		"GoVersion":      runtime.Version(),
 	}
 	t.Execute(ctx.ResponseWriter, data)
 }
@@ -189,7 +175,7 @@ var errtpl = `
 					{{.Content}}
 					<a href="/" title="Home" class="button">Go Home</a><br />
 
-					<br>Powered by beego {{.BeegoVersion}}
+					<br>Powered by radiant {{.radiantVersion}}
 				</div>
 			</div>
 		</div>
@@ -375,19 +361,19 @@ func payloadTooLarge(rw http.ResponseWriter, r *http.Request) {
 }
 
 func responseError(rw http.ResponseWriter, r *http.Request, errCode int, errContent string) {
-	t, _ := template.New("beegoerrortemp").Parse(errtpl)
+	t, _ := template.New("radianterrortemp").Parse(errtpl)
 	data := M{
-		"Title":        http.StatusText(errCode),
-		"BeegoVersion": beego.VERSION,
-		"Content":      template.HTML(errContent),
+		"Title":          http.StatusText(errCode),
+		"radiantVersion": radiant.VERSION,
+		"Content":        template.HTML(errContent),
 	}
 	t.Execute(rw, data)
 }
 
 // ErrorHandler registers http.HandlerFunc to each http err code string.
 // usage:
-// 	beego.ErrorHandler("404",NotFound)
-//	beego.ErrorHandler("500",InternalServerError)
+// 	radiant.ErrorHandler("404",NotFound)
+//	radiant.ErrorHandler("500",InternalServerError)
 func ErrorHandler(code string, h http.HandlerFunc) *HttpServer {
 	ErrorMaps[code] = &errorInfo{
 		errorType: errorTypeHandler,
@@ -399,7 +385,7 @@ func ErrorHandler(code string, h http.HandlerFunc) *HttpServer {
 
 // ErrorController registers ControllerInterface to each http err code string.
 // usage:
-// 	beego.ErrorController(&controllers.ErrorController{})
+// 	radiant.ErrorController(&controllers.ErrorController{})
 func ErrorController(c ControllerInterface) *HttpServer {
 	reflectVal := reflect.ValueOf(c)
 	rt := reflectVal.Type()

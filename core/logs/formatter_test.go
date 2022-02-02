@@ -81,7 +81,7 @@ func TestPatternLogFormatter(t *testing.T) {
 	when := time.Now()
 	lm := &LogMsg{
 		Msg:        "message",
-		FilePath:   "/User/go/beego/main.go",
+		FilePath:   "/User/go/radiant/main.go",
 		Level:      LevelWarn,
 		LineNumber: 10,
 		When:       when,

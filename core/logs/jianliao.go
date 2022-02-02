@@ -9,7 +9,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// JLWriter implements beego LoggerInterface and is used to send jiaoliao webhook
+// JLWriter implements radiant LoggerInterface and is used to send jiaoliao webhook
 type JLWriter struct {
 	AuthorName  string `json:"authorname"`
 	Title       string `json:"title"`

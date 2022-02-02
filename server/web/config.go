@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package web
 
 import (
@@ -37,7 +23,7 @@ import (
 type Config struct {
 	// AppName
 	// @Description Application's name. You'd better set it because we use it to do some logging and tracing
-	// @Default beego
+	// @Default radiant
 	AppName string // Application name
 	// RunMode
 	// @Description it's the same as environment. In general, we have different run modes.
@@ -47,7 +33,7 @@ type Config struct {
 	// and the RunMode should be set as test
 	// when you completed all tests, you want to deploy it to prod, you should set it to prod
 	// You should never set RunMode="dev" when you deploy the application to prod
-	// because Beego will do more things which need Go SDK and other tools when it found out the RunMode="dev"
+	// because radiant will do more things which need Go SDK and other tools when it found out the RunMode="dev"
 	// @Default dev
 	RunMode string // Running Mode: dev | prod
 
@@ -59,27 +45,27 @@ type Config struct {
 	// @Default true
 	RouterCaseSensitive bool
 	// RecoverPanic
-	// @Description if it was true, Beego will try to recover from panic when it serves your http request
-	// So you should notice that it doesn't mean that Beego will recover all panic cases.
+	// @Description if it was true, radiant will try to recover from panic when it serves your http request
+	// So you should notice that it doesn't mean that radiant will recover all panic cases.
 	// @Default true
 	RecoverPanic bool
 	// CopyRequestBody
-	// @Description if it's true, Beego will copy the request body. But if the request body's size > MaxMemory,
-	// Beego will return 413 as http status
+	// @Description if it's true, radiant will copy the request body. But if the request body's size > MaxMemory,
+	// radiant will return 413 as http status
 	// If you are building RESTful API, please set it to true.
 	// And if you want to read data from request Body multiple times, please set it to true
 	// In general, if you don't meet any performance issue, you could set it to true
 	// @Default false
 	CopyRequestBody bool
 	// EnableGzip
-	// @Description If it was true, Beego will try to compress data by using zip algorithm.
+	// @Description If it was true, radiant will try to compress data by using zip algorithm.
 	// But there are two points:
 	// 1. Only static resources will be compressed
 	// 2. Only those static resource which has the extension specified by StaticExtensionsToGzip will be compressed
 	// @Default false
 	EnableGzip bool
 	// EnableErrorsShow
-	// @Description If it's true, Beego will show error message to page
+	// @Description If it's true, radiant will show error message to page
 	// it will work with ErrorMaps which allows you register some error handler
 	// You may want to set it to false when application was deploy to prod environment
 	// because you may not want to expose your internal error msg to your users
@@ -94,13 +80,13 @@ type Config struct {
 	// ServerName
 	// @Description server name. For example, in large scale system,
 	// you may want to deploy your application to several machines, so that each of them has a server name
-	// we suggest you'd better set value because Beego use this to output some DEBUG msg,
+	// we suggest you'd better set value because radiant use this to output some DEBUG msg,
 	// or integrated with other tools such as tracing, metrics
 	// @Default
 	ServerName string
 
 	// RecoverFunc
-	// @Description when Beego want to recover from panic, it will use this func as callback
+	// @Description when radiant want to recover from panic, it will use this func as callback
 	// see RecoverPanic
 	// @Default defaultRecoverPanic
 	RecoverFunc func(*context.Context, *Config)
@@ -137,37 +123,37 @@ type Listen struct {
 	// @Default false
 	Graceful bool
 	// ListenTCP4
-	// @Description if it's true, means that Beego only work for TCP4
+	// @Description if it's true, means that radiant only work for TCP4
 	// please check net.Listen function
 	// In general, you should not set it to true
 	// @Default false
 	ListenTCP4 bool
 	// EnableHTTP
-	// @Description if it's true, Beego will accept HTTP request.
+	// @Description if it's true, radiant will accept HTTP request.
 	// But if you want to use HTTPS only, please set it to false
 	// see EnableHTTPS
 	// @Default true
 	EnableHTTP bool
 	// AutoTLS
-	// @Description If it's true, Beego will use default value to initialize the TLS configure
+	// @Description If it's true, radiant will use default value to initialize the TLS configure
 	// But those values could be override if you have custom value.
 	// see Domains, TLSCacheDir
 	// @Default false
 	AutoTLS bool
 	// EnableHTTPS
-	// @Description If it's true, Beego will accept HTTPS request.
+	// @Description If it's true, radiant will accept HTTPS request.
 	// Now, you'd better use HTTPS protocol on prod environment to get better security
 	// In prod, the best option is EnableHTTPS=true and EnableHTTP=false
 	// see EnableHTTP
 	// @Default false
 	EnableHTTPS bool
 	// EnableMutualHTTPS
-	// @Description if it's true, Beego will handle requests on incoming mutual TLS connections
+	// @Description if it's true, radiant will handle requests on incoming mutual TLS connections
 	// see Server.ListenAndServeMutualTLS
 	// @Default false
 	EnableMutualHTTPS bool
 	// EnableAdmin
-	// @Description if it's true, Beego will provide admin service.
+	// @Description if it's true, radiant will provide admin service.
 	// You can visit the admin service via browser.
 	// The default port is 8088
 	// see AdminPort
@@ -182,63 +168,63 @@ type Listen struct {
 	// @Default false
 	EnableStdIo bool
 	// ServerTimeOut
-	// @Description Beego use this as ReadTimeout and WriteTimeout
+	// @Description radiant use this as ReadTimeout and WriteTimeout
 	// The unit is second.
 	// see http.Server.ReadTimeout, WriteTimeout
 	// @Default 0
 	ServerTimeOut int64
 	// HTTPAddr
-	// @Description Beego listen to this address when the application start up.
+	// @Description radiant listen to this address when the application start up.
 	// @Default ""
 	HTTPAddr string
 	// HTTPPort
-	// @Description Beego listen to this port
+	// @Description radiant listen to this port
 	// you'd better change this value when you deploy to prod environment
 	// @Default 8080
 	HTTPPort int
 	// Domains
-	// @Description Beego use this to configure TLS. Those domains are "white list" domain
+	// @Description radiant use this to configure TLS. Those domains are "white list" domain
 	// @Default []
 	Domains []string
 	// TLSCacheDir
-	// @Description Beego use this as cache dir to store TLS cert data
+	// @Description radiant use this as cache dir to store TLS cert data
 	// @Default ""
 	TLSCacheDir string
 	// HTTPSAddr
-	// @Description Beego will listen to this address to accept HTTPS request
+	// @Description radiant will listen to this address to accept HTTPS request
 	// see EnableHTTPS
 	// @Default ""
 	HTTPSAddr string
 	// HTTPSPort
-	// @Description  Beego will listen to this port to accept HTTPS request
+	// @Description  radiant will listen to this port to accept HTTPS request
 	// @Default 10443
 	HTTPSPort int
 	// HTTPSCertFile
-	// @Description Beego read this file as cert file
+	// @Description radiant read this file as cert file
 	// When you are using HTTPS protocol, please configure it
 	// see HTTPSKeyFile
 	// @Default ""
 	HTTPSCertFile string
 	// HTTPSKeyFile
-	// @Description Beego read this file as key file
+	// @Description radiant read this file as key file
 	// When you are using HTTPS protocol, please configure it
 	// see HTTPSCertFile
 	// @Default ""
 	HTTPSKeyFile string
 	// TrustCaFile
-	// @Description Beego read this file as CA file
+	// @Description radiant read this file as CA file
 	// @Default ""
 	TrustCaFile string
 	// AdminAddr
-	// @Description Beego will listen to this address to provide admin service
+	// @Description radiant will listen to this address to provide admin service
 	// In general, it should be the same with your application address, HTTPAddr or HTTPSAddr
 	// @Default ""
 	AdminAddr string
 	// AdminPort
-	// @Description  Beego will listen to this port to provide admin service
+	// @Description  radiant will listen to this port to provide admin service
 	// @Default 8088
 	AdminPort int
-	// @Description Beego use this tls.ClientAuthType to initialize TLS connection
+	// @Description radiant use this tls.ClientAuthType to initialize TLS connection
 	// The default value is tls.RequireAndVerifyClientCert
 	// @Default 4
 	ClientAuth int
@@ -247,46 +233,46 @@ type Listen struct {
 // WebConfig holds web related config
 type WebConfig struct {
 	// AutoRender
-	// @Description If it's true, Beego will render the page based on your template and data
+	// @Description If it's true, radiant will render the page based on your template and data
 	// In general, keep it as true.
 	// But if you are building RESTFul API and you don't have any page,
 	// you can set it to false
 	// @Default true
 	AutoRender bool
-	// Deprecated: Beego didn't use it anymore
+	// Deprecated: radiant didn't use it anymore
 	EnableDocs bool
 	// EnableXSRF
-	// @Description If it's true, Beego will help to provide XSRF support
-	// But you should notice that, now Beego only work for HTTPS protocol with XSRF
+	// @Description If it's true, radiant will help to provide XSRF support
+	// But you should notice that, now radiant only work for HTTPS protocol with XSRF
 	// because it's not safe if using HTTP protocol
 	// And, the cookie storing XSRF token has two more flags HttpOnly and Secure
 	// It means that you must use HTTPS protocol and you can not read the token from JS script
-	// This is completed different from Beego 1.x because we got many security reports
+	// This is completed different from radiant 1.x because we got many security reports
 	// And if you are in dev environment, you could set it to false
 	// @Default false
 	EnableXSRF bool
 	// DirectoryIndex
-	// @Description When Beego serves static resources request, it will look up the file.
-	// If the file is directory, Beego will try to find the index.html as the response
+	// @Description When radiant serves static resources request, it will look up the file.
+	// If the file is directory, radiant will try to find the index.html as the response
 	// But if the index.html is not exist or it's a directory,
-	// Beego will return 403 response if DirectoryIndex is **false**
+	// radiant will return 403 response if DirectoryIndex is **false**
 	// @Default false
 	DirectoryIndex bool
 	// FlashName
-	// @Description the cookie's name when Beego try to store the flash data into cookie
-	// @Default BEEGO_FLASH
+	// @Description the cookie's name when radiant try to store the flash data into cookie
+	// @Default radiant_FLASH
 	FlashName string
 	// FlashSeparator
-	// @Description When Beego read flash data from request, it uses this as the separator
-	// @Default BEEGOFLASH
+	// @Description When radiant read flash data from request, it uses this as the separator
+	// @Default radiantFLASH
 	FlashSeparator string
 	// StaticDir
-	// @Description Beego uses this as static resources' root directory.
-	// It means that Beego will try to search static resource from this start point
+	// @Description radiant uses this as static resources' root directory.
+	// It means that radiant will try to search static resource from this start point
 	// It's a map, the key is the path and the value is the directory
 	// For example, the default value is /static => static,
-	// which means that when Beego got a request with path /static/xxx
-	// Beego will try to find the resource from static directory
+	// which means that when radiant got a request with path /static/xxx
+	// radiant will try to find the resource from static directory
 	// @Default /static => static
 	StaticDir map[string]string
 	// StaticExtensionsToGzip
@@ -294,44 +280,44 @@ type WebConfig struct {
 	// @Default [".css", ".js" ]
 	StaticExtensionsToGzip []string
 	// StaticCacheFileSize
-	// @Description If the size of static resource < StaticCacheFileSize, Beego will try to handle it by itself,
-	// it means that Beego will compressed the file data (if enable) and cache this file.
-	// But if the file size > StaticCacheFileSize, Beego just simply delegate the request to http.ServeFile
+	// @Description If the size of static resource < StaticCacheFileSize, radiant will try to handle it by itself,
+	// it means that radiant will compressed the file data (if enable) and cache this file.
+	// But if the file size > StaticCacheFileSize, radiant just simply delegate the request to http.ServeFile
 	// the default value is 100KB.
 	// the max memory size of caching static files is StaticCacheFileSize * StaticCacheFileNum
 	// see StaticCacheFileNum
 	// @Default 102400
 	StaticCacheFileSize int
 	// StaticCacheFileNum
-	// @Description Beego use it to control the memory usage of caching static resource file
-	// If the caching files > StaticCacheFileNum, Beego use LRU algorithm to remove caching file
+	// @Description radiant use it to control the memory usage of caching static resource file
+	// If the caching files > StaticCacheFileNum, radiant use LRU algorithm to remove caching file
 	// the max memory size of caching static files is StaticCacheFileSize * StaticCacheFileNum
 	// see StaticCacheFileSize
 	// @Default 1000
 	StaticCacheFileNum int
 	// TemplateLeft
-	// @Description Beego use this to render page
+	// @Description radiant use this to render page
 	// see TemplateRight
 	// @Default {{
 	TemplateLeft string
 	// TemplateRight
-	// @Description Beego use this to render page
+	// @Description radiant use this to render page
 	// see TemplateLeft
 	// @Default }}
 	TemplateRight string
 	// ViewsPath
-	// @Description The directory of Beego application storing template
+	// @Description The directory of radiant application storing template
 	// @Default views
 	ViewsPath string
 	// CommentRouterPath
-	// @Description Beego scans this directory and its sub directory to generate router
-	// Beego only scans this directory when it's in dev environment
+	// @Description radiant scans this directory and its sub directory to generate router
+	// radiant only scans this directory when it's in dev environment
 	// @Default controllers
 	CommentRouterPath string
 	// XSRFKey
 	// @Description the name of cookie storing XSRF token
 	// see EnableXSRF
-	// @Default beegoxsrf
+	// @Default radiantxsrf
 	XSRFKey string
 	// XSRFExpire
 	// @Description the expiration time of XSRF token cookie
@@ -345,11 +331,11 @@ type WebConfig struct {
 // SessionConfig holds session related config
 type SessionConfig struct {
 	// SessionOn
-	// @Description if it's true, Beego will auto manage session
+	// @Description if it's true, radiant will auto manage session
 	// @Default false
 	SessionOn bool
 	// SessionAutoSetCookie
-	// @Description if it's true, Beego will put the session token into cookie too
+	// @Description if it's true, radiant will put the session token into cookie too
 	// @Default true
 	SessionAutoSetCookie bool
 	// SessionDisableHTTPOnly
@@ -373,10 +359,10 @@ type SessionConfig struct {
 	SessionProvider string
 	// SessionName
 	// @Description If SessionAutoSetCookie is true, we use this value as the cookie's name
-	// @Default beegosessionID
+	// @Default radiantsessionID
 	SessionName string
 	// SessionGCMaxLifetime
-	// @Description Beego will GC session to clean useless session.
+	// @Description radiant will GC session to clean useless session.
 	// unit: second
 	// @Default 3600
 	SessionGCMaxLifetime int64
@@ -398,7 +384,7 @@ type SessionConfig struct {
 	SessionDomain string
 	// SessionNameInHTTPHeader
 	// @Description if SessionEnableSidInHTTPHeader is true, this value will be used as the http header
-	// @Default Beegosessionid
+	// @Default radiantsessionid
 	SessionNameInHTTPHeader string
 	// SessionCookieSameSite
 	// @Description If SessionAutoSetCookie is true, we use this value as the cookie's same site policy
@@ -415,7 +401,7 @@ type SessionConfig struct {
 // LogConfig holds Log related config
 type LogConfig struct {
 	// AccessLogs
-	// @Description If it's true, Beego will log the HTTP request info
+	// @Description If it's true, radiant will log the HTTP request info
 	// @Default false
 	AccessLogs bool
 	// EnableStaticLogs
@@ -441,7 +427,7 @@ var (
 	// BConfig is the default config for Application
 	BConfig *Config
 	// AppConfig is the instance of Config, store the config information from file
-	AppConfig *beegoAppConfig
+	AppConfig *radiantAppConfig
 	// AppPath is the absolute path to the app
 	AppPath string
 	// GlobalSessions is the instance for the session manager
@@ -466,14 +452,14 @@ func init() {
 		panic(err)
 	}
 	filename := "app.conf"
-	if os.Getenv("BEEGO_RUNMODE") != "" {
-		filename = os.Getenv("BEEGO_RUNMODE") + ".app.conf"
+	if os.Getenv("radiant_RUNMODE") != "" {
+		filename = os.Getenv("radiant_RUNMODE") + ".app.conf"
 	}
 	appConfigPath = filepath.Join(WorkPath, "conf", filename)
 	if !utils.FileExists(appConfigPath) {
 		appConfigPath = filepath.Join(AppPath, "conf", filename)
 		if !utils.FileExists(appConfigPath) {
-			AppConfig = &beegoAppConfig{innerConfig: config.NewFakeConfig()}
+			AppConfig = &radiantAppConfig{innerConfig: config.NewFakeConfig()}
 			return
 		}
 	}
@@ -522,10 +508,10 @@ func defaultRecoverPanic(ctx *context.Context, cfg *Config) {
 
 func newBConfig() *Config {
 	res := &Config{
-		AppName:             "beego",
+		AppName:             "radiant",
 		RunMode:             PROD,
 		RouterCaseSensitive: true,
-		ServerName:          "beegoServer:" + beego.VERSION,
+		ServerName:          "radiantServer:" + radiant.VERSION,
 		RecoverPanic:        true,
 
 		CopyRequestBody:    false,
@@ -559,8 +545,8 @@ func newBConfig() *Config {
 		WebConfig: WebConfig{
 			AutoRender:             true,
 			EnableDocs:             false,
-			FlashName:              "BEEGO_FLASH",
-			FlashSeparator:         "BEEGOFLASH",
+			FlashName:              "radiant_FLASH",
+			FlashSeparator:         "radiantFLASH",
 			DirectoryIndex:         false,
 			StaticDir:              map[string]string{"/static": "static"},
 			StaticExtensionsToGzip: []string{".css", ".js"},
@@ -571,12 +557,12 @@ func newBConfig() *Config {
 			ViewsPath:              "views",
 			CommentRouterPath:      "controllers",
 			EnableXSRF:             false,
-			XSRFKey:                "beegoxsrf",
+			XSRFKey:                "radiantxsrf",
 			XSRFExpire:             0,
 			Session: SessionConfig{
 				SessionOn:                    false,
 				SessionProvider:              "memory",
-				SessionName:                  "beegosessionID",
+				SessionName:                  "radiantsessionID",
 				SessionGCMaxLifetime:         3600,
 				SessionProviderConfig:        "",
 				SessionDisableHTTPOnly:       false,
@@ -584,7 +570,7 @@ func newBConfig() *Config {
 				SessionAutoSetCookie:         true,
 				SessionDomain:                "",
 				SessionEnableSidInHTTPHeader: false, // enable store/get the sessionId into/from http headers
-				SessionNameInHTTPHeader:      "Beegosessionid",
+				SessionNameInHTTPHeader:      "radiantsessionid",
 				SessionEnableSidInURLQuery:   false, // enable get the sessionId from Url Query params
 				SessionCookieSameSite:        http.SameSiteDefaultMode,
 			},
@@ -643,7 +629,7 @@ func parseConfigForV1(ac config.Configer) {
 	}
 
 	// set the run mode first
-	if envRunMode := os.Getenv("BEEGO_RUNMODE"); envRunMode != "" {
+	if envRunMode := os.Getenv("radiant_RUNMODE"); envRunMode != "" {
 		BConfig.RunMode = envRunMode
 	} else if runMode, err := ac.String("RunMode"); runMode != "" && err == nil {
 		BConfig.RunMode = runMode
@@ -751,122 +737,122 @@ func LoadAppConfig(adapterName, configPath string) error {
 	return parseConfig(appConfigPath)
 }
 
-type beegoAppConfig struct {
+type radiantAppConfig struct {
 	config.BaseConfiger
 	innerConfig config.Configer
 }
 
-func newAppConfig(appConfigProvider, appConfigPath string) (*beegoAppConfig, error) {
+func newAppConfig(appConfigProvider, appConfigPath string) (*radiantAppConfig, error) {
 	ac, err := config.NewConfig(appConfigProvider, appConfigPath)
 	if err != nil {
 		return nil, err
 	}
-	return &beegoAppConfig{innerConfig: ac}, nil
+	return &radiantAppConfig{innerConfig: ac}, nil
 }
 
-func (b *beegoAppConfig) Unmarshaler(prefix string, obj interface{}, opt ...config.DecodeOption) error {
+func (b *radiantAppConfig) Unmarshaler(prefix string, obj interface{}, opt ...config.DecodeOption) error {
 	return b.innerConfig.Unmarshaler(prefix, obj, opt...)
 }
 
-func (b *beegoAppConfig) Set(key, val string) error {
+func (b *radiantAppConfig) Set(key, val string) error {
 	if err := b.innerConfig.Set(BConfig.RunMode+"::"+key, val); err != nil {
 		return b.innerConfig.Set(key, val)
 	}
 	return nil
 }
 
-func (b *beegoAppConfig) String(key string) (string, error) {
+func (b *radiantAppConfig) String(key string) (string, error) {
 	if v, err := b.innerConfig.String(BConfig.RunMode + "::" + key); v != "" && err == nil {
 		return v, nil
 	}
 	return b.innerConfig.String(key)
 }
 
-func (b *beegoAppConfig) Strings(key string) ([]string, error) {
+func (b *radiantAppConfig) Strings(key string) ([]string, error) {
 	if v, err := b.innerConfig.Strings(BConfig.RunMode + "::" + key); len(v) > 0 && err == nil {
 		return v, nil
 	}
 	return b.innerConfig.Strings(key)
 }
 
-func (b *beegoAppConfig) Int(key string) (int, error) {
+func (b *radiantAppConfig) Int(key string) (int, error) {
 	if v, err := b.innerConfig.Int(BConfig.RunMode + "::" + key); err == nil {
 		return v, nil
 	}
 	return b.innerConfig.Int(key)
 }
 
-func (b *beegoAppConfig) Int64(key string) (int64, error) {
+func (b *radiantAppConfig) Int64(key string) (int64, error) {
 	if v, err := b.innerConfig.Int64(BConfig.RunMode + "::" + key); err == nil {
 		return v, nil
 	}
 	return b.innerConfig.Int64(key)
 }
 
-func (b *beegoAppConfig) Bool(key string) (bool, error) {
+func (b *radiantAppConfig) Bool(key string) (bool, error) {
 	if v, err := b.innerConfig.Bool(BConfig.RunMode + "::" + key); err == nil {
 		return v, nil
 	}
 	return b.innerConfig.Bool(key)
 }
 
-func (b *beegoAppConfig) Float(key string) (float64, error) {
+func (b *radiantAppConfig) Float(key string) (float64, error) {
 	if v, err := b.innerConfig.Float(BConfig.RunMode + "::" + key); err == nil {
 		return v, nil
 	}
 	return b.innerConfig.Float(key)
 }
 
-func (b *beegoAppConfig) DefaultString(key string, defaultVal string) string {
+func (b *radiantAppConfig) DefaultString(key string, defaultVal string) string {
 	if v, err := b.String(key); v != "" && err == nil {
 		return v
 	}
 	return defaultVal
 }
 
-func (b *beegoAppConfig) DefaultStrings(key string, defaultVal []string) []string {
+func (b *radiantAppConfig) DefaultStrings(key string, defaultVal []string) []string {
 	if v, err := b.Strings(key); len(v) != 0 && err == nil {
 		return v
 	}
 	return defaultVal
 }
 
-func (b *beegoAppConfig) DefaultInt(key string, defaultVal int) int {
+func (b *radiantAppConfig) DefaultInt(key string, defaultVal int) int {
 	if v, err := b.Int(key); err == nil {
 		return v
 	}
 	return defaultVal
 }
 
-func (b *beegoAppConfig) DefaultInt64(key string, defaultVal int64) int64 {
+func (b *radiantAppConfig) DefaultInt64(key string, defaultVal int64) int64 {
 	if v, err := b.Int64(key); err == nil {
 		return v
 	}
 	return defaultVal
 }
 
-func (b *beegoAppConfig) DefaultBool(key string, defaultVal bool) bool {
+func (b *radiantAppConfig) DefaultBool(key string, defaultVal bool) bool {
 	if v, err := b.Bool(key); err == nil {
 		return v
 	}
 	return defaultVal
 }
 
-func (b *beegoAppConfig) DefaultFloat(key string, defaultVal float64) float64 {
+func (b *radiantAppConfig) DefaultFloat(key string, defaultVal float64) float64 {
 	if v, err := b.Float(key); err == nil {
 		return v
 	}
 	return defaultVal
 }
 
-func (b *beegoAppConfig) DIY(key string) (interface{}, error) {
+func (b *radiantAppConfig) DIY(key string) (interface{}, error) {
 	return b.innerConfig.DIY(key)
 }
 
-func (b *beegoAppConfig) GetSection(section string) (map[string]string, error) {
+func (b *radiantAppConfig) GetSection(section string) (map[string]string, error) {
 	return b.innerConfig.GetSection(section)
 }
 
-func (b *beegoAppConfig) SaveConfigFile(filename string) error {
+func (b *radiantAppConfig) SaveConfigFile(filename string) error {
 	return b.innerConfig.SaveConfigFile(filename)
 }

@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -147,7 +147,7 @@ func (l *limiter) createBucket(key string) bucket {
 }
 
 func defaultSessionKey(ctx *context.Context) string {
-	return "BEEGO_ALL"
+	return "radiant_ALL"
 }
 
 func RemoteIPSessionKey(ctx *context.Context) string {

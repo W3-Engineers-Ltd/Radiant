@@ -4,7 +4,7 @@ logs is a Go logs manager. It can use many logs adapters. The repo is inspired b
 
 ## How to install?
 
-	go get github.com/beego/beego/v2/core/logs
+	go get github.com/radiant/radiant/v2/core/logs
 
 ## What adapters are supported?
 
@@ -64,7 +64,7 @@ Configure like this:
 
 ```golang
 log := NewLogger(10000)
-log.SetLogger("smtp", `{"username":"beegotest@gmail.com","password":"xxxxxxxx","host":"smtp.gmail.com:587","sendTos":["xiemengjun@gmail.com"]}`)
+log.SetLogger("smtp", `{"username":"radianttest@gmail.com","password":"xxxxxxxx","host":"smtp.gmail.com:587","sendTos":["xiemengjun@gmail.com"]}`)
 log.Critical("sendmail critical")
 time.Sleep(time.Second * 30)
 ```

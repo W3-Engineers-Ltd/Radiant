@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 // Package authz provides handlers to enable ACL, RBAC, ABAC authorization support.
 // Simple Usage:
 //	import(
@@ -22,8 +8,8 @@
 //
 //	func main(){
 //		// mediate the access for every request
-//		beego.InsertFilter("*", beego.BeforeRouter, authz.NewAuthorizer(casbin.NewEnforcer("authz_model.conf", "authz_policy.csv")))
-//		beego.Run()
+//		radiant.InsertFilter("*", radiant.BeforeRouter, authz.NewAuthorizer(casbin.NewEnforcer("authz_model.conf", "authz_policy.csv")))
+//		radiant.Run()
 //	}
 //
 //
@@ -34,8 +20,8 @@
 //		e.AddRoleForUser("alice", "admin")
 //		e.AddPolicy(...)
 //
-//		beego.InsertFilter("*", beego.BeforeRouter, authz.NewAuthorizer(e))
-//		beego.Run()
+//		radiant.InsertFilter("*", radiant.BeforeRouter, authz.NewAuthorizer(e))
+//		radiant.Run()
 //	}
 package authz
 
@@ -44,7 +30,7 @@ import (
 
 	"github.com/casbin/casbin"
 
-	beego "github.com/W3-Engineers-Ltd/Radiant/adapter"
+	radiant "github.com/W3-Engineers-Ltd/Radiant/adapter"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/filter/authz"
@@ -52,7 +38,7 @@ import (
 
 // NewAuthorizer returns the authorizer.
 // Use a casbin enforcer as input
-func NewAuthorizer(e *casbin.Enforcer) beego.FilterFunc {
+func NewAuthorizer(e *casbin.Enforcer) radiant.FilterFunc {
 	f := authz.NewAuthorizer(e)
 	return func(context *context.Context) {
 		f((*beecontext.Context)(context))

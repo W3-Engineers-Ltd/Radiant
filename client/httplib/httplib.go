@@ -1,23 +1,9 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 // Package httplib is used as http.Client
 // Usage:
 //
 // import "github.com/W3-Engineers-Ltd/Radiant/client/httplib"
 //
-//	b := httplib.Post("http://beego.me/")
+//	b := httplib.Post("http://radiant.me/")
 //	b.Param("username","astaxie")
 //	b.Param("password","123456")
 //	b.PostFile("uploadfile1", "httplib.pdf")
@@ -28,7 +14,7 @@
 //	}
 //	fmt.Println(str)
 //
-//  more docs http://beego.me/docs/module/httplib.md
+//  more docs http://radiant.me/docs/module/httplib.md
 package httplib
 
 import (
@@ -58,15 +44,15 @@ import (
 const contentTypeKey = "Content-Type"
 
 // it will be the last filter and execute request.Do
-var doRequestFilter = func(ctx context.Context, req *BeegoHTTPRequest) (*http.Response, error) {
+var doRequestFilter = func(ctx context.Context, req *radiantHTTPRequest) (*http.Response, error) {
 	return req.doRequest(ctx)
 }
 
-// NewBeegoRequest returns *BeegoHttpRequest with specific method
+// NewradiantRequest returns *radiantHttpRequest with specific method
 // TODO add error as return value
 // I think if we don't return error
-// users are hard to check whether we create Beego request successfully
-func NewBeegoRequest(rawurl, method string) *BeegoHTTPRequest {
+// users are hard to check whether we create radiant request successfully
+func NewradiantRequest(rawurl, method string) *radiantHTTPRequest {
 	var resp http.Response
 	u, err := url.Parse(rawurl)
 	if err != nil {
@@ -80,7 +66,7 @@ func NewBeegoRequest(rawurl, method string) *BeegoHTTPRequest {
 		ProtoMajor: 1,
 		ProtoMinor: 1,
 	}
-	return &BeegoHTTPRequest{
+	return &radiantHTTPRequest{
 		url:     rawurl,
 		req:     &req,
 		params:  map[string][]string{},
@@ -90,67 +76,67 @@ func NewBeegoRequest(rawurl, method string) *BeegoHTTPRequest {
 	}
 }
 
-// Get returns *BeegoHttpRequest with GET method.
-func Get(url string) *BeegoHTTPRequest {
-	return NewBeegoRequest(url, "GET")
+// Get returns *radiantHttpRequest with GET method.
+func Get(url string) *radiantHTTPRequest {
+	return NewradiantRequest(url, "GET")
 }
 
-// Post returns *BeegoHttpRequest with POST method.
-func Post(url string) *BeegoHTTPRequest {
-	return NewBeegoRequest(url, "POST")
+// Post returns *radiantHttpRequest with POST method.
+func Post(url string) *radiantHTTPRequest {
+	return NewradiantRequest(url, "POST")
 }
 
-// Put returns *BeegoHttpRequest with PUT method.
-func Put(url string) *BeegoHTTPRequest {
-	return NewBeegoRequest(url, "PUT")
+// Put returns *radiantHttpRequest with PUT method.
+func Put(url string) *radiantHTTPRequest {
+	return NewradiantRequest(url, "PUT")
 }
 
-// Delete returns *BeegoHttpRequest DELETE method.
-func Delete(url string) *BeegoHTTPRequest {
-	return NewBeegoRequest(url, "DELETE")
+// Delete returns *radiantHttpRequest DELETE method.
+func Delete(url string) *radiantHTTPRequest {
+	return NewradiantRequest(url, "DELETE")
 }
 
-// Head returns *BeegoHttpRequest with HEAD method.
-func Head(url string) *BeegoHTTPRequest {
-	return NewBeegoRequest(url, "HEAD")
+// Head returns *radiantHttpRequest with HEAD method.
+func Head(url string) *radiantHTTPRequest {
+	return NewradiantRequest(url, "HEAD")
 }
 
-// BeegoHTTPRequest provides more useful methods than http.Request for requesting a url.
-type BeegoHTTPRequest struct {
+// radiantHTTPRequest provides more useful methods than http.Request for requesting a url.
+type radiantHTTPRequest struct {
 	url     string
 	req     *http.Request
 	params  map[string][]string
 	files   map[string]string
-	setting BeegoHTTPSettings
+	setting radiantHTTPSettings
 	resp    *http.Response
 	body    []byte
 }
 
 // GetRequest returns the request object
-func (b *BeegoHTTPRequest) GetRequest() *http.Request {
+func (b *radiantHTTPRequest) GetRequest() *http.Request {
 	return b.req
 }
 
 // Setting changes request settings
-func (b *BeegoHTTPRequest) Setting(setting BeegoHTTPSettings) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) Setting(setting radiantHTTPSettings) *radiantHTTPRequest {
 	b.setting = setting
 	return b
 }
 
 // SetBasicAuth sets the request's Authorization header to use HTTP Basic Authentication with the provided username and password.
-func (b *BeegoHTTPRequest) SetBasicAuth(username, password string) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetBasicAuth(username, password string) *radiantHTTPRequest {
 	b.req.SetBasicAuth(username, password)
 	return b
 }
 
 // SetEnableCookie sets enable/disable cookiejar
-func (b *BeegoHTTPRequest) SetEnableCookie(enable bool) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetEnableCookie(enable bool) *radiantHTTPRequest {
 	b.setting.EnableCookie = enable
 	return b
 }
 
 // SetUserAgent sets User-Agent header field
-func (b *BeegoHTTPRequest) SetUserAgent(useragent string) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetUserAgent(useragent string) *radiantHTTPRequest {
 	b.setting.UserAgent = useragent
 	return b
 }
@@ -159,45 +145,45 @@ func (b *BeegoHTTPRequest) SetUserAgent(useragent string) *BeegoHTTPRequest {
 // default is 0 (never retry)
 // -1 retry indefinitely (forever)
 // Other numbers specify the exact retry amount
-func (b *BeegoHTTPRequest) Retries(times int) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) Retries(times int) *radiantHTTPRequest {
 	b.setting.Retries = times
 	return b
 }
 
 // RetryDelay sets the time to sleep between reconnection attempts
-func (b *BeegoHTTPRequest) RetryDelay(delay time.Duration) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) RetryDelay(delay time.Duration) *radiantHTTPRequest {
 	b.setting.RetryDelay = delay
 	return b
 }
 
-// SetTimeout sets connect time out and read-write time out for BeegoRequest.
-func (b *BeegoHTTPRequest) SetTimeout(connectTimeout, readWriteTimeout time.Duration) *BeegoHTTPRequest {
+// SetTimeout sets connect time out and read-write time out for radiantRequest.
+func (b *radiantHTTPRequest) SetTimeout(connectTimeout, readWriteTimeout time.Duration) *radiantHTTPRequest {
 	b.setting.ConnectTimeout = connectTimeout
 	b.setting.ReadWriteTimeout = readWriteTimeout
 	return b
 }
 
 // SetTLSClientConfig sets TLS connection configuration if visiting HTTPS url.
-func (b *BeegoHTTPRequest) SetTLSClientConfig(config *tls.Config) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetTLSClientConfig(config *tls.Config) *radiantHTTPRequest {
 	b.setting.TLSClientConfig = config
 	return b
 }
 
 // Header adds header item string in request.
-func (b *BeegoHTTPRequest) Header(key, value string) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) Header(key, value string) *radiantHTTPRequest {
 	b.req.Header.Set(key, value)
 	return b
 }
 
 // SetHost set the request host
-func (b *BeegoHTTPRequest) SetHost(host string) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetHost(host string) *radiantHTTPRequest {
 	b.req.Host = host
 	return b
 }
 
 // SetProtocolVersion sets the protocol version for incoming requests.
 // Client requests always use HTTP/1.1
-func (b *BeegoHTTPRequest) SetProtocolVersion(vers string) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetProtocolVersion(vers string) *radiantHTTPRequest {
 	if vers == "" {
 		vers = "HTTP/1.1"
 	}
@@ -214,13 +200,13 @@ func (b *BeegoHTTPRequest) SetProtocolVersion(vers string) *BeegoHTTPRequest {
 }
 
 // SetCookie adds a cookie to the request.
-func (b *BeegoHTTPRequest) SetCookie(cookie *http.Cookie) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetCookie(cookie *http.Cookie) *radiantHTTPRequest {
 	b.req.Header.Add("Cookie", cookie.String())
 	return b
 }
 
 // SetTransport sets the transport field
-func (b *BeegoHTTPRequest) SetTransport(transport http.RoundTripper) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetTransport(transport http.RoundTripper) *radiantHTTPRequest {
 	b.setting.Transport = transport
 	return b
 }
@@ -232,7 +218,7 @@ func (b *BeegoHTTPRequest) SetTransport(transport http.RoundTripper) *BeegoHTTPR
 // 		u, _ := url.ParseRequestURI("http://127.0.0.1:8118")
 // 		return u, nil
 // 	}
-func (b *BeegoHTTPRequest) SetProxy(proxy func(*http.Request) (*url.URL, error)) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetProxy(proxy func(*http.Request) (*url.URL, error)) *radiantHTTPRequest {
 	b.setting.Proxy = proxy
 	return b
 }
@@ -241,32 +227,32 @@ func (b *BeegoHTTPRequest) SetProxy(proxy func(*http.Request) (*url.URL, error))
 //
 // If CheckRedirect is nil, the Client uses its default policy,
 // which is to stop after 10 consecutive requests.
-func (b *BeegoHTTPRequest) SetCheckRedirect(redirect func(req *http.Request, via []*http.Request) error) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetCheckRedirect(redirect func(req *http.Request, via []*http.Request) error) *radiantHTTPRequest {
 	b.setting.CheckRedirect = redirect
 	return b
 }
 
 // SetFilters will use the filter as the invocation filters
-func (b *BeegoHTTPRequest) SetFilters(fcs ...FilterChain) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetFilters(fcs ...FilterChain) *radiantHTTPRequest {
 	b.setting.FilterChains = fcs
 	return b
 }
 
 // AddFilters adds filter
-func (b *BeegoHTTPRequest) AddFilters(fcs ...FilterChain) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) AddFilters(fcs ...FilterChain) *radiantHTTPRequest {
 	b.setting.FilterChains = append(b.setting.FilterChains, fcs...)
 	return b
 }
 
 // SetEscapeHTML is used to set the flag whether escape HTML special characters during processing
-func (b *BeegoHTTPRequest) SetEscapeHTML(isEscape bool) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) SetEscapeHTML(isEscape bool) *radiantHTTPRequest {
 	b.setting.EscapeHTML = isEscape
 	return b
 }
 
 // Param adds query param in to request.
 // params build query string as ?key1=value1&key2=value2...
-func (b *BeegoHTTPRequest) Param(key, value string) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) Param(key, value string) *radiantHTTPRequest {
 	if param, ok := b.params[key]; ok {
 		b.params[key] = append(param, value)
 	} else {
@@ -276,7 +262,7 @@ func (b *BeegoHTTPRequest) Param(key, value string) *BeegoHTTPRequest {
 }
 
 // PostFile adds a post file to the request
-func (b *BeegoHTTPRequest) PostFile(formname, filename string) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) PostFile(formname, filename string) *radiantHTTPRequest {
 	b.files[formname] = filename
 	return b
 }
@@ -284,7 +270,7 @@ func (b *BeegoHTTPRequest) PostFile(formname, filename string) *BeegoHTTPRequest
 // Body adds request raw body.
 // Supports string and []byte.
 // TODO return error if data is invalid
-func (b *BeegoHTTPRequest) Body(data interface{}) *BeegoHTTPRequest {
+func (b *radiantHTTPRequest) Body(data interface{}) *radiantHTTPRequest {
 	switch t := data.(type) {
 	case string:
 		bf := bytes.NewBufferString(t)
@@ -307,7 +293,7 @@ func (b *BeegoHTTPRequest) Body(data interface{}) *BeegoHTTPRequest {
 }
 
 // XMLBody adds the request raw body encoded in XML.
-func (b *BeegoHTTPRequest) XMLBody(obj interface{}) (*BeegoHTTPRequest, error) {
+func (b *radiantHTTPRequest) XMLBody(obj interface{}) (*radiantHTTPRequest, error) {
 	if b.req.Body == nil && obj != nil {
 		byts, err := xml.Marshal(obj)
 		if err != nil {
@@ -324,7 +310,7 @@ func (b *BeegoHTTPRequest) XMLBody(obj interface{}) (*BeegoHTTPRequest, error) {
 }
 
 // YAMLBody adds the request raw body encoded in YAML.
-func (b *BeegoHTTPRequest) YAMLBody(obj interface{}) (*BeegoHTTPRequest, error) {
+func (b *radiantHTTPRequest) YAMLBody(obj interface{}) (*radiantHTTPRequest, error) {
 	if b.req.Body == nil && obj != nil {
 		byts, err := yaml.Marshal(obj)
 		if err != nil {
@@ -338,7 +324,7 @@ func (b *BeegoHTTPRequest) YAMLBody(obj interface{}) (*BeegoHTTPRequest, error) 
 }
 
 // JSONBody adds the request raw body encoded in JSON.
-func (b *BeegoHTTPRequest) JSONBody(obj interface{}) (*BeegoHTTPRequest, error) {
+func (b *radiantHTTPRequest) JSONBody(obj interface{}) (*radiantHTTPRequest, error) {
 	if b.req.Body == nil && obj != nil {
 		byts, err := b.JSONMarshal(obj)
 		if err != nil {
@@ -351,7 +337,7 @@ func (b *BeegoHTTPRequest) JSONBody(obj interface{}) (*BeegoHTTPRequest, error) 
 	return b, nil
 }
 
-func (b *BeegoHTTPRequest) JSONMarshal(obj interface{}) ([]byte, error) {
+func (b *radiantHTTPRequest) JSONMarshal(obj interface{}) ([]byte, error) {
 	bf := bytes.NewBuffer([]byte{})
 	jsonEncoder := json.NewEncoder(bf)
 	jsonEncoder.SetEscapeHTML(b.setting.EscapeHTML)
@@ -362,7 +348,7 @@ func (b *BeegoHTTPRequest) JSONMarshal(obj interface{}) ([]byte, error) {
 	return bf.Bytes(), nil
 }
 
-func (b *BeegoHTTPRequest) buildURL(paramBody string) {
+func (b *radiantHTTPRequest) buildURL(paramBody string) {
 	// build GET url with query string
 	if b.req.Method == "GET" && len(paramBody) > 0 {
 		if strings.Contains(b.url, "?") {
@@ -389,7 +375,7 @@ func (b *BeegoHTTPRequest) buildURL(paramBody string) {
 	}
 }
 
-func (b *BeegoHTTPRequest) handleFiles() {
+func (b *radiantHTTPRequest) handleFiles() {
 	pr, pw := io.Pipe()
 	bodyWriter := multipart.NewWriter(pw)
 	go func() {
@@ -409,7 +395,7 @@ func (b *BeegoHTTPRequest) handleFiles() {
 	b.Header("Transfer-Encoding", "chunked")
 }
 
-func (b *BeegoHTTPRequest) handleFileToBody(bodyWriter *multipart.Writer, formname string, filename string) {
+func (b *radiantHTTPRequest) handleFileToBody(bodyWriter *multipart.Writer, formname string, filename string) {
 	fileWriter, err := bodyWriter.CreateFormFile(formname, filename)
 	const errFmt = "Httplib: %+v"
 	if err != nil {
@@ -431,7 +417,7 @@ func (b *BeegoHTTPRequest) handleFileToBody(bodyWriter *multipart.Writer, formna
 	}
 }
 
-func (b *BeegoHTTPRequest) getResponse() (*http.Response, error) {
+func (b *radiantHTTPRequest) getResponse() (*http.Response, error) {
 	if b.resp.StatusCode != 0 {
 		return b.resp, nil
 	}
@@ -444,11 +430,11 @@ func (b *BeegoHTTPRequest) getResponse() (*http.Response, error) {
 }
 
 // DoRequest executes client.Do
-func (b *BeegoHTTPRequest) DoRequest() (resp *http.Response, err error) {
+func (b *radiantHTTPRequest) DoRequest() (resp *http.Response, err error) {
 	return b.DoRequestWithCtx(context.Background())
 }
 
-func (b *BeegoHTTPRequest) DoRequestWithCtx(ctx context.Context) (resp *http.Response, err error) {
+func (b *radiantHTTPRequest) DoRequestWithCtx(ctx context.Context) (resp *http.Response, err error) {
 	root := doRequestFilter
 	if len(b.setting.FilterChains) > 0 {
 		for i := len(b.setting.FilterChains) - 1; i >= 0; i-- {
@@ -458,7 +444,7 @@ func (b *BeegoHTTPRequest) DoRequestWithCtx(ctx context.Context) (resp *http.Res
 	return root(ctx, b)
 }
 
-func (b *BeegoHTTPRequest) doRequest(ctx context.Context) (*http.Response, error) {
+func (b *radiantHTTPRequest) doRequest(ctx context.Context) (*http.Response, error) {
 	paramBody := b.buildParamBody()
 
 	b.buildURL(paramBody)
@@ -489,7 +475,7 @@ func (b *BeegoHTTPRequest) doRequest(ctx context.Context) (*http.Response, error
 	return b.sendRequest(client)
 }
 
-func (b *BeegoHTTPRequest) sendRequest(client *http.Client) (resp *http.Response, err error) {
+func (b *radiantHTTPRequest) sendRequest(client *http.Client) (resp *http.Response, err error) {
 	// retries default value is 0, it will run once.
 	// retries equal to -1, it will run forever until success
 	// retries is setted, it will retries fixed times.
@@ -504,7 +490,7 @@ func (b *BeegoHTTPRequest) sendRequest(client *http.Client) (resp *http.Response
 	return nil, berror.Wrap(err, SendRequestFailed, "sending request fail")
 }
 
-func (b *BeegoHTTPRequest) buildCookieJar() http.CookieJar {
+func (b *radiantHTTPRequest) buildCookieJar() http.CookieJar {
 	var jar http.CookieJar
 	if b.setting.EnableCookie {
 		if defaultCookieJar == nil {
@@ -515,7 +501,7 @@ func (b *BeegoHTTPRequest) buildCookieJar() http.CookieJar {
 	return jar
 }
 
-func (b *BeegoHTTPRequest) buildTrans() http.RoundTripper {
+func (b *radiantHTTPRequest) buildTrans() http.RoundTripper {
 	trans := b.setting.Transport
 
 	if trans == nil {
@@ -541,7 +527,7 @@ func (b *BeegoHTTPRequest) buildTrans() http.RoundTripper {
 	return trans
 }
 
-func (b *BeegoHTTPRequest) buildParamBody() string {
+func (b *radiantHTTPRequest) buildParamBody() string {
 	var paramBody string
 	if len(b.params) > 0 {
 		var buf bytes.Buffer
@@ -561,7 +547,7 @@ func (b *BeegoHTTPRequest) buildParamBody() string {
 
 // String returns the body string in response.
 // Calls Response inner.
-func (b *BeegoHTTPRequest) String() (string, error) {
+func (b *radiantHTTPRequest) String() (string, error) {
 	data, err := b.Bytes()
 	if err != nil {
 		return "", err
@@ -572,7 +558,7 @@ func (b *BeegoHTTPRequest) String() (string, error) {
 
 // Bytes returns the body []byte in response.
 // Calls Response inner.
-func (b *BeegoHTTPRequest) Bytes() ([]byte, error) {
+func (b *radiantHTTPRequest) Bytes() ([]byte, error) {
 	if b.body != nil {
 		return b.body, nil
 	}
@@ -598,7 +584,7 @@ func (b *BeegoHTTPRequest) Bytes() ([]byte, error) {
 
 // ToFile saves the body data in response to one file.
 // Calls Response inner.
-func (b *BeegoHTTPRequest) ToFile(filename string) error {
+func (b *radiantHTTPRequest) ToFile(filename string) error {
 	resp, err := b.getResponse()
 	if err != nil {
 		return err
@@ -638,7 +624,7 @@ func pathExistAndMkdir(filename string) (err error) {
 
 // ToJSON returns the map that marshals from the body bytes as json in response.
 // Calls Response inner.
-func (b *BeegoHTTPRequest) ToJSON(v interface{}) error {
+func (b *radiantHTTPRequest) ToJSON(v interface{}) error {
 	data, err := b.Bytes()
 	if err != nil {
 		return err
@@ -649,7 +635,7 @@ func (b *BeegoHTTPRequest) ToJSON(v interface{}) error {
 
 // ToXML returns the map that marshals from the body bytes as xml in response .
 // Calls Response inner.
-func (b *BeegoHTTPRequest) ToXML(v interface{}) error {
+func (b *radiantHTTPRequest) ToXML(v interface{}) error {
 	data, err := b.Bytes()
 	if err != nil {
 		return err
@@ -660,7 +646,7 @@ func (b *BeegoHTTPRequest) ToXML(v interface{}) error {
 
 // ToYAML returns the map that marshals from the body bytes as yaml in response .
 // Calls Response inner.
-func (b *BeegoHTTPRequest) ToYAML(v interface{}) error {
+func (b *radiantHTTPRequest) ToYAML(v interface{}) error {
 	data, err := b.Bytes()
 	if err != nil {
 		return err
@@ -673,7 +659,7 @@ func (b *BeegoHTTPRequest) ToYAML(v interface{}) error {
 // Calls Response inner.
 // If response header contain Content-Type, func will call ToJSON\ToXML\ToYAML.
 // Else it will try to parse body as json\yaml\xml, If all attempts fail, an error will be returned
-func (b *BeegoHTTPRequest) ToValue(value interface{}) error {
+func (b *radiantHTTPRequest) ToValue(value interface{}) error {
 	if value == nil {
 		return nil
 	}
@@ -704,7 +690,7 @@ func (b *BeegoHTTPRequest) ToValue(value interface{}) error {
 }
 
 // Response executes request client gets response manually.
-func (b *BeegoHTTPRequest) Response() (*http.Response, error) {
+func (b *radiantHTTPRequest) Response() (*http.Response, error) {
 	return b.getResponse()
 }
 

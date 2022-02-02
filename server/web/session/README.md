@@ -6,7 +6,7 @@ and `database/sql/driver`.
 
 ## How to install?
 
-	go get github.com/beego/beego/v2/server/web/session
+	go get github.com/radiant/radiant/v2/server/web/session
 
 ## What providers are supported?
 
@@ -17,7 +17,7 @@ As of now this session manager support memory, file, Redis and MySQL.
 First you must import it
 
 	import (
-		"github.com/beego/beego/v2/server/web/session"
+		"github.com/radiant/radiant/v2/server/web/session"
 	)
 
 Then in you web app init the global session manager
@@ -58,7 +58,7 @@ Then in you web app init the global session manager
 
   	func init() {
   		globalSessions, _ = session.NewManager(
-  			"cookie", `{"cookieName":"gosessionid","enableSetCookie":false,"gclifetime":3600,"ProviderConfig":"{\"cookieName\":\"gosessionid\",\"securityKey\":\"beegocookiehashkey\"}"}`)
+  			"cookie", `{"cookieName":"gosessionid","enableSetCookie":false,"gclifetime":3600,"ProviderConfig":"{\"cookieName\":\"gosessionid\",\"securityKey\":\"radiantcookiehashkey\"}"}`)
   		go globalSessions.GC()
   	}
 

@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 // Package captcha implements generation and verification of image CAPTCHAs.
 // an example for use captcha
 //
@@ -27,13 +13,13 @@
 // var cpt *captcha.Captcha
 //
 // func init() {
-// 	// use beego cache system store the captcha data
+// 	// use radiant cache system store the captcha data
 // 	store := cache.NewMemoryCache()
 // 	cpt = captcha.NewWithFilter("/captcha/", store)
 // }
 //
 // type MainController struct {
-// 	beego.Controller
+// 	radiant.Controller
 // }
 //
 // func (this *MainController) Get() {
@@ -87,7 +73,7 @@ const (
 
 // Captcha struct
 type Captcha struct {
-	// beego cache store
+	// radiant cache store
 	store Storage
 
 	// url prefix for captcha image
@@ -122,7 +108,7 @@ func (c *Captcha) genRandChars() []byte {
 	return utils.RandomCreateBytes(c.ChallengeNums, defaultChars...)
 }
 
-// Handler beego filter handler for serve captcha image
+// Handler radiant filter handler for serve captcha image
 func (c *Captcha) Handler(ctx *context.Context) {
 	var chars []byte
 

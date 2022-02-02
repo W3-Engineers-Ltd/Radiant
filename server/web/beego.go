@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package web
 
 import (
@@ -36,17 +22,17 @@ type hookfunc func() error
 var hooks = make([]hookfunc, 0) // hook function slice to store the hookfunc
 
 // AddAPPStartHook is used to register the hookfunc
-// The hookfuncs will run in beego.Run()
+// The hookfuncs will run in radiant.Run()
 // such as initiating session , starting middleware , building template, starting admin control and so on.
 func AddAPPStartHook(hf ...hookfunc) {
 	hooks = append(hooks, hf...)
 }
 
-// Run beego application.
-// beego.Run() default run on HttpPort
-// beego.Run("localhost")
-// beego.Run(":8089")
-// beego.Run("127.0.0.1:8089")
+// Run radiant application.
+// radiant.Run() default run on HttpPort
+// radiant.Run("localhost")
+// radiant.Run(":8089")
+// radiant.Run("127.0.0.1:8089")
 func Run(params ...string) {
 	if len(params) > 0 && params[0] != "" {
 		BeeApp.Run(params[0])
@@ -54,7 +40,7 @@ func Run(params ...string) {
 	BeeApp.Run("")
 }
 
-// RunWithMiddleWares Run beego application with middlewares.
+// RunWithMiddleWares Run radiant application with middlewares.
 func RunWithMiddleWares(addr string, mws ...MiddleWare) {
 	BeeApp.Run(addr, mws...)
 }
@@ -83,15 +69,15 @@ func initBeforeHTTPRun() {
 	})
 }
 
-// TestBeegoInit is for test package init
-func TestBeegoInit(ap string) {
+// TestradiantInit is for test package init
+func TestradiantInit(ap string) {
 	path := filepath.Join(ap, "conf", "app.conf")
 	os.Chdir(ap)
-	InitBeegoBeforeTest(path)
+	InitradiantBeforeTest(path)
 }
 
-// InitBeegoBeforeTest is for test package init
-func InitBeegoBeforeTest(appConfigPath string) {
+// InitradiantBeforeTest is for test package init
+func InitradiantBeforeTest(appConfigPath string) {
 	if err := LoadAppConfig(appConfigProvider, appConfigPath); err != nil {
 		panic(err)
 	}

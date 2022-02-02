@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package adapter
 
 import (
@@ -48,7 +34,7 @@ type templateFile struct {
 	files map[string][]string
 }
 
-// HasTemplateExt return this path contains supported template extension of beego or not.
+// HasTemplateExt return this path contains supported template extension of radiant or not.
 func HasTemplateExt(paths string) bool {
 	return web.HasTemplateExt(paths)
 }
@@ -60,13 +46,13 @@ func AddTemplateExt(ext string) {
 
 // AddViewPath adds a new path to the supported view paths.
 // Can later be used by setting a controller ViewPath to this folder
-// will panic if called after beego.Run()
+// will panic if called after radiant.Run()
 func AddViewPath(viewPath string) error {
 	return web.AddViewPath(viewPath)
 }
 
 // BuildTemplate will build all template files in a directory.
-// it makes beego can render any template file in view directory.
+// it makes radiant can render any template file in view directory.
 func BuildTemplate(dir string, files ...string) error {
 	return web.BuildTemplate(dir, files...)
 }
@@ -84,18 +70,18 @@ func SetTemplateFSFunc(fnt templateFSFunc) {
 	})
 }
 
-// SetViewsPath sets view directory path in beego application.
+// SetViewsPath sets view directory path in radiant application.
 func SetViewsPath(path string) *App {
 	return (*App)(web.SetViewsPath(path))
 }
 
-// SetStaticPath sets static directory path and proper url pattern in beego application.
-// if beego.SetStaticPath("static","public"), visit /static/* to load static file in folder "public".
+// SetStaticPath sets static directory path and proper url pattern in radiant application.
+// if radiant.SetStaticPath("static","public"), visit /static/* to load static file in folder "public".
 func SetStaticPath(url string, path string) *App {
 	return (*App)(web.SetStaticPath(url, path))
 }
 
-// DelStaticPath removes the static folder setting in this url pattern in beego application.
+// DelStaticPath removes the static folder setting in this url pattern in radiant application.
 func DelStaticPath(url string) *App {
 	return (*App)(web.DelStaticPath(url))
 }

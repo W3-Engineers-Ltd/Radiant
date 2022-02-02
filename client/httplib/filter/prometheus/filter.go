@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ var (
 func (builder *FilterChainBuilder) FilterChain(next httplib.Filter) httplib.Filter {
 	initSummaryVec.Do(func() {
 		summaryVec = prometheus.NewSummaryVec(prometheus.SummaryOpts{
-			Name:      "beego",
+			Name:      "radiant",
 			Subsystem: "remote_http_request",
 			ConstLabels: map[string]string{
 				"server":  builder.ServerName,
@@ -53,7 +53,7 @@ func (builder *FilterChainBuilder) FilterChain(next httplib.Filter) httplib.Filt
 		prometheus.MustRegister(summaryVec)
 	})
 
-	return func(ctx context.Context, req *httplib.BeegoHTTPRequest) (*http.Response, error) {
+	return func(ctx context.Context, req *httplib.radiantHTTPRequest) (*http.Response, error) {
 		startTime := time.Now()
 		resp, err := next(ctx, req)
 		endTime := time.Now()
@@ -63,7 +63,7 @@ func (builder *FilterChainBuilder) FilterChain(next httplib.Filter) httplib.Filt
 }
 
 func (builder *FilterChainBuilder) report(startTime time.Time, endTime time.Time,
-	ctx context.Context, req *httplib.BeegoHTTPRequest, resp *http.Response, err error) {
+	ctx context.Context, req *httplib.radiantHTTPRequest, resp *http.Response, err error) {
 
 	proto := req.GetRequest().Proto
 

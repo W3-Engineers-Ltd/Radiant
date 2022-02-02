@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,17 +22,17 @@ import (
 	"github.com/opentracing/opentracing-go"
 
 	"github.com/W3-Engineers-Ltd/Radiant/server/web"
-	beegoCtx "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radiantCtx "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
 // FilterChainBuilder provides an extension point that we can support more configurations if necessary
 type FilterChainBuilder struct {
 	// CustomSpanFunc makes users to custom the span.
-	CustomSpanFunc func(span opentracing.Span, ctx *beegoCtx.Context)
+	CustomSpanFunc func(span opentracing.Span, ctx *radiantCtx.Context)
 }
 
 func (builder *FilterChainBuilder) FilterChain(next web.FilterFunc) web.FilterFunc {
-	return func(ctx *beegoCtx.Context) {
+	return func(ctx *radiantCtx.Context) {
 		var (
 			spanCtx context.Context
 			span    opentracing.Span
@@ -60,14 +60,14 @@ func (builder *FilterChainBuilder) FilterChain(next web.FilterFunc) web.FilterFu
 		span.SetTag("http.url", ctx.Request.URL.String())
 		span.SetTag("http.scheme", ctx.Request.URL.Scheme)
 		span.SetTag("span.kind", "server")
-		span.SetTag("component", "beego")
+		span.SetTag("component", "radiant")
 		if ctx.Output.IsServerError() || ctx.Output.IsClientError() {
 			span.SetTag("error", true)
 		}
 		span.SetTag("peer.address", ctx.Request.RemoteAddr)
 		span.SetTag("http.proto", ctx.Request.Proto)
 
-		span.SetTag("beego.route", ctx.Input.GetData("RouterPattern"))
+		span.SetTag("radiant.route", ctx.Input.GetData("RouterPattern"))
 
 		if builder.CustomSpanFunc != nil {
 			builder.CustomSpanFunc(span, ctx)
@@ -75,7 +75,7 @@ func (builder *FilterChainBuilder) FilterChain(next web.FilterFunc) web.FilterFu
 	}
 }
 
-func (builder *FilterChainBuilder) operationName(ctx *beegoCtx.Context) string {
+func (builder *FilterChainBuilder) operationName(ctx *radiantCtx.Context) string {
 	operationName := ctx.Input.URL()
 	// it means that there is not any span, so we create a span as the root span.
 	// TODO, if we support multiple servers, this need to be changed

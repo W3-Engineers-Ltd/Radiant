@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package adapter
 
 import (
@@ -51,7 +37,7 @@ func oldToNewLinkNs(params []LinkNamespace) []web.LinkNamespace {
 // if cond return true can run this namespace, else can't
 // usage:
 // ns.Cond(func (ctx *context.Context) bool{
-//       if ctx.Input.Domain() == "api.beego.me" {
+//       if ctx.Input.Domain() == "api.radiant.me" {
 //         return true
 //       }
 //       return false
@@ -91,28 +77,28 @@ func oldToNewFilter(filter []FilterFunc) []web.FilterFunc {
 	return nfs
 }
 
-// Router same as beego.Rourer
+// Router same as radiant.Rourer
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Router
 func (n *Namespace) Router(rootpath string, c ControllerInterface, mappingMethods ...string) *Namespace {
 	(*web.Namespace)(n).Router(rootpath, c, mappingMethods...)
 	return n
 }
 
-// AutoRouter same as beego.AutoRouter
+// AutoRouter same as radiant.AutoRouter
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#AutoRouter
 func (n *Namespace) AutoRouter(c ControllerInterface) *Namespace {
 	(*web.Namespace)(n).AutoRouter(c)
 	return n
 }
 
-// AutoPrefix same as beego.AutoPrefix
+// AutoPrefix same as radiant.AutoPrefix
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#AutoPrefix
 func (n *Namespace) AutoPrefix(prefix string, c ControllerInterface) *Namespace {
 	(*web.Namespace)(n).AutoPrefix(prefix, c)
 	return n
 }
 
-// Get same as beego.Get
+// Get same as radiant.Get
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Get
 func (n *Namespace) Get(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Get(rootpath, func(ctx *context.Context) {
@@ -121,7 +107,7 @@ func (n *Namespace) Get(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Post same as beego.Post
+// Post same as radiant.Post
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Post
 func (n *Namespace) Post(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Post(rootpath, func(ctx *context.Context) {
@@ -130,7 +116,7 @@ func (n *Namespace) Post(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Delete same as beego.Delete
+// Delete same as radiant.Delete
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Delete
 func (n *Namespace) Delete(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Delete(rootpath, func(ctx *context.Context) {
@@ -139,7 +125,7 @@ func (n *Namespace) Delete(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Put same as beego.Put
+// Put same as radiant.Put
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Put
 func (n *Namespace) Put(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Put(rootpath, func(ctx *context.Context) {
@@ -148,7 +134,7 @@ func (n *Namespace) Put(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Head same as beego.Head
+// Head same as radiant.Head
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Head
 func (n *Namespace) Head(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Head(rootpath, func(ctx *context.Context) {
@@ -157,7 +143,7 @@ func (n *Namespace) Head(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Options same as beego.Options
+// Options same as radiant.Options
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Options
 func (n *Namespace) Options(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Options(rootpath, func(ctx *context.Context) {
@@ -166,7 +152,7 @@ func (n *Namespace) Options(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Patch same as beego.Patch
+// Patch same as radiant.Patch
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Patch
 func (n *Namespace) Patch(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Patch(rootpath, func(ctx *context.Context) {
@@ -175,7 +161,7 @@ func (n *Namespace) Patch(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Any same as beego.Any
+// Any same as radiant.Any
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Any
 func (n *Namespace) Any(rootpath string, f FilterFunc) *Namespace {
 	(*web.Namespace)(n).Any(rootpath, func(ctx *context.Context) {
@@ -184,7 +170,7 @@ func (n *Namespace) Any(rootpath string, f FilterFunc) *Namespace {
 	return n
 }
 
-// Handler same as beego.Handler
+// Handler same as radiant.Handler
 // refer: https://godoc.org/github.com/W3-Engineers-Ltd/Radiant#Handler
 func (n *Namespace) Handler(rootpath string, h http.Handler) *Namespace {
 	(*web.Namespace)(n).Handler(rootpath, h)
@@ -201,17 +187,17 @@ func (n *Namespace) Include(cList ...ControllerInterface) *Namespace {
 
 // Namespace add nest Namespace
 // usage:
-// ns := beego.NewNamespace(“/v1”).
+// ns := radiant.NewNamespace(“/v1”).
 // Namespace(
-//    beego.NewNamespace("/shop").
+//    radiant.NewNamespace("/shop").
 //        Get("/:id", func(ctx *context.Context) {
 //            ctx.Output.Body([]byte("shopinfo"))
 //    }),
-//    beego.NewNamespace("/order").
+//    radiant.NewNamespace("/order").
 //        Get("/:id", func(ctx *context.Context) {
 //            ctx.Output.Body([]byte("orderinfo"))
 //    }),
-//    beego.NewNamespace("/crm").
+//    radiant.NewNamespace("/crm").
 //        Get("/:id", func(ctx *context.Context) {
 //            ctx.Output.Body([]byte("crminfo"))
 //    }),
@@ -230,7 +216,7 @@ func oldToNewNs(ns []*Namespace) []*web.Namespace {
 	return nns
 }
 
-// AddNamespace register Namespace into beego.Handler
+// AddNamespace register Namespace into radiant.Handler
 // support multi Namespace
 func AddNamespace(nl ...*Namespace) {
 	nnl := oldToNewNs(nl)

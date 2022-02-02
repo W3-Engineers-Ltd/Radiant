@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ func TestOptionWithEnableCookie(t *testing.T) {
 }
 
 func TestOptionWithUserAgent(t *testing.T) {
-	v := "beego"
+	v := "radiant"
 	client, err := NewClient("test", "http://httpbin.org/",
 		WithUserAgent(v))
 	if err != nil {
@@ -98,8 +98,8 @@ func TestOptionWithCheckRedirect(t *testing.T) {
 }
 
 func TestOptionWithHTTPSetting(t *testing.T) {
-	v := "beego"
-	var setting BeegoHTTPSettings
+	v := "radiant"
+	var setting radiantHTTPSettings
 	setting.EnableCookie = true
 	setting.UserAgent = v
 	setting.Transport = &http.Transport{

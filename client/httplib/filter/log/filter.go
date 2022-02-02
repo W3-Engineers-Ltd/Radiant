@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ func WithprintableContentTypes(types []string) BuilderOption {
 
 // FilterChain can print the request after FilterChain processing and response before processsing
 func (builder *FilterChainBuilder) FilterChain(next httplib.Filter) httplib.Filter {
-	return func(ctx context.Context, req *httplib.BeegoHTTPRequest) (*http.Response, error) {
+	return func(ctx context.Context, req *httplib.radiantHTTPRequest) (*http.Response, error) {
 		info := &logInfo{}
 		defer info.print(builder.log)
 		resp, err := next(ctx, req)

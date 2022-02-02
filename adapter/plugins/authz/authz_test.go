@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package authz
 
 import (
@@ -21,7 +7,7 @@ import (
 
 	"github.com/casbin/casbin"
 
-	beego "github.com/W3-Engineers-Ltd/Radiant/adapter"
+	radiant "github.com/W3-Engineers-Ltd/Radiant/adapter"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/plugins/auth"
 )
@@ -31,7 +17,7 @@ const (
 	authCsv = "authz_policy.csv"
 )
 
-func testRequest(t *testing.T, handler *beego.ControllerRegister, user string, path string, method string, code int) {
+func testRequest(t *testing.T, handler *radiant.ControllerRegister, user string, path string, method string, code int) {
 	r, _ := http.NewRequest(method, path, nil)
 	r.SetBasicAuth(user, "123")
 	w := httptest.NewRecorder()
@@ -43,11 +29,11 @@ func testRequest(t *testing.T, handler *beego.ControllerRegister, user string, p
 }
 
 func TestBasic(t *testing.T) {
-	handler := beego.NewControllerRegister()
+	handler := radiant.NewControllerRegister()
 
-	_ = handler.InsertFilter("*", beego.BeforeRouter, auth.Basic("alice", "123"))
+	_ = handler.InsertFilter("*", radiant.BeforeRouter, auth.Basic("alice", "123"))
 
-	_ = handler.InsertFilter("*", beego.BeforeRouter, NewAuthorizer(casbin.NewEnforcer(authCfg, authCsv)))
+	_ = handler.InsertFilter("*", radiant.BeforeRouter, NewAuthorizer(casbin.NewEnforcer(authCfg, authCsv)))
 
 	handler.Any("*", func(ctx *context.Context) {
 		ctx.Output.SetStatus(200)
@@ -62,10 +48,10 @@ func TestBasic(t *testing.T) {
 }
 
 func TestPathWildcard(t *testing.T) {
-	handler := beego.NewControllerRegister()
+	handler := radiant.NewControllerRegister()
 
-	_ = handler.InsertFilter("*", beego.BeforeRouter, auth.Basic("bob", "123"))
-	_ = handler.InsertFilter("*", beego.BeforeRouter, NewAuthorizer(casbin.NewEnforcer(authCfg, authCsv)))
+	_ = handler.InsertFilter("*", radiant.BeforeRouter, auth.Basic("bob", "123"))
+	_ = handler.InsertFilter("*", radiant.BeforeRouter, NewAuthorizer(casbin.NewEnforcer(authCfg, authCsv)))
 
 	handler.Any("*", func(ctx *context.Context) {
 		ctx.Output.SetStatus(200)
@@ -91,11 +77,11 @@ func TestPathWildcard(t *testing.T) {
 }
 
 func TestRBAC(t *testing.T) {
-	handler := beego.NewControllerRegister()
+	handler := radiant.NewControllerRegister()
 
-	_ = handler.InsertFilter("*", beego.BeforeRouter, auth.Basic("cathy", "123"))
+	_ = handler.InsertFilter("*", radiant.BeforeRouter, auth.Basic("cathy", "123"))
 	e := casbin.NewEnforcer(authCfg, authCsv)
-	_ = handler.InsertFilter("*", beego.BeforeRouter, NewAuthorizer(e))
+	_ = handler.InsertFilter("*", radiant.BeforeRouter, NewAuthorizer(e))
 
 	handler.Any("*", func(ctx *context.Context) {
 		ctx.Output.SetStatus(200)

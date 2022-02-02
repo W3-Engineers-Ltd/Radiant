@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import (
 	"sync"
 )
 
-// A Code is an unsigned 32-bit error code as defined in the beego spec.
+// A Code is an unsigned 32-bit error code as defined in the radiant spec.
 type Code interface {
 	Code() uint32
 	Module() string
@@ -32,7 +32,7 @@ var defaultCodeRegistry = &codeRegistry{
 }
 
 // DefineCode defining a new Code
-// Before defining a new code, please read Beego specification.
+// Before defining a new code, please read radiant specification.
 // desc could be markdown doc
 func DefineCode(code uint32, module string, name string, desc string) Code {
 	res := &codeDefinition{

@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ func NewMockResponseFilter() *MockResponseFilter {
 }
 
 func (m *MockResponseFilter) FilterChain(next httplib.Filter) httplib.Filter {
-	return func(ctx context.Context, req *httplib.BeegoHTTPRequest) (*http.Response, error) {
+	return func(ctx context.Context, req *httplib.radiantHTTPRequest) (*http.Response, error) {
 		ms := mockFromCtx(ctx)
 		ms = append(ms, m.ms...)
 		for _, mock := range ms {

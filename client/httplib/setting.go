@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import (
 	"time"
 )
 
-// BeegoHTTPSettings is the http.Client setting
-type BeegoHTTPSettings struct {
+// radiantHTTPSettings is the http.Client setting
+type radiantHTTPSettings struct {
 	UserAgent        string
 	ConnectTimeout   time.Duration
 	ReadWriteTimeout time.Duration
@@ -50,19 +50,19 @@ func createDefaultCookie() {
 // SetDefaultSetting overwrites default settings
 // Keep in mind that when you invoke the SetDefaultSetting
 // some methods invoked before SetDefaultSetting
-func SetDefaultSetting(setting BeegoHTTPSettings) {
+func SetDefaultSetting(setting radiantHTTPSettings) {
 	settingMutex.Lock()
 	defer settingMutex.Unlock()
 	defaultSetting = setting
 }
 
 // GetDefaultSetting return current default setting
-func GetDefaultSetting() BeegoHTTPSettings {
+func GetDefaultSetting() radiantHTTPSettings {
 	return defaultSetting
 }
 
-var defaultSetting = BeegoHTTPSettings{
-	UserAgent:        "beegoServer",
+var defaultSetting = radiantHTTPSettings{
+	UserAgent:        "radiantServer",
 	ConnectTimeout:   60 * time.Second,
 	ReadWriteTimeout: 60 * time.Second,
 	Gzip:             true,

@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package adapter
 
 import (
@@ -32,7 +18,7 @@ var tpl = `
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>beego application error</title>
+    <title>radiant application error</title>
     <style>
         html, body, body * {padding: 0; margin: 0;}
         #header {background:#ffd; border-bottom:solid 2px #A31515; padding: 20px 10px;}
@@ -69,7 +55,7 @@ var tpl = `
         </div>
     </div>
     <div id="footer">
-        <p>beego {{ .BeegoVersion }} (beego framework)</p>
+        <p>radiant {{ .radiantVersion }} (radiant framework)</p>
         <p>golang version: {{.GoVersion}}</p>
     </div>
 </body>
@@ -168,7 +154,7 @@ var errtpl = `
 					{{.Content}}
 					<a href="/" title="Home" class="button">Go Home</a><br />
 
-					<br>Powered by beego {{.BeegoVersion}}
+					<br>Powered by radiant {{.radiantVersion}}
 				</div>
 			</div>
 		</div>
@@ -182,15 +168,15 @@ var ErrorMaps = web.ErrorMaps
 
 // ErrorHandler registers http.HandlerFunc to each http err code string.
 // usage:
-// 	beego.ErrorHandler("404",NotFound)
-//	beego.ErrorHandler("500",InternalServerError)
+// 	radiant.ErrorHandler("404",NotFound)
+//	radiant.ErrorHandler("500",InternalServerError)
 func ErrorHandler(code string, h http.HandlerFunc) *App {
 	return (*App)(web.ErrorHandler(code, h))
 }
 
 // ErrorController registers ControllerInterface to each http err code string.
 // usage:
-// 	beego.ErrorController(&controllers.ErrorController{})
+// 	radiant.ErrorController(&controllers.ErrorController{})
 func ErrorController(c ControllerInterface) *App {
 	return (*App)(web.ErrorController(c))
 }

@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package web
 
 import (
@@ -276,11 +262,11 @@ func TestRouteOk(t *testing.T) {
 }
 
 func TestManyRoute(t *testing.T) {
-	r, _ := http.NewRequest("GET", "/beego32-12.html", nil)
+	r, _ := http.NewRequest("GET", "/radiant32-12.html", nil)
 	w := httptest.NewRecorder()
 
 	handler := NewControllerRegister()
-	handler.Add("/beego:id([0-9]+)-:page([0-9]+).html", &TestController{}, WithRouterMethods(&TestController{}, "get:GetManyRouter"))
+	handler.Add("/radiant:id([0-9]+)-:page([0-9]+).html", &TestController{}, WithRouterMethods(&TestController{}, "get:GetManyRouter"))
 	handler.ServeHTTP(w, r)
 
 	body := w.Body.String()
@@ -292,11 +278,11 @@ func TestManyRoute(t *testing.T) {
 
 // Test for issue #1669
 func TestEmptyResponse(t *testing.T) {
-	r, _ := http.NewRequest("GET", "/beego-empty.html", nil)
+	r, _ := http.NewRequest("GET", "/radiant-empty.html", nil)
 	w := httptest.NewRecorder()
 
 	handler := NewControllerRegister()
-	handler.Add("/beego-empty.html", &TestController{}, WithRouterMethods(&TestController{}, "get:GetEmptyBody"))
+	handler.Add("/radiant-empty.html", &TestController{}, WithRouterMethods(&TestController{}, "get:GetEmptyBody"))
 	handler.ServeHTTP(w, r)
 
 	if body := w.Body.String(); body != "" {
@@ -414,7 +400,7 @@ func TestRouterHandlerAll(t *testing.T) {
 // Benchmarks NewHttpSever:
 //
 
-func beegoFilterFunc(ctx *context.Context) {
+func radiantFilterFunc(ctx *context.Context) {
 	ctx.WriteString("hello")
 }
 
@@ -428,8 +414,8 @@ func (a *AdminController) Get() {
 
 func TestRouterFunc(t *testing.T) {
 	mux := NewControllerRegister()
-	mux.Get("/action", beegoFilterFunc)
-	mux.Post("/action", beegoFilterFunc)
+	mux.Get("/action", radiantFilterFunc)
+	mux.Post("/action", radiantFilterFunc)
 	rw, r := testRequest("GET", "/action")
 	mux.ServeHTTP(rw, r)
 	if rw.Body.String() != "hello" {
@@ -439,7 +425,7 @@ func TestRouterFunc(t *testing.T) {
 
 func BenchmarkFunc(b *testing.B) {
 	mux := NewControllerRegister()
-	mux.Get("/action", beegoFilterFunc)
+	mux.Get("/action", radiantFilterFunc)
 	rw, r := testRequest("GET", "/action")
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -503,19 +489,19 @@ func TestInsertFilter(t *testing.T) {
 // to preserve the parameters from before its execution.
 func TestParamResetFilter(t *testing.T) {
 	testName := "TestParamResetFilter"
-	route := "/beego/*" // splat
-	path := "/beego/routes/routes"
+	route := "/radiant/*" // splat
+	path := "/radiant/routes/routes"
 
 	mux := NewControllerRegister()
 
-	mux.InsertFilter("*", BeforeExec, beegoResetParams, WithReturnOnOutput(true), WithResetParams(true))
+	mux.InsertFilter("*", BeforeExec, radiantResetParams, WithReturnOnOutput(true), WithResetParams(true))
 
-	mux.Get(route, beegoHandleResetParams)
+	mux.Get(route, radiantHandleResetParams)
 
 	rw, r := testRequest("GET", path)
 	mux.ServeHTTP(rw, r)
 
-	// The two functions, `beegoResetParams` and `beegoHandleResetParams` add
+	// The two functions, `radiantResetParams` and `radiantHandleResetParams` add
 	// a response header of `Splat`.  The expectation here is that that Header
 	// value should match what the _request's_ router set, not the filter's.
 
@@ -539,9 +525,9 @@ func TestFilterBeforeRouter(t *testing.T) {
 	url := "/beforeRouter"
 
 	mux := NewControllerRegister()
-	mux.InsertFilter(url, BeforeRouter, beegoBeforeRouter1)
+	mux.InsertFilter(url, BeforeRouter, radiantBeforeRouter1)
 
-	mux.Get(url, beegoFilterFunc)
+	mux.Get(url, radiantFilterFunc)
 
 	rw, r := testRequest("GET", url)
 	mux.ServeHTTP(rw, r)
@@ -561,10 +547,10 @@ func TestFilterBeforeExec(t *testing.T) {
 	url := "/beforeExec"
 
 	mux := NewControllerRegister()
-	mux.InsertFilter(url, BeforeRouter, beegoFilterNoOutput, WithReturnOnOutput(true))
-	mux.InsertFilter(url, BeforeExec, beegoBeforeExec1, WithReturnOnOutput(true))
+	mux.InsertFilter(url, BeforeRouter, radiantFilterNoOutput, WithReturnOnOutput(true))
+	mux.InsertFilter(url, BeforeExec, radiantBeforeExec1, WithReturnOnOutput(true))
 
-	mux.Get(url, beegoFilterFunc)
+	mux.Get(url, radiantFilterFunc)
 
 	rw, r := testRequest("GET", url)
 	mux.ServeHTTP(rw, r)
@@ -587,11 +573,11 @@ func TestFilterAfterExec(t *testing.T) {
 	url := "/afterExec"
 
 	mux := NewControllerRegister()
-	mux.InsertFilter(url, BeforeRouter, beegoFilterNoOutput)
-	mux.InsertFilter(url, BeforeExec, beegoFilterNoOutput)
-	mux.InsertFilter(url, AfterExec, beegoAfterExec1, WithReturnOnOutput(false))
+	mux.InsertFilter(url, BeforeRouter, radiantFilterNoOutput)
+	mux.InsertFilter(url, BeforeExec, radiantFilterNoOutput)
+	mux.InsertFilter(url, AfterExec, radiantAfterExec1, WithReturnOnOutput(false))
 
-	mux.Get(url, beegoFilterFunc)
+	mux.Get(url, radiantFilterFunc)
 
 	rw, r := testRequest("GET", url)
 	mux.ServeHTTP(rw, r)
@@ -617,12 +603,12 @@ func TestFilterFinishRouter(t *testing.T) {
 	url := "/finishRouter"
 
 	mux := NewControllerRegister()
-	mux.InsertFilter(url, BeforeRouter, beegoFilterNoOutput, WithReturnOnOutput(true))
-	mux.InsertFilter(url, BeforeExec, beegoFilterNoOutput, WithReturnOnOutput(true))
-	mux.InsertFilter(url, AfterExec, beegoFilterNoOutput, WithReturnOnOutput(true))
-	mux.InsertFilter(url, FinishRouter, beegoFinishRouter1, WithReturnOnOutput(true))
+	mux.InsertFilter(url, BeforeRouter, radiantFilterNoOutput, WithReturnOnOutput(true))
+	mux.InsertFilter(url, BeforeExec, radiantFilterNoOutput, WithReturnOnOutput(true))
+	mux.InsertFilter(url, AfterExec, radiantFilterNoOutput, WithReturnOnOutput(true))
+	mux.InsertFilter(url, FinishRouter, radiantFinishRouter1, WithReturnOnOutput(true))
 
-	mux.Get(url, beegoFilterFunc)
+	mux.Get(url, radiantFilterFunc)
 
 	rw, r := testRequest("GET", url)
 	mux.ServeHTTP(rw, r)
@@ -651,10 +637,10 @@ func TestFilterFinishRouterMultiFirstOnly(t *testing.T) {
 	url := "/finishRouterMultiFirstOnly"
 
 	mux := NewControllerRegister()
-	mux.InsertFilter(url, FinishRouter, beegoFinishRouter1, WithReturnOnOutput(false))
-	mux.InsertFilter(url, FinishRouter, beegoFinishRouter2)
+	mux.InsertFilter(url, FinishRouter, radiantFinishRouter1, WithReturnOnOutput(false))
+	mux.InsertFilter(url, FinishRouter, radiantFinishRouter2)
 
-	mux.Get(url, beegoFilterFunc)
+	mux.Get(url, radiantFilterFunc)
 
 	rw, r := testRequest("GET", url)
 	mux.ServeHTTP(rw, r)
@@ -678,10 +664,10 @@ func TestFilterFinishRouterMulti(t *testing.T) {
 	url := "/finishRouterMulti"
 
 	mux := NewControllerRegister()
-	mux.InsertFilter(url, FinishRouter, beegoFinishRouter1, WithReturnOnOutput(false))
-	mux.InsertFilter(url, FinishRouter, beegoFinishRouter2, WithReturnOnOutput(false))
+	mux.InsertFilter(url, FinishRouter, radiantFinishRouter1, WithReturnOnOutput(false))
+	mux.InsertFilter(url, FinishRouter, radiantFinishRouter2, WithReturnOnOutput(false))
 
-	mux.Get(url, beegoFilterFunc)
+	mux.Get(url, radiantFilterFunc)
 
 	rw, r := testRequest("GET", url)
 	mux.ServeHTTP(rw, r)
@@ -697,34 +683,34 @@ func TestFilterFinishRouterMulti(t *testing.T) {
 	}
 }
 
-func beegoFilterNoOutput(ctx *context.Context) {
+func radiantFilterNoOutput(ctx *context.Context) {
 }
 
-func beegoBeforeRouter1(ctx *context.Context) {
+func radiantBeforeRouter1(ctx *context.Context) {
 	ctx.WriteString("|BeforeRouter1")
 }
 
-func beegoBeforeExec1(ctx *context.Context) {
+func radiantBeforeExec1(ctx *context.Context) {
 	ctx.WriteString("|BeforeExec1")
 }
 
-func beegoAfterExec1(ctx *context.Context) {
+func radiantAfterExec1(ctx *context.Context) {
 	ctx.WriteString("|AfterExec1")
 }
 
-func beegoFinishRouter1(ctx *context.Context) {
+func radiantFinishRouter1(ctx *context.Context) {
 	ctx.WriteString("|FinishRouter1")
 }
 
-func beegoFinishRouter2(ctx *context.Context) {
+func radiantFinishRouter2(ctx *context.Context) {
 	ctx.WriteString("|FinishRouter2")
 }
 
-func beegoResetParams(ctx *context.Context) {
+func radiantResetParams(ctx *context.Context) {
 	ctx.ResponseWriter.Header().Set("splat", ctx.Input.Param(":splat"))
 }
 
-func beegoHandleResetParams(ctx *context.Context) {
+func radiantHandleResetParams(ctx *context.Context) {
 	ctx.ResponseWriter.Header().Set("splat", ctx.Input.Param(":splat"))
 }
 

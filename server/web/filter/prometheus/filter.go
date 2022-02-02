@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ func (builder *FilterChainBuilder) FilterChain(next web.FilterFunc) web.FilterFu
 
 func (builder *FilterChainBuilder) buildVec() *prometheus.SummaryVec {
 	summaryVec := prometheus.NewSummaryVec(prometheus.SummaryOpts{
-		Name:      "beego",
+		Name:      "radiant",
 		Subsystem: "http_request",
 		ConstLabels: map[string]string{
 			"server":  web.BConfig.ServerName,
@@ -75,18 +75,18 @@ func (builder *FilterChainBuilder) buildVec() *prometheus.SummaryVec {
 
 func registerBuildInfo() {
 	buildInfo := prometheus.NewGaugeVec(prometheus.GaugeOpts{
-		Name:      "beego",
+		Name:      "radiant",
 		Subsystem: "build_info",
 		Help:      "The building information",
 		ConstLabels: map[string]string{
 			"appname":        web.BConfig.AppName,
-			"build_version":  beego.BuildVersion,
-			"build_revision": beego.BuildGitRevision,
-			"build_status":   beego.BuildStatus,
-			"build_tag":      beego.BuildTag,
-			"build_time":     strings.Replace(beego.BuildTime, "--", " ", 1),
-			"go_version":     beego.GoVersion,
-			"git_branch":     beego.GitBranch,
+			"build_version":  radiant.BuildVersion,
+			"build_revision": radiant.BuildGitRevision,
+			"build_status":   radiant.BuildStatus,
+			"build_tag":      radiant.BuildTag,
+			"build_time":     strings.Replace(radiant.BuildTime, "--", " ", 1),
+			"go_version":     radiant.GoVersion,
+			"git_branch":     radiant.GitBranch,
 			"start_time":     time.Now().Format("2006-01-02 15:04:05"),
 		},
 	}, []string{})

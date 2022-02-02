@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,11 +31,11 @@ type FilterChainBuilder struct {
 	TagURL bool
 	// CustomSpanFunc users are able to custom their span
 	CustomSpanFunc func(span opentracing.Span, ctx context.Context,
-		req *httplib.BeegoHTTPRequest, resp *http.Response, err error)
+		req *httplib.radiantHTTPRequest, resp *http.Response, err error)
 }
 
 func (builder *FilterChainBuilder) FilterChain(next httplib.Filter) httplib.Filter {
-	return func(ctx context.Context, req *httplib.BeegoHTTPRequest) (*http.Response, error) {
+	return func(ctx context.Context, req *httplib.radiantHTTPRequest) (*http.Response, error) {
 		method := req.GetRequest().Method
 
 		operationName := method + "#" + req.GetRequest().URL.String()
@@ -54,7 +54,7 @@ func (builder *FilterChainBuilder) FilterChain(next httplib.Filter) httplib.Filt
 
 		span.SetTag("http.scheme", req.GetRequest().URL.Scheme)
 		span.SetTag("span.kind", "client")
-		span.SetTag("component", "beego")
+		span.SetTag("component", "radiant")
 
 		if builder.TagURL {
 			span.SetTag("http.url", req.GetRequest().URL.String())

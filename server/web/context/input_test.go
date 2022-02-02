@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package context
 
 import (
@@ -91,13 +77,13 @@ func TestBind(t *testing.T) {
 	}
 	for _, c := range cases {
 		r, _ := http.NewRequest("GET", c.request, nil)
-		beegoInput := NewInput()
-		beegoInput.Context = NewContext()
-		beegoInput.Context.Reset(httptest.NewRecorder(), r)
+		radiantInput := NewInput()
+		radiantInput.Context = NewContext()
+		radiantInput.Context.Reset(httptest.NewRecorder(), r)
 
 		for _, item := range c.valueGp {
 			got := item.empty
-			err := beegoInput.Bind(&got, item.field)
+			err := radiantInput.Bind(&got, item.field)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -111,45 +97,45 @@ func TestBind(t *testing.T) {
 
 func TestSubDomain(t *testing.T) {
 	r, _ := http.NewRequest("GET", "http://www.example.com/?id=123&isok=true&ft=1.2&ol[0]=1&ol[1]=2&ul[]=str&ul[]=array&user.Name=astaxie", nil)
-	beegoInput := NewInput()
-	beegoInput.Context = NewContext()
-	beegoInput.Context.Reset(httptest.NewRecorder(), r)
+	radiantInput := NewInput()
+	radiantInput.Context = NewContext()
+	radiantInput.Context.Reset(httptest.NewRecorder(), r)
 
-	subdomain := beegoInput.SubDomains()
+	subdomain := radiantInput.SubDomains()
 	if subdomain != "www" {
 		t.Fatal("Subdomain parse error, got" + subdomain)
 	}
 
 	r, _ = http.NewRequest("GET", "http://localhost/", nil)
-	beegoInput.Context.Request = r
-	if beegoInput.SubDomains() != "" {
-		t.Fatal("Subdomain parse error, should be empty, got " + beegoInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "" {
+		t.Fatal("Subdomain parse error, should be empty, got " + radiantInput.SubDomains())
 	}
 
 	r, _ = http.NewRequest("GET", "http://aa.bb.example.com/", nil)
-	beegoInput.Context.Request = r
-	if beegoInput.SubDomains() != "aa.bb" {
-		t.Fatal("Subdomain parse error, got " + beegoInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "aa.bb" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 
 	/* TODO Fix this
 	r, _ = http.NewRequest("GET", "http://127.0.0.1/", nil)
-	beegoInput.Context.Request = r
-	if beegoInput.SubDomains() != "" {
-		t.Fatal("Subdomain parse error, got " + beegoInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 	*/
 
 	r, _ = http.NewRequest("GET", "http://example.com/", nil)
-	beegoInput.Context.Request = r
-	if beegoInput.SubDomains() != "" {
-		t.Fatal("Subdomain parse error, got " + beegoInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 
 	r, _ = http.NewRequest("GET", "http://aa.bb.cc.dd.example.com/", nil)
-	beegoInput.Context.Request = r
-	if beegoInput.SubDomains() != "aa.bb.cc.dd" {
-		t.Fatal("Subdomain parse error, got " + beegoInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "aa.bb.cc.dd" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 }
 
@@ -206,12 +192,12 @@ func TestParams(t *testing.T) {
 }
 
 func BenchmarkQuery(b *testing.B) {
-	beegoInput := NewInput()
-	beegoInput.Context = NewContext()
-	beegoInput.Context.Request, _ = http.NewRequest("POST", "http://www.example.com/?q=foo", nil)
+	radiantInput := NewInput()
+	radiantInput.Context = NewContext()
+	radiantInput.Context.Request, _ = http.NewRequest("POST", "http://www.example.com/?q=foo", nil)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			beegoInput.Query("q")
+			radiantInput.Query("q")
 		}
 	})
 }

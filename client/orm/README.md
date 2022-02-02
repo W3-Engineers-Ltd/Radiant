@@ -1,6 +1,6 @@
-# beego orm
+# radiant orm
 
-[![Build Status](https://drone.io/github.com/beego/beego/v2/status.png)](https://drone.io/github.com/beego/beego/v2/latest)
+[![Build Status](https://drone.io/github.com/radiant/radiant/v2/status.png)](https://drone.io/github.com/radiant/radiant/v2/latest)
 
 A powerful orm framework for go.
 
@@ -27,7 +27,7 @@ more features please read the docs
 
 **Install:**
 
-	go get github.com/beego/beego/v2/client/orm
+	go get github.com/radiant/radiant/v2/client/orm
 
 ## Changelog
 
@@ -45,7 +45,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/beego/beego/v2/client/orm"
+	"github.com/radiant/radiant/v2/client/orm"
 	_ "github.com/go-sql-driver/mysql" // import your used driver
 )
 
@@ -155,5 +155,5 @@ note: not recommend use this in product env.
 
 more details and examples in docs and test
 
-[documents](http://beego.me/docs/mvc/model/overview.md)
+[documents](http://radiant.me/docs/mvc/model/overview.md)
 

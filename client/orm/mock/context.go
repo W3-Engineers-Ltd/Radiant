@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import (
 
 type mockCtxKeyType string
 
-const mockCtxKey = mockCtxKeyType("beego-orm-mock")
+const mockCtxKey = mockCtxKeyType("radiant-orm-mock")
 
 func CtxWithMock(ctx context.Context, mock ...*Mock) context.Context {
 	return context.WithValue(ctx, mockCtxKey, mock)

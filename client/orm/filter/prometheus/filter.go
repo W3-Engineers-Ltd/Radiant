@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ var (
 func (builder *FilterChainBuilder) FilterChain(next orm.Filter) orm.Filter {
 	initSummaryVec.Do(func() {
 		summaryVec = prometheus.NewSummaryVec(prometheus.SummaryOpts{
-			Name:      "beego",
+			Name:      "radiant",
 			Subsystem: "orm_operation",
 			ConstLabels: map[string]string{
 				"server":  builder.ServerName,

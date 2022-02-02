@@ -1,4 +1,4 @@
-// Copyright 2021 beego
+// Copyright 2021 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@ package mock
 import (
 	"net/http"
 
-	beegoCtx "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radiantCtx "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
-func NewMockContext(req *http.Request) (*beegoCtx.Context, *HttpResponse) {
-	ctx := beegoCtx.NewContext()
+func NewMockContext(req *http.Request) (*radiantCtx.Context, *HttpResponse) {
+	ctx := radiantCtx.NewContext()
 	resp := NewMockHttpResponse()
 	ctx.Reset(resp, req)
 	return ctx, resp

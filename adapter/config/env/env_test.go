@@ -1,4 +1,4 @@
-// Copyright 2014 beego Author. All Rights Reserved.
+// Copyright 2014 radiant Author. All Rights Reserved.
 // Copyright 2017 Faissal Elamraoui. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");

@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 // Package context provide the context utils
 // Usage:
 //
@@ -19,7 +5,7 @@
 //
 //	ctx := context.Context{Request:req,ResponseWriter:rw}
 //
-//  more docs http://beego.me/docs/module/context.md
+//  more docs http://radiant.me/docs/module/context.md
 package context
 
 import (
@@ -69,11 +55,11 @@ func NewContext() *Context {
 	}
 }
 
-// Context Http request context struct including BeegoInput, BeegoOutput, http.Request and http.ResponseWriter.
-// BeegoInput and BeegoOutput provides an api to operate request and response more easily.
+// Context Http request context struct including radiantInput, radiantOutput, http.Request and http.ResponseWriter.
+// radiantInput and radiantOutput provides an api to operate request and response more easily.
 type Context struct {
-	Input          *BeegoInput
-	Output         *BeegoOutput
+	Input          *radiantInput
+	Output         *radiantOutput
 	Request        *http.Request
 	ResponseWriter *Response
 	_xsrfToken     string
@@ -181,7 +167,7 @@ func isStructPtr(t reflect.Type) bool {
 	return t.Kind() == reflect.Ptr && t.Elem().Kind() == reflect.Struct
 }
 
-// Reset initializes Context, BeegoInput and BeegoOutput
+// Reset initializes Context, radiantInput and radiantOutput
 func (ctx *Context) Reset(rw http.ResponseWriter, r *http.Request) {
 	ctx.Request = r
 	if ctx.ResponseWriter == nil {
@@ -199,7 +185,7 @@ func (ctx *Context) Redirect(status int, localurl string) {
 }
 
 // Abort stops the request.
-// If beego.ErrorMaps exists, panic body.
+// If radiant.ErrorMaps exists, panic body.
 func (ctx *Context) Abort(status int, body string) {
 	ctx.Output.SetStatus(status)
 	panic(body)
@@ -211,13 +197,13 @@ func (ctx *Context) WriteString(content string) {
 }
 
 // GetCookie gets a cookie from a request for a given key.
-// (Alias of BeegoInput.Cookie)
+// (Alias of radiantInput.Cookie)
 func (ctx *Context) GetCookie(key string) string {
 	return ctx.Input.Cookie(key)
 }
 
 // SetCookie sets a cookie for a response.
-// (Alias of BeegoOutput.Cookie)
+// (Alias of radiantOutput.Cookie)
 func (ctx *Context) SetCookie(name string, value string, others ...interface{}) {
 	ctx.Output.Cookie(name, value, others...)
 }

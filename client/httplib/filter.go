@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,4 +21,4 @@ import (
 
 type FilterChain func(next Filter) Filter
 
-type Filter func(ctx context.Context, req *BeegoHTTPRequest) (*http.Response, error)
+type Filter func(ctx context.Context, req *radiantHTTPRequest) (*http.Response, error)

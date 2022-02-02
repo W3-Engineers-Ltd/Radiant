@@ -199,7 +199,7 @@ func (a *adminController) QpsIndex() {
 	writeTemplate(a.Ctx.ResponseWriter, data, qpsTpl, defaultScriptsTpl)
 }
 
-// ListConf is the http.Handler of displaying all beego configuration values as key/value pair.
+// ListConf is the http.Handler of displaying all radiant configuration values as key/value pair.
 // it's registered with url pattern "/listconf" in admin module.
 func (a *adminController) ListConf() {
 	rw := a.Ctx.ResponseWriter

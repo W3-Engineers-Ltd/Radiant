@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package adapter
 
 import (
@@ -21,8 +7,8 @@ import (
 
 const (
 
-	// VERSION represent beego web framework version.
-	VERSION = beego.VERSION
+	// VERSION represent radiant web framework version.
+	VERSION = radiant.VERSION
 
 	// DEV is for develop
 	DEV = web.DEV
@@ -37,7 +23,7 @@ type M web.M
 type hookfunc func() error
 
 // AddAPPStartHook is used to register the hookfunc
-// The hookfuncs will run in beego.Run()
+// The hookfuncs will run in radiant.Run()
 // such as initiating session , starting middleware , building template, starting admin control and so on.
 func AddAPPStartHook(hf ...hookfunc) {
 	for i := 0; i < len(hf); i++ {
@@ -48,27 +34,27 @@ func AddAPPStartHook(hf ...hookfunc) {
 	}
 }
 
-// Run beego application.
-// beego.Run() default run on HttpPort
-// beego.Run("localhost")
-// beego.Run(":8089")
-// beego.Run("127.0.0.1:8089")
+// Run radiant application.
+// radiant.Run() default run on HttpPort
+// radiant.Run("localhost")
+// radiant.Run(":8089")
+// radiant.Run("127.0.0.1:8089")
 func Run(params ...string) {
 	web.Run(params...)
 }
 
-// RunWithMiddleWares Run beego application with middlewares.
+// RunWithMiddleWares Run radiant application with middlewares.
 func RunWithMiddleWares(addr string, mws ...MiddleWare) {
 	newMws := oldMiddlewareToNew(mws)
 	web.RunWithMiddleWares(addr, newMws...)
 }
 
-// TestBeegoInit is for test package init
-func TestBeegoInit(ap string) {
-	web.TestBeegoInit(ap)
+// TestradiantInit is for test package init
+func TestradiantInit(ap string) {
+	web.TestradiantInit(ap)
 }
 
-// InitBeegoBeforeTest is for test package init
-func InitBeegoBeforeTest(appConfigPath string) {
-	web.InitBeegoBeforeTest(appConfigPath)
+// InitradiantBeforeTest is for test package init
+func InitradiantBeforeTest(appConfigPath string) {
+	web.InitradiantBeforeTest(appConfigPath)
 }

@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package web
 
 import (
@@ -42,7 +28,7 @@ const (
 )
 
 const (
-	routerTypeBeego = iota
+	routerTyperadiant = iota
 	routerTypeRESTFul
 	routerTypeHandler
 )
@@ -272,7 +258,7 @@ func (p *ControllerRegister) addWithMethodParams(pattern string, c ControllerInt
 	reflectVal := reflect.ValueOf(c)
 	t := reflect.Indirect(reflectVal).Type()
 
-	route := p.createBeegoRouter(t, pattern)
+	route := p.createradiantRouter(t, pattern)
 	route.initialize = func() ControllerInterface {
 		vc := reflect.New(route.controllerType)
 		execController, ok := vc.Interface().(ControllerInterface)
@@ -486,23 +472,23 @@ func (p *ControllerRegister) AddRouterMethod(httpMethod, pattern string, f inter
 	httpMethod = p.getUpperMethodString(httpMethod)
 	ct, methodName := getReflectTypeAndMethod(f)
 
-	p.addBeegoTypeRouter(ct, methodName, httpMethod, pattern)
+	p.addradiantTypeRouter(ct, methodName, httpMethod, pattern)
 }
 
-// addBeegoTypeRouter add beego type router
-func (p *ControllerRegister) addBeegoTypeRouter(ct reflect.Type, ctMethod, httpMethod, pattern string) {
-	route := p.createBeegoRouter(ct, pattern)
+// addradiantTypeRouter add radiant type router
+func (p *ControllerRegister) addradiantTypeRouter(ct reflect.Type, ctMethod, httpMethod, pattern string) {
+	route := p.createradiantRouter(ct, pattern)
 	methods := p.getHttpMethodMapMethod(httpMethod, ctMethod)
 	route.methods = methods
 
 	p.addRouterForMethod(route)
 }
 
-// createBeegoRouter create beego router base on reflect type and pattern
-func (p *ControllerRegister) createBeegoRouter(ct reflect.Type, pattern string) *ControllerInfo {
+// createradiantRouter create radiant router base on reflect type and pattern
+func (p *ControllerRegister) createradiantRouter(ct reflect.Type, pattern string) *ControllerInfo {
 	route := &ControllerInfo{}
 	route.pattern = pattern
-	route.routerType = routerTypeBeego
+	route.routerType = routerTyperadiant
 	route.sessionOn = p.cfg.WebConfig.Session.SessionOn
 	route.controllerType = ct
 	return route
@@ -719,7 +705,7 @@ func (p *ControllerRegister) Handler(pattern string, h http.Handler, options ...
 }
 
 // AddAuto router to ControllerRegister.
-// example beego.AddAuto(&MainController{}),
+// example radiant.AddAuto(&MainController{}),
 // MainController has method List and Page.
 // visit the url /main/list to execute List function
 // /main/page to execute Page function.
@@ -728,7 +714,7 @@ func (p *ControllerRegister) AddAuto(c ControllerInterface) {
 }
 
 // AddAutoPrefix Add auto router to ControllerRegister with prefix.
-// example beego.AddAutoPrefix("/admin",&MainController{}),
+// example radiant.AddAutoPrefix("/admin",&MainController{}),
 // MainController has method List and Page.
 // visit the url /admin/main/list to execute List function
 // /admin/main/page to execute Page function.
@@ -751,7 +737,7 @@ func (p *ControllerRegister) addAutoPrefixMethod(prefix, controllerName, methodN
 	patternFix := path.Join(prefix, strings.ToLower(controllerName), strings.ToLower(methodName))
 	patternFixInit := path.Join(prefix, controllerName, methodName)
 
-	route := p.createBeegoRouter(ctrl, pattern)
+	route := p.createradiantRouter(ctrl, pattern)
 	route.methods = map[string]string{"*": methodName}
 	for m := range HTTPMETHOD {
 
@@ -857,7 +843,7 @@ func (p *ControllerRegister) getURL(t *Tree, url, controllerName, methodName str
 	}
 	for _, l := range t.leaves {
 		if c, ok := l.runObject.(*ControllerInfo); ok {
-			if c.routerType == routerTypeBeego &&
+			if c.routerType == routerTyperadiant &&
 				strings.HasSuffix(path.Join(c.controllerType.PkgPath(), c.controllerType.Name()), `/`+controllerName) {
 				find := false
 				if HTTPMETHOD[strings.ToUpper(methodName)] {

@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import (
 	"github.com/W3-Engineers-Ltd/Radiant/core/logs"
 )
 
-const mockCtxKey = "beego-httplib-mock"
+const mockCtxKey = "radiant-httplib-mock"
 
 func init() {
 	InitMockSetting()

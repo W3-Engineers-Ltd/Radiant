@@ -1,17 +1,3 @@
-// Copyright 2014 beego Author. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package adapter
 
 import (
@@ -116,7 +102,7 @@ func TestParseForm(t *testing.T) {
 		"Intro":        []string{"I am an engineer!"},
 		"strbool":      []string{"yes"},
 		"date":         []string{"2014-11-12"},
-		"organization": []string{"beego"},
+		"organization": []string{"radiant"},
 		"title":        []string{"CXO"},
 		"hobby":        []string{"", "Basketball", "Football"},
 		"memo":         []string{"nothing"},
@@ -146,7 +132,7 @@ func TestParseForm(t *testing.T) {
 	assert.Equal(t, "November", m.String())
 	assert.Equal(t, 12, d)
 
-	assert.Equal(t, "beego", u.Organization)
+	assert.Equal(t, "radiant", u.Organization)
 
 	assert.Equal(t, "CXO", u.Title)
 

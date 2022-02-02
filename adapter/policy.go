@@ -1,4 +1,4 @@
-// Copyright 2016 beego authors. All Rights Reserved.
+// Copyright 2016 radiant authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ func oldToNewPolicyFunc(pf []PolicyFunc) []web.PolicyFunc {
 	return npf
 }
 
-// Policy Register new policy in beego
+// Policy Register new policy in radiant
 func Policy(pattern, method string, policy ...PolicyFunc) {
 	pf := oldToNewPolicyFunc(policy)
 	web.Policy(pattern, method, pf...)

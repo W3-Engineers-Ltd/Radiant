@@ -1,4 +1,4 @@
-// Copyright 2020 beego
+// Copyright 2020 radiant
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import (
 )
 
 func TestNewClient(t *testing.T) {
-	client, err := NewClient("test1", "http://beego.me", WithEnableCookie(true))
+	client, err := NewClient("test1", "http://radiant.me", WithEnableCookie(true))
 	assert.NoError(t, err)
 	assert.NotNil(t, client)
 	assert.Equal(t, true, client.Setting.EnableCookie)
@@ -81,7 +81,7 @@ type slide struct {
 }
 
 func TestClientHandleCarrier(t *testing.T) {
-	v := "beego"
+	v := "radiant"
 	client, err := NewClient("test", "http://httpbin.org/",
 		WithUserAgent(v))
 	if err != nil {
@@ -204,7 +204,7 @@ func TestClientDelete(t *testing.T) {
 }
 
 func TestClientHead(t *testing.T) {
-	client, err := NewClient("test", "http://beego.me")
+	client, err := NewClient("test", "http://radiant.me")
 	if err != nil {
 		t.Fatal(err)
 	}
