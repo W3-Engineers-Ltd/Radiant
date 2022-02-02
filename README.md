@@ -38,14 +38,14 @@ Beego is composed of four parts:
 
 #### Download and install
 
-    go get github.com/beego/beego/v2@latest
+    go get github.com/W3-Engineers-Ltd/Radiant
 
 #### Create file `hello.go`
 
 ```go
 package main
 
-import "github.com/beego/beego/v2/server/web"
+import "github.com/W3-Engineers-Ltd/Radiant/server/web"
 
 func main() {
 	web.Run()
