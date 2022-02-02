@@ -48,6 +48,7 @@ package main
 import "github.com/W3-Engineers-Ltd/Radiant/server/web"
 
 func main() {
+	
 	web.Run()
 }
 ```
