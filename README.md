@@ -95,5 +95,4 @@ Congratulations! You've just built your first **beego** app.
 
 ## License
 
-beego source code is licensed under the Apache Licence, Version 2.0
-([https://www.apache.org/licenses/LICENSE-2.0.html](https://www.apache.org/licenses/LICENSE-2.0.html)).
+Radiant source code is licensed under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3.0
