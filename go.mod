@@ -1,5 +1,7 @@
 module github.com/W3-Engineers-Ltd/Radiant
+
 go 1.17
+
 require (
 	github.com/beego/x2j v0.0.0-20131220205130-a0352aadc542
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b
