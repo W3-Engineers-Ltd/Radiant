@@ -2,7 +2,7 @@
 
 Please answer these questions before submitting your issue. Thanks!
 
-1. What version of Go and radiant are you using (`bee version`)?
+1. What version of Go and radiant are you using (`radical version`)?
 
 
 2. What operating system and processor architecture are you using (`go env`)?
