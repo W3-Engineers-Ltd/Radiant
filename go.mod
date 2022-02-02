@@ -1,5 +1,7 @@
 module github.com/W3-Engineers-Ltd/Radiant
+
 go 1.17
+
 require (
 	github.com/beego/x2j v0.0.0-20131220205130-a0352aadc542
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b
@@ -21,7 +23,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/opentracing/opentracing-go v1.2.0
-	github.com/pelletier/go-toml v1.9.2
+	github.com/pelletier/go-toml v1.9.4
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.11.0
 	github.com/shiena/ansicolor v0.0.0-20200904210342-c7312218db18
