@@ -1,4 +1,4 @@
-# radiant [![Test](https://github.com/radiant/radiant/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/radiant/radiant/actions/workflows/test.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/radiant/radiant)](https://goreportcard.com/report/github.com/radiant/radiant) [![Go Reference](https://pkg.go.dev/badge/github.com/radiant/radiant/v2.svg)](https://pkg.go.dev/github.com/radiant/radiant/v2)
+# radiant [![Test](https://github.com/W3-Engineers-Ltd/Radiant/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/W3-Engineers-Ltd/Radiant/actions/workflows/test.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/W3-Engineers-Ltd/Radiant)](https://goreportcard.com/report/github.com/W3-Engineers-Ltd/Radiant) [![Go Reference](https://pkg.go.dev/badge/github.com/W3-Engineers-Ltd/Radiant.svg)](https://pkg.go.dev/github.com/W3-Engineers-Ltd/Radiant)
 
 radiant is used for rapid development of enterprise application in Go, including RESTful APIs, web apps and backend services.
 
@@ -19,7 +19,7 @@ radiant is composed of four parts:
 
 [Official website](http://radiant.me)
 
-[Example](https://github.com/radiant/radiant-example)
+[Example](https://github.com/W3-Engineers-Ltd/Radiant-example)
 
 > If you could not open official website, go to [beedoc](https://github.com/radiant/beedoc)
 

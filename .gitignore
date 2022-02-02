@@ -5,10 +5,10 @@
 *.swo
 radiant.iml
 
-_beeTmp/
-_beeTmp2/
-pkg/_beeTmp/
-pkg/_beeTmp2/
+_radicalTmp/
+_radicalTmp2/
+pkg/_radicalTmp/
+pkg/_radicalTmp2/
 test/tmp/
 core/config/env/pkg/
 

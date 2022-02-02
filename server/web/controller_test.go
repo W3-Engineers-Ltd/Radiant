@@ -118,8 +118,8 @@ func TestGetUint64(t *testing.T) {
 
 func TestAdditionalViewPaths(t *testing.T) {
 	tmpDir := os.TempDir()
-	dir1 := filepath.Join(tmpDir, "_beeTmp", "TestAdditionalViewPaths")
-	dir2 := filepath.Join(tmpDir, "_beeTmp2", "TestAdditionalViewPaths")
+	dir1 := filepath.Join(tmpDir, "_radicalTmp", "TestAdditionalViewPaths")
+	dir2 := filepath.Join(tmpDir, "_radicalTmp2", "TestAdditionalViewPaths")
 	defer os.RemoveAll(dir1)
 	defer os.RemoveAll(dir2)
 

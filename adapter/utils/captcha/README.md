@@ -6,9 +6,9 @@ an example for use captcha
 package controllers
 
 import (
-	"github.com/radiant/radiant/v2"
-	"github.com/radiant/radiant/v2/client/cache"
-	"github.com/radiant/radiant/v2/server/web/captcha"
+	"github.com/W3-Engineers-Ltd/Radiant"
+	"github.com/W3-Engineers-Ltd/Radiant/client/cache"
+	"github.com/W3-Engineers-Ltd/Radiant/server/web/captcha"
 )
 
 var cpt *captcha.Captcha

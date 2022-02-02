@@ -6,7 +6,7 @@ and `database/sql/driver`.
 
 ## How to install?
 
-	go get github.com/radiant/radiant/v2/server/web/session
+	go get github.com/W3-Engineers-Ltd/Radiant/server/web/session
 
 ## What providers are supported?
 
@@ -17,7 +17,7 @@ As of now this session manager support memory, file, Redis and MySQL.
 First you must import it
 
 	import (
-		"github.com/radiant/radiant/v2/server/web/session"
+		"github.com/W3-Engineers-Ltd/Radiant/server/web/session"
 	)
 
 Then in you web app init the global session manager

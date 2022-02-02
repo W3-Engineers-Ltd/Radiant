@@ -4,7 +4,7 @@ cache is a Go cache manager. It can use many cache adapters. The repo is inspire
 
 ## How to install?
 
-	go get github.com/radiant/radiant/v2/client/cache
+	go get github.com/W3-Engineers-Ltd/Radiant/client/cache
 
 ## What adapters are supported?
 
@@ -15,7 +15,7 @@ As of now this cache support memory, Memcache and Redis.
 First you must import it
 
 	import (
-		"github.com/radiant/radiant/v2/client/cache"
+		"github.com/W3-Engineers-Ltd/Radiant/client/cache"
 	)
 
 Then init a Cache (example with memory adapter)

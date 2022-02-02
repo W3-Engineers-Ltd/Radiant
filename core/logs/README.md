@@ -4,7 +4,7 @@ logs is a Go logs manager. It can use many logs adapters. The repo is inspired b
 
 ## How to install?
 
-	go get github.com/radiant/radiant/v2/core/logs
+	go get github.com/W3-Engineers-Ltd/Radiant/core/logs
 
 ## What adapters are supported?
 

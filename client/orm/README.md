@@ -1,6 +1,6 @@
 # radiant orm
 
-[![Build Status](https://drone.io/github.com/radiant/radiant/v2/status.png)](https://drone.io/github.com/radiant/radiant/v2/latest)
+[![Build Status](https://drone.io/github.com/W3-Engineers-Ltd/Radiant/status.png)](https://drone.io/github.com/W3-Engineers-Ltd/Radiant/latest)
 
 A powerful orm framework for go.
 
@@ -27,7 +27,7 @@ more features please read the docs
 
 **Install:**
 
-	go get github.com/radiant/radiant/v2/client/orm
+	go get github.com/W3-Engineers-Ltd/Radiant/client/orm
 
 ## Changelog
 
@@ -45,7 +45,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/radiant/radiant/v2/client/orm"
+	"github.com/W3-Engineers-Ltd/Radiant/client/orm"
 	_ "github.com/go-sql-driver/mysql" // import your used driver
 )
 

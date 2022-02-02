@@ -8,7 +8,7 @@ httplib is an libs help you to curl remote url.
 
 you can use Get to crawl data.
 
-	import "github.com/radiant/radiant/v2/client/httplib"
+	import "github.com/W3-Engineers-Ltd/Radiant/client/httplib"
 
 	str, err := httplib.Get("http://radiant.me/").String()
 	if err != nil {
@@ -95,4 +95,4 @@ httplib support mutil file upload, use `req.PostFile()`
 
 See godoc for further documentation and examples.
 
-* [godoc.org/github.com/radiant/radiant/v2/client/httplib](https://godoc.org/github.com/radiant/radiant/v2/client/httplib)
+* [godoc.org/github.com/W3-Engineers-Ltd/Radiant/client/httplib](https://godoc.org/github.com/W3-Engineers-Ltd/Radiant/client/httplib)

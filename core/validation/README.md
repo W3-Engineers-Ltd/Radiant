@@ -7,18 +7,18 @@ validation is a form validation for a data validation and error collecting using
 
 Install:
 
-	go get github.com/radiant/radiant/v2/core/validation
+	go get github.com/W3-Engineers-Ltd/Radiant/core/validation
 
 Test:
 
-	go test github.com/radiant/radiant/v2/core/validation
+	go test github.com/W3-Engineers-Ltd/Radiant/core/validation
 
 ## Example
 
 Direct Use:
 
 	import (
-		"github.com/radiant/radiant/v2/core/validation"
+		"github.com/W3-Engineers-Ltd/Radiant/core/validation"
 		"log"
 	)
 
@@ -49,7 +49,7 @@ Direct Use:
 Struct Tag Use:
 
 	import (
-		"github.com/radiant/radiant/v2/core/validation"
+		"github.com/W3-Engineers-Ltd/Radiant/core/validation"
 	)
 
 	// validation function follow with "valid" tag
@@ -81,7 +81,7 @@ Struct Tag Use:
 Use custom function:
 
 	import (
-		"github.com/radiant/radiant/v2/core/validation"
+		"github.com/W3-Engineers-Ltd/Radiant/core/validation"
 	)
 
 	type user struct {

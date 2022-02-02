@@ -36,7 +36,7 @@ var block = `{{define "block"}}
 
 func TestTemplate(t *testing.T) {
 	tmpDir := os.TempDir()
-	dir := filepath.Join(tmpDir, "_beeTmp", "TestTemplate")
+	dir := filepath.Join(tmpDir, "_radicalTmp", "TestTemplate")
 	files := []string{
 		"header.tpl",
 		"index.tpl",
@@ -100,7 +100,7 @@ var user = `<!DOCTYPE html>
 
 func TestRelativeTemplate(t *testing.T) {
 	tmpDir := os.TempDir()
-	dir := filepath.Join(tmpDir, "_beeTmp")
+	dir := filepath.Join(tmpDir, "_radicalTmp")
 
 	// Just add dir to known viewPaths
 	if err := AddViewPath(dir); err != nil {
@@ -214,7 +214,7 @@ func TestTemplateLayout(t *testing.T) {
 	tmpDir, err := os.Getwd()
 	assert.Nil(t, err)
 
-	dir := filepath.Join(tmpDir, "_beeTmp", "TestTemplateLayout")
+	dir := filepath.Join(tmpDir, "_radicalTmp", "TestTemplateLayout")
 	files := []string{
 		"add.tpl",
 		"layout_blog.tpl",
