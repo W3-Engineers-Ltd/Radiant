@@ -5,7 +5,7 @@ import (
 
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
 const (
@@ -55,7 +55,7 @@ var tpl = `
         </div>
     </div>
     <div id="footer">
-        <p>radiant {{ .radiantVersion }} (radiant framework)</p>
+        <p>radiant {{ .RadiantVersion }} (radiant framework)</p>
         <p>golang version: {{.GoVersion}}</p>
     </div>
 </body>
@@ -154,7 +154,7 @@ var errtpl = `
 					{{.Content}}
 					<a href="/" title="Home" class="button">Go Home</a><br />
 
-					<br>Powered by radiant {{.radiantVersion}}
+					<br>Powered by radiant {{.RadiantVersion}}
 				</div>
 			</div>
 		</div>
@@ -183,5 +183,5 @@ func ErrorController(c ControllerInterface) *App {
 
 // Exception Write HttpStatus with errCode and Exec error handler if exist.
 func Exception(errCode uint64, ctx *context.Context) {
-	web.Exception(errCode, (*beecontext.Context)(ctx))
+	web.Exception(errCode, (*radicalcontext.Context)(ctx))
 }

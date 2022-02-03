@@ -49,12 +49,12 @@ func RunWithMiddleWares(addr string, mws ...MiddleWare) {
 	web.RunWithMiddleWares(addr, newMws...)
 }
 
-// TestradiantInit is for test package init
-func TestradiantInit(ap string) {
-	web.TestradiantInit(ap)
+// TestRadiantInit is for test package init
+func TestRadiantInit(ap string) {
+	web.TestRadiantInit(ap)
 }
 
-// InitradiantBeforeTest is for test package init
-func InitradiantBeforeTest(appConfigPath string) {
-	web.InitradiantBeforeTest(appConfigPath)
+// InitRadiantBeforeTest is for test package init
+func InitRadiantBeforeTest(appConfigPath string) {
+	web.InitRadiantBeforeTest(appConfigPath)
 }

@@ -13,7 +13,7 @@ func TestIni(t *testing.T) {
 		inicontext = `
 ;comment one
 #comment two
-appname = beeapi
+appname = radicalapi
 httpport = 8080
 mysqlport = 3600
 PI = 3.1415976
@@ -38,7 +38,7 @@ password = ${GOPATH}
 `
 
 		keyValue = map[string]interface{}{
-			"appname":               "beeapi",
+			"appname":               "radicalapi",
 			"httpport":              8080,
 			"mysqlport":             int64(3600),
 			"pi":                    3.1415976,
@@ -123,7 +123,7 @@ app = app
 ;comment one
 #comment two
 # comment three
-appname = beeapi
+appname = radicalapi
 httpport = 8080
 # DB Info
 # enable db
@@ -138,7 +138,7 @@ app=app
 #comment one
 #comment two
 # comment three
-appname=beeapi
+appname=radicalapi
 httpport=8080
 
 # DB Info

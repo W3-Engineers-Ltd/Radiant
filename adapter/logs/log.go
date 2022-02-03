@@ -83,151 +83,151 @@ func Register(name string, log newLoggerFunc) {
 	})
 }
 
-// BeeLogger is default logger in radiant application.
+// RadicalLogger is default logger in radiant application.
 // it can contain several providers and log message into all providers.
-type BeeLogger logs.BeeLogger
+type RadicalLogger logs.RadicalLogger
 
 const defaultAsyncMsgLen = 1e3
 
-// NewLogger returns a new BeeLogger.
+// NewLogger returns a new RadicalLogger.
 // channelLen means the number of messages in chan(used where asynchronous is true).
 // if the buffering chan is full, logger adapters write to file or other way.
-func NewLogger(channelLens ...int64) *BeeLogger {
-	return (*BeeLogger)(logs.NewLogger(channelLens...))
+func NewLogger(channelLens ...int64) *RadicalLogger {
+	return (*RadicalLogger)(logs.NewLogger(channelLens...))
 }
 
 // Async set the log to asynchronous and start the goroutine
-func (bl *BeeLogger) Async(msgLen ...int64) *BeeLogger {
-	(*logs.BeeLogger)(bl).Async(msgLen...)
+func (bl *RadicalLogger) Async(msgLen ...int64) *RadicalLogger {
+	(*logs.RadicalLogger)(bl).Async(msgLen...)
 	return bl
 }
 
-// SetLogger provides a given logger adapter into BeeLogger with config string.
+// SetLogger provides a given logger adapter into RadicalLogger with config string.
 // config need to be correct JSON as string: {"interval":360}.
-func (bl *BeeLogger) SetLogger(adapterName string, configs ...string) error {
-	return (*logs.BeeLogger)(bl).SetLogger(adapterName, configs...)
+func (bl *RadicalLogger) SetLogger(adapterName string, configs ...string) error {
+	return (*logs.RadicalLogger)(bl).SetLogger(adapterName, configs...)
 }
 
-// DelLogger remove a logger adapter in BeeLogger.
-func (bl *BeeLogger) DelLogger(adapterName string) error {
-	return (*logs.BeeLogger)(bl).DelLogger(adapterName)
+// DelLogger remove a logger adapter in RadicalLogger.
+func (bl *RadicalLogger) DelLogger(adapterName string) error {
+	return (*logs.RadicalLogger)(bl).DelLogger(adapterName)
 }
 
-func (bl *BeeLogger) Write(p []byte) (n int, err error) {
-	return (*logs.BeeLogger)(bl).Write(p)
+func (bl *RadicalLogger) Write(p []byte) (n int, err error) {
+	return (*logs.RadicalLogger)(bl).Write(p)
 }
 
 // SetLevel Set log message level.
 // If message level (such as LevelDebug) is higher than logger level (such as LevelWarning),
 // log providers will not even be sent the message.
-func (bl *BeeLogger) SetLevel(l int) {
-	(*logs.BeeLogger)(bl).SetLevel(l)
+func (bl *RadicalLogger) SetLevel(l int) {
+	(*logs.RadicalLogger)(bl).SetLevel(l)
 }
 
 // GetLevel Get Current log message level.
-func (bl *BeeLogger) GetLevel() int {
-	return (*logs.BeeLogger)(bl).GetLevel()
+func (bl *RadicalLogger) GetLevel() int {
+	return (*logs.RadicalLogger)(bl).GetLevel()
 }
 
 // SetLogFuncCallDepth set log funcCallDepth
-func (bl *BeeLogger) SetLogFuncCallDepth(d int) {
-	(*logs.BeeLogger)(bl).SetLogFuncCallDepth(d)
+func (bl *RadicalLogger) SetLogFuncCallDepth(d int) {
+	(*logs.RadicalLogger)(bl).SetLogFuncCallDepth(d)
 }
 
 // GetLogFuncCallDepth return log funcCallDepth for wrapper
-func (bl *BeeLogger) GetLogFuncCallDepth() int {
-	return (*logs.BeeLogger)(bl).GetLogFuncCallDepth()
+func (bl *RadicalLogger) GetLogFuncCallDepth() int {
+	return (*logs.RadicalLogger)(bl).GetLogFuncCallDepth()
 }
 
 // EnableFuncCallDepth enable log funcCallDepth
-func (bl *BeeLogger) EnableFuncCallDepth(b bool) {
-	(*logs.BeeLogger)(bl).EnableFuncCallDepth(b)
+func (bl *RadicalLogger) EnableFuncCallDepth(b bool) {
+	(*logs.RadicalLogger)(bl).EnableFuncCallDepth(b)
 }
 
 // set prefix
-func (bl *BeeLogger) SetPrefix(s string) {
-	(*logs.BeeLogger)(bl).SetPrefix(s)
+func (bl *RadicalLogger) SetPrefix(s string) {
+	(*logs.RadicalLogger)(bl).SetPrefix(s)
 }
 
 // Emergency Log EMERGENCY level message.
-func (bl *BeeLogger) Emergency(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Emergency(format, v...)
+func (bl *RadicalLogger) Emergency(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Emergency(format, v...)
 }
 
 // Alert Log ALERT level message.
-func (bl *BeeLogger) Alert(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Alert(format, v...)
+func (bl *RadicalLogger) Alert(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Alert(format, v...)
 }
 
 // Critical Log CRITICAL level message.
-func (bl *BeeLogger) Critical(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Critical(format, v...)
+func (bl *RadicalLogger) Critical(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Critical(format, v...)
 }
 
 // Error Log ERROR level message.
-func (bl *BeeLogger) Error(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Error(format, v...)
+func (bl *RadicalLogger) Error(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Error(format, v...)
 }
 
 // Warning Log WARNING level message.
-func (bl *BeeLogger) Warning(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Warning(format, v...)
+func (bl *RadicalLogger) Warning(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Warning(format, v...)
 }
 
 // Notice Log NOTICE level message.
-func (bl *BeeLogger) Notice(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Notice(format, v...)
+func (bl *RadicalLogger) Notice(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Notice(format, v...)
 }
 
 // Informational Log INFORMATIONAL level message.
-func (bl *BeeLogger) Informational(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Informational(format, v...)
+func (bl *RadicalLogger) Informational(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Informational(format, v...)
 }
 
 // Debug Log DEBUG level message.
-func (bl *BeeLogger) Debug(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Debug(format, v...)
+func (bl *RadicalLogger) Debug(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Debug(format, v...)
 }
 
 // Warn Log WARN level message.
 // compatibility alias for Warning()
-func (bl *BeeLogger) Warn(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Warn(format, v...)
+func (bl *RadicalLogger) Warn(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Warn(format, v...)
 }
 
 // Info Log INFO level message.
 // compatibility alias for Informational()
-func (bl *BeeLogger) Info(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Info(format, v...)
+func (bl *RadicalLogger) Info(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Info(format, v...)
 }
 
 // Trace Log TRACE level message.
 // compatibility alias for Debug()
-func (bl *BeeLogger) Trace(format string, v ...interface{}) {
-	(*logs.BeeLogger)(bl).Trace(format, v...)
+func (bl *RadicalLogger) Trace(format string, v ...interface{}) {
+	(*logs.RadicalLogger)(bl).Trace(format, v...)
 }
 
 // Flush flush all chan data.
-func (bl *BeeLogger) Flush() {
-	(*logs.BeeLogger)(bl).Flush()
+func (bl *RadicalLogger) Flush() {
+	(*logs.RadicalLogger)(bl).Flush()
 }
 
-// Close close logger, flush all chan data and destroy all adapters in BeeLogger.
-func (bl *BeeLogger) Close() {
-	(*logs.BeeLogger)(bl).Close()
+// Close close logger, flush all chan data and destroy all adapters in RadicalLogger.
+func (bl *RadicalLogger) Close() {
+	(*logs.RadicalLogger)(bl).Close()
 }
 
 // Reset close all outputs, and set bl.outputs to nil
-func (bl *BeeLogger) Reset() {
-	(*logs.BeeLogger)(bl).Reset()
+func (bl *RadicalLogger) Reset() {
+	(*logs.RadicalLogger)(bl).Reset()
 }
 
-// GetBeeLogger returns the default BeeLogger
-func GetBeeLogger() *BeeLogger {
-	return (*BeeLogger)(logs.GetBeeLogger())
+// GetRadicalLogger returns the default RadicalLogger
+func GetRadicalLogger() *RadicalLogger {
+	return (*RadicalLogger)(logs.GetRadicalLogger())
 }
 
-// GetLogger returns the default BeeLogger
+// GetLogger returns the default RadicalLogger
 func GetLogger(prefixes ...string) *log.Logger {
 	return logs.GetLogger(prefixes...)
 }
@@ -237,9 +237,9 @@ func Reset() {
 	logs.Reset()
 }
 
-// Async set the beelogger with Async mode and hold msglen messages
-func Async(msgLen ...int64) *BeeLogger {
-	return (*BeeLogger)(logs.Async(msgLen...))
+// Async set the radicallogger with Async mode and hold msglen messages
+func Async(msgLen ...int64) *RadicalLogger {
+	return (*RadicalLogger)(logs.Async(msgLen...))
 }
 
 // SetLevel sets the global log level used by the simple logger.

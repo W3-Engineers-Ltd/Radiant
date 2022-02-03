@@ -59,7 +59,7 @@ func TestJsonStartsWithArray(t *testing.T) {
 func TestJson(t *testing.T) {
 	var (
 		jsoncontext = `{
-"appname": "beeapi",
+"appname": "radicalapi",
 "testnames": "foo;bar",
 "httpport": 8080,
 "mysqlport": 3600,
@@ -91,7 +91,7 @@ func TestJson(t *testing.T) {
     }
 }`
 		keyValue = map[string]interface{}{
-			"appname":                         "beeapi",
+			"appname":                         "radicalapi",
 			"testnames":                       []string{"foo", "bar"},
 			"httpport":                        8080,
 			"mysqlport":                       int64(3600),

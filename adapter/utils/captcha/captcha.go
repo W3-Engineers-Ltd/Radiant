@@ -52,7 +52,7 @@ import (
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/cache"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/captcha"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
 var defaultChars = []byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -72,7 +72,7 @@ type Captcha captcha.Captcha
 
 // Handler radiant filter handler for serve captcha image
 func (c *Captcha) Handler(ctx *context.Context) {
-	(*captcha.Captcha)(c).Handler((*beecontext.Context)(ctx))
+	(*captcha.Captcha)(c).Handler((*radicalcontext.Context)(ctx))
 }
 
 // CreateCaptchaHTML template func for output html

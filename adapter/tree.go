@@ -3,7 +3,7 @@ package adapter
 import (
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
 // Tree has three elements: FixRouter/wildcard/leaves
@@ -30,5 +30,5 @@ func (t *Tree) AddRouter(pattern string, runObject interface{}) {
 
 // Match router to runObject & params
 func (t *Tree) Match(pattern string, ctx *context.Context) (runObject interface{}) {
-	return (*web.Tree)(t).Match(pattern, (*beecontext.Context)(ctx))
+	return (*web.Tree)(t).Match(pattern, (*radicalcontext.Context)(ctx))
 }

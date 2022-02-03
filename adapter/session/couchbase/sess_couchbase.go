@@ -23,82 +23,82 @@ import (
 	"net/http"
 
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/session"
-	beecb "github.com/W3-Engineers-Ltd/Radiant/server/web/session/couchbase"
+	radicalcb "github.com/W3-Engineers-Ltd/Radiant/server/web/session/couchbase"
 )
 
 // SessionStore store each session
-type SessionStore beecb.SessionStore
+type SessionStore radicalcb.SessionStore
 
 // Provider couchabse provided
-type Provider beecb.Provider
+type Provider radicalcb.Provider
 
 // Set value to couchabse session
 func (cs *SessionStore) Set(key, value interface{}) error {
-	return (*beecb.SessionStore)(cs).Set(context.Background(), key, value)
+	return (*radicalcb.SessionStore)(cs).Set(context.Background(), key, value)
 }
 
 // Get value from couchabse session
 func (cs *SessionStore) Get(key interface{}) interface{} {
-	return (*beecb.SessionStore)(cs).Get(context.Background(), key)
+	return (*radicalcb.SessionStore)(cs).Get(context.Background(), key)
 }
 
 // Delete value in couchbase session by given key
 func (cs *SessionStore) Delete(key interface{}) error {
-	return (*beecb.SessionStore)(cs).Delete(context.Background(), key)
+	return (*radicalcb.SessionStore)(cs).Delete(context.Background(), key)
 }
 
 // Flush Clean all values in couchbase session
 func (cs *SessionStore) Flush() error {
-	return (*beecb.SessionStore)(cs).Flush(context.Background())
+	return (*radicalcb.SessionStore)(cs).Flush(context.Background())
 }
 
 // SessionID Get couchbase session store id
 func (cs *SessionStore) SessionID() string {
-	return (*beecb.SessionStore)(cs).SessionID(context.Background())
+	return (*radicalcb.SessionStore)(cs).SessionID(context.Background())
 }
 
 // SessionRelease Write couchbase session with Gob string
 func (cs *SessionStore) SessionRelease(w http.ResponseWriter) {
-	(*beecb.SessionStore)(cs).SessionRelease(context.Background(), w)
+	(*radicalcb.SessionStore)(cs).SessionRelease(context.Background(), w)
 }
 
 // SessionInit init couchbase session
 // savepath like couchbase server REST/JSON URL
 // e.g. http://host:port/, Pool, Bucket
 func (cp *Provider) SessionInit(maxlifetime int64, savePath string) error {
-	return (*beecb.Provider)(cp).SessionInit(context.Background(), maxlifetime, savePath)
+	return (*radicalcb.Provider)(cp).SessionInit(context.Background(), maxlifetime, savePath)
 }
 
 // SessionRead read couchbase session by sid
 func (cp *Provider) SessionRead(sid string) (session.Store, error) {
-	s, err := (*beecb.Provider)(cp).SessionRead(context.Background(), sid)
+	s, err := (*radicalcb.Provider)(cp).SessionRead(context.Background(), sid)
 	return session.CreateNewToOldStoreAdapter(s), err
 }
 
 // SessionExist Check couchbase session exist.
 // it checkes sid exist or not.
 func (cp *Provider) SessionExist(sid string) bool {
-	res, _ := (*beecb.Provider)(cp).SessionExist(context.Background(), sid)
+	res, _ := (*radicalcb.Provider)(cp).SessionExist(context.Background(), sid)
 	return res
 }
 
 // SessionRegenerate remove oldsid and use sid to generate new session
 func (cp *Provider) SessionRegenerate(oldsid, sid string) (session.Store, error) {
-	s, err := (*beecb.Provider)(cp).SessionRegenerate(context.Background(), oldsid, sid)
+	s, err := (*radicalcb.Provider)(cp).SessionRegenerate(context.Background(), oldsid, sid)
 	return session.CreateNewToOldStoreAdapter(s), err
 }
 
 // SessionDestroy Remove bucket in this couchbase
 func (cp *Provider) SessionDestroy(sid string) error {
-	return (*beecb.Provider)(cp).SessionDestroy(context.Background(), sid)
+	return (*radicalcb.Provider)(cp).SessionDestroy(context.Background(), sid)
 }
 
 // SessionGC Recycle
 func (cp *Provider) SessionGC() {
-	(*beecb.Provider)(cp).SessionGC(context.Background())
+	(*radicalcb.Provider)(cp).SessionGC(context.Background())
 }
 
 // SessionAll return all active session
 func (cp *Provider) SessionAll() int {
-	return (*beecb.Provider)(cp).SessionAll(context.Background())
+	return (*radicalcb.Provider)(cp).SessionAll(context.Background())
 }

@@ -285,7 +285,7 @@ func FileGetContents(filename string) ([]byte, error) {
 	if err != nil {
 		return nil, berror.Wrapf(err, ReadFileCacheContentFailed,
 			"could not read the data from the file: %s, "+
-				"please confirm that file exist and radiant has the permission to read the content.", filename)
+				"please confirm that file exist and Radiant has the permission to read the content.", filename)
 	}
 	return data, nil
 }

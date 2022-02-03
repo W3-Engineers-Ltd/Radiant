@@ -326,18 +326,18 @@ func TestPost(t *testing.T) {
 	assert.Equal(t, "POST", req.req.Method)
 }
 
-func TestNewradiantRequest(t *testing.T) {
-	req := NewradiantRequest("http://radiant.me", "GET")
+func TestNewRadiantRequest(t *testing.T) {
+	req := NewRadiantRequest("http://radiant.me", "GET")
 	assert.NotNil(t, req)
 	assert.Equal(t, "GET", req.req.Method)
 
 	// invalid case but still go request
-	req = NewradiantRequest("httpa\ta://radiant.me", "GET")
+	req = NewRadiantRequest("httpa\ta://radiant.me", "GET")
 	assert.NotNil(t, req)
 }
 
 func TestRadiantHTTPRequestSetProtocolVersion(t *testing.T) {
-	req := NewradiantRequest("http://radiant.me", "GET")
+	req := NewRadiantRequest("http://radiant.me", "GET")
 	req.SetProtocolVersion("HTTP/3.10")
 	assert.Equal(t, "HTTP/3.10", req.req.Proto)
 	assert.Equal(t, 3, req.req.ProtoMajor)

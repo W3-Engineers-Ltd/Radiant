@@ -23,7 +23,7 @@ import (
 	"github.com/W3-Engineers-Ltd/Radiant/core/logs"
 )
 
-// const the data format for the bee generate migration datatype
+// const the data format for the radical generate migration datatype
 const (
 	DateFormat   = "20060102_150405"
 	DBDateFormat = "2006-01-02 15:04:05"

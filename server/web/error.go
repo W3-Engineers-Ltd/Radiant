@@ -61,7 +61,7 @@ var tpl = `
         </div>
     </div>
     <div id="footer">
-        <p>radiant {{ .radiantVersion }} (radiant framework)</p>
+        <p>radiant {{ .RadiantVersion }} (radiant framework)</p>
         <p>golang version: {{.GoVersion}}</p>
     </div>
 </body>
@@ -77,7 +77,7 @@ func showErr(err interface{}, ctx *context.Context, stack string) {
 		"RequestURL":     ctx.Input.URI(),
 		"RemoteAddr":     ctx.Input.IP(),
 		"Stack":          stack,
-		"radiantVersion": radiant.VERSION,
+		"RadiantVersion": radiant.VERSION,
 		"GoVersion":      runtime.Version(),
 	}
 	t.Execute(ctx.ResponseWriter, data)
@@ -175,7 +175,7 @@ var errtpl = `
 					{{.Content}}
 					<a href="/" title="Home" class="button">Go Home</a><br />
 
-					<br>Powered by radiant {{.radiantVersion}}
+					<br>Powered by radiant {{.RadiantVersion}}
 				</div>
 			</div>
 		</div>
@@ -364,7 +364,7 @@ func responseError(rw http.ResponseWriter, r *http.Request, errCode int, errCont
 	t, _ := template.New("radianterrortemp").Parse(errtpl)
 	data := M{
 		"Title":          http.StatusText(errCode),
-		"radiantVersion": radiant.VERSION,
+		"RadiantVersion": radiant.VERSION,
 		"Content":        template.HTML(errContent),
 	}
 	t.Execute(rw, data)
@@ -429,7 +429,7 @@ func exception(errCode string, ctx *context.Context) {
 			return
 		}
 	}
-	// if 50x error has been removed from errorMap
+	// if 50x error has radicaln removed from errorMap
 	ctx.ResponseWriter.WriteHeader(atoi(errCode))
 	ctx.WriteString(errCode)
 }

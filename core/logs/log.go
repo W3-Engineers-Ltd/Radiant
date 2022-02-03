@@ -96,9 +96,9 @@ func Register(name string, log newLoggerFunc) {
 	adapters[name] = log
 }
 
-// BeeLogger is default logger in radiant application.
+// RadicalLogger is default logger in radiant application.
 // Can contain several providers and log message into all providers.
-type BeeLogger struct {
+type RadicalLogger struct {
 	lock                sync.Mutex
 	init                bool
 	enableFuncCallDepth bool
@@ -124,11 +124,11 @@ type nameLogger struct {
 
 var logMsgPool *sync.Pool
 
-// NewLogger returns a new BeeLogger.
+// NewLogger returns a new RadicalLogger.
 // channelLen: the number of messages in chan(used where asynchronous is true).
 // if the buffering chan is full, logger adapters write to file or other way.
-func NewLogger(channelLens ...int64) *BeeLogger {
-	bl := new(BeeLogger)
+func NewLogger(channelLens ...int64) *RadicalLogger {
+	bl := new(RadicalLogger)
 	bl.level = LevelDebug
 	bl.loggerFuncCallDepth = 3
 	bl.msgChanLen = append(channelLens, 0)[0]
@@ -141,7 +141,7 @@ func NewLogger(channelLens ...int64) *BeeLogger {
 }
 
 // Async sets the log to asynchronous and start the goroutine
-func (bl *BeeLogger) Async(msgLen ...int64) *BeeLogger {
+func (bl *RadicalLogger) Async(msgLen ...int64) *RadicalLogger {
 	bl.lock.Lock()
 	defer bl.lock.Unlock()
 	if bl.asynchronous {
@@ -162,9 +162,9 @@ func (bl *BeeLogger) Async(msgLen ...int64) *BeeLogger {
 	return bl
 }
 
-// SetLogger provides a given logger adapter into BeeLogger with config string.
+// SetLogger provides a given logger adapter into RadicalLogger with config string.
 // config must in in JSON format like {"interval":360}}
-func (bl *BeeLogger) setLogger(adapterName string, configs ...string) error {
+func (bl *RadicalLogger) setLogger(adapterName string, configs ...string) error {
 	config := append(configs, "{}")[0]
 	for _, l := range bl.outputs {
 		if l.name == adapterName {
@@ -190,16 +190,16 @@ func (bl *BeeLogger) setLogger(adapterName string, configs ...string) error {
 
 	err := lg.Init(config)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "logs.BeeLogger.SetLogger: "+err.Error())
+		fmt.Fprintln(os.Stderr, "logs.RadicalLogger.SetLogger: "+err.Error())
 		return err
 	}
 	bl.outputs = append(bl.outputs, &nameLogger{name: adapterName, Logger: lg})
 	return nil
 }
 
-// SetLogger provides a given logger adapter into BeeLogger with config string.
+// SetLogger provides a given logger adapter into RadicalLogger with config string.
 // config must in in JSON format like {"interval":360}}
-func (bl *BeeLogger) SetLogger(adapterName string, configs ...string) error {
+func (bl *RadicalLogger) SetLogger(adapterName string, configs ...string) error {
 	bl.lock.Lock()
 	defer bl.lock.Unlock()
 	if !bl.init {
@@ -209,8 +209,8 @@ func (bl *BeeLogger) SetLogger(adapterName string, configs ...string) error {
 	return bl.setLogger(adapterName, configs...)
 }
 
-// DelLogger removes a logger adapter in BeeLogger.
-func (bl *BeeLogger) DelLogger(adapterName string) error {
+// DelLogger removes a logger adapter in RadicalLogger.
+func (bl *RadicalLogger) DelLogger(adapterName string) error {
 	bl.lock.Lock()
 	defer bl.lock.Unlock()
 	outputs := []*nameLogger{}
@@ -228,7 +228,7 @@ func (bl *BeeLogger) DelLogger(adapterName string) error {
 	return nil
 }
 
-func (bl *BeeLogger) writeToLoggers(lm *LogMsg) {
+func (bl *RadicalLogger) writeToLoggers(lm *LogMsg) {
 	for _, l := range bl.outputs {
 		err := l.WriteMsg(lm)
 		if err != nil {
@@ -237,7 +237,7 @@ func (bl *BeeLogger) writeToLoggers(lm *LogMsg) {
 	}
 }
 
-func (bl *BeeLogger) Write(p []byte) (n int, err error) {
+func (bl *RadicalLogger) Write(p []byte) (n int, err error) {
 	if len(p) == 0 {
 		return 0, nil
 	}
@@ -259,7 +259,7 @@ func (bl *BeeLogger) Write(p []byte) (n int, err error) {
 	return 0, err
 }
 
-func (bl *BeeLogger) writeMsg(lm *LogMsg) error {
+func (bl *RadicalLogger) writeMsg(lm *LogMsg) error {
 	if !bl.init {
 		bl.lock.Lock()
 		bl.setLogger(AdapterConsole)
@@ -313,38 +313,38 @@ func (bl *BeeLogger) writeMsg(lm *LogMsg) error {
 // SetLevel sets log message level.
 // If message level (such as LevelDebug) is higher than logger level (such as LevelWarning),
 // log providers will not be sent the message.
-func (bl *BeeLogger) SetLevel(l int) {
+func (bl *RadicalLogger) SetLevel(l int) {
 	bl.level = l
 }
 
 // GetLevel Get Current log message level.
-func (bl *BeeLogger) GetLevel() int {
+func (bl *RadicalLogger) GetLevel() int {
 	return bl.level
 }
 
 // SetLogFuncCallDepth set log funcCallDepth
-func (bl *BeeLogger) SetLogFuncCallDepth(d int) {
+func (bl *RadicalLogger) SetLogFuncCallDepth(d int) {
 	bl.loggerFuncCallDepth = d
 }
 
 // GetLogFuncCallDepth return log funcCallDepth for wrapper
-func (bl *BeeLogger) GetLogFuncCallDepth() int {
+func (bl *RadicalLogger) GetLogFuncCallDepth() int {
 	return bl.loggerFuncCallDepth
 }
 
 // EnableFuncCallDepth enable log funcCallDepth
-func (bl *BeeLogger) EnableFuncCallDepth(b bool) {
+func (bl *RadicalLogger) EnableFuncCallDepth(b bool) {
 	bl.enableFuncCallDepth = b
 }
 
 // set prefix
-func (bl *BeeLogger) SetPrefix(s string) {
+func (bl *RadicalLogger) SetPrefix(s string) {
 	bl.prefix = s
 }
 
 // start logger chan reading.
 // when chan is not empty, write logs.
-func (bl *BeeLogger) startLogger() {
+func (bl *RadicalLogger) startLogger() {
 	gameOver := false
 	for {
 		select {
@@ -369,7 +369,7 @@ func (bl *BeeLogger) startLogger() {
 	}
 }
 
-func (bl *BeeLogger) setGlobalFormatter(fmtter string) error {
+func (bl *RadicalLogger) setGlobalFormatter(fmtter string) error {
 	bl.globalFormatter = fmtter
 	return nil
 }
@@ -377,11 +377,11 @@ func (bl *BeeLogger) setGlobalFormatter(fmtter string) error {
 // SetGlobalFormatter sets the global formatter for all log adapters
 // don't forget to register the formatter by invoking RegisterFormatter
 func SetGlobalFormatter(fmtter string) error {
-	return beeLogger.setGlobalFormatter(fmtter)
+	return radicalLogger.setGlobalFormatter(fmtter)
 }
 
 // Emergency Log EMERGENCY level message.
-func (bl *BeeLogger) Emergency(format string, v ...interface{}) {
+func (bl *RadicalLogger) Emergency(format string, v ...interface{}) {
 	if LevelEmergency > bl.level {
 		return
 	}
@@ -399,7 +399,7 @@ func (bl *BeeLogger) Emergency(format string, v ...interface{}) {
 }
 
 // Alert Log ALERT level message.
-func (bl *BeeLogger) Alert(format string, v ...interface{}) {
+func (bl *RadicalLogger) Alert(format string, v ...interface{}) {
 	if LevelAlert > bl.level {
 		return
 	}
@@ -414,7 +414,7 @@ func (bl *BeeLogger) Alert(format string, v ...interface{}) {
 }
 
 // Critical Log CRITICAL level message.
-func (bl *BeeLogger) Critical(format string, v ...interface{}) {
+func (bl *RadicalLogger) Critical(format string, v ...interface{}) {
 	if LevelCritical > bl.level {
 		return
 	}
@@ -429,7 +429,7 @@ func (bl *BeeLogger) Critical(format string, v ...interface{}) {
 }
 
 // Error Log ERROR level message.
-func (bl *BeeLogger) Error(format string, v ...interface{}) {
+func (bl *RadicalLogger) Error(format string, v ...interface{}) {
 	if LevelError > bl.level {
 		return
 	}
@@ -444,7 +444,7 @@ func (bl *BeeLogger) Error(format string, v ...interface{}) {
 }
 
 // Warning Log WARNING level message.
-func (bl *BeeLogger) Warning(format string, v ...interface{}) {
+func (bl *RadicalLogger) Warning(format string, v ...interface{}) {
 	if LevelWarn > bl.level {
 		return
 	}
@@ -459,7 +459,7 @@ func (bl *BeeLogger) Warning(format string, v ...interface{}) {
 }
 
 // Notice Log NOTICE level message.
-func (bl *BeeLogger) Notice(format string, v ...interface{}) {
+func (bl *RadicalLogger) Notice(format string, v ...interface{}) {
 	if LevelNotice > bl.level {
 		return
 	}
@@ -474,7 +474,7 @@ func (bl *BeeLogger) Notice(format string, v ...interface{}) {
 }
 
 // Informational Log INFORMATIONAL level message.
-func (bl *BeeLogger) Informational(format string, v ...interface{}) {
+func (bl *RadicalLogger) Informational(format string, v ...interface{}) {
 	if LevelInfo > bl.level {
 		return
 	}
@@ -489,7 +489,7 @@ func (bl *BeeLogger) Informational(format string, v ...interface{}) {
 }
 
 // Debug Log DEBUG level message.
-func (bl *BeeLogger) Debug(format string, v ...interface{}) {
+func (bl *RadicalLogger) Debug(format string, v ...interface{}) {
 	if LevelDebug > bl.level {
 		return
 	}
@@ -505,7 +505,7 @@ func (bl *BeeLogger) Debug(format string, v ...interface{}) {
 
 // Warn Log WARN level message.
 // compatibility alias for Warning()
-func (bl *BeeLogger) Warn(format string, v ...interface{}) {
+func (bl *RadicalLogger) Warn(format string, v ...interface{}) {
 	if LevelWarn > bl.level {
 		return
 	}
@@ -521,7 +521,7 @@ func (bl *BeeLogger) Warn(format string, v ...interface{}) {
 
 // Info Log INFO level message.
 // compatibility alias for Informational()
-func (bl *BeeLogger) Info(format string, v ...interface{}) {
+func (bl *RadicalLogger) Info(format string, v ...interface{}) {
 	if LevelInfo > bl.level {
 		return
 	}
@@ -537,7 +537,7 @@ func (bl *BeeLogger) Info(format string, v ...interface{}) {
 
 // Trace Log TRACE level message.
 // compatibility alias for Debug()
-func (bl *BeeLogger) Trace(format string, v ...interface{}) {
+func (bl *RadicalLogger) Trace(format string, v ...interface{}) {
 	if LevelDebug > bl.level {
 		return
 	}
@@ -552,7 +552,7 @@ func (bl *BeeLogger) Trace(format string, v ...interface{}) {
 }
 
 // Flush flush all chan data.
-func (bl *BeeLogger) Flush() {
+func (bl *RadicalLogger) Flush() {
 	if bl.asynchronous {
 		bl.signalChan <- "flush"
 		bl.wg.Wait()
@@ -562,8 +562,8 @@ func (bl *BeeLogger) Flush() {
 	bl.flush()
 }
 
-// Close close logger, flush all chan data and destroy all adapters in BeeLogger.
-func (bl *BeeLogger) Close() {
+// Close close logger, flush all chan data and destroy all adapters in RadicalLogger.
+func (bl *RadicalLogger) Close() {
 	if bl.asynchronous {
 		bl.signalChan <- "close"
 		bl.wg.Wait()
@@ -579,7 +579,7 @@ func (bl *BeeLogger) Close() {
 }
 
 // Reset close all outputs, and set bl.outputs to nil
-func (bl *BeeLogger) Reset() {
+func (bl *RadicalLogger) Reset() {
 	bl.Flush()
 	for _, l := range bl.outputs {
 		l.Destroy()
@@ -587,7 +587,7 @@ func (bl *BeeLogger) Reset() {
 	bl.outputs = nil
 }
 
-func (bl *BeeLogger) flush() {
+func (bl *RadicalLogger) flush() {
 	if bl.asynchronous {
 		for {
 			if len(bl.msgChan) > 0 {
@@ -604,40 +604,40 @@ func (bl *BeeLogger) flush() {
 	}
 }
 
-// beeLogger references the used application logger.
-var beeLogger = NewLogger()
+// radicalLogger references the used application logger.
+var radicalLogger = NewLogger()
 
-// GetBeeLogger returns the default BeeLogger
-func GetBeeLogger() *BeeLogger {
-	return beeLogger
+// GetRadicalLogger returns the default RadicalLogger
+func GetRadicalLogger() *RadicalLogger {
+	return radicalLogger
 }
 
-var beeLoggerMap = struct {
+var radicalLoggerMap = struct {
 	sync.RWMutex
 	logs map[string]*log.Logger
 }{
 	logs: map[string]*log.Logger{},
 }
 
-// GetLogger returns the default BeeLogger
+// GetLogger returns the default RadicalLogger
 func GetLogger(prefixes ...string) *log.Logger {
 	prefix := append(prefixes, "")[0]
 	if prefix != "" {
 		prefix = fmt.Sprintf(`[%s] `, strings.ToUpper(prefix))
 	}
-	beeLoggerMap.RLock()
-	l, ok := beeLoggerMap.logs[prefix]
+	radicalLoggerMap.RLock()
+	l, ok := radicalLoggerMap.logs[prefix]
 	if ok {
-		beeLoggerMap.RUnlock()
+		radicalLoggerMap.RUnlock()
 		return l
 	}
-	beeLoggerMap.RUnlock()
-	beeLoggerMap.Lock()
-	defer beeLoggerMap.Unlock()
-	l, ok = beeLoggerMap.logs[prefix]
+	radicalLoggerMap.RUnlock()
+	radicalLoggerMap.Lock()
+	defer radicalLoggerMap.Unlock()
+	l, ok = radicalLoggerMap.logs[prefix]
 	if !ok {
-		l = log.New(beeLogger, prefix, 0)
-		beeLoggerMap.logs[prefix] = l
+		l = log.New(radicalLogger, prefix, 0)
+		radicalLoggerMap.logs[prefix] = l
 	}
 	return l
 }
@@ -645,104 +645,104 @@ func GetLogger(prefixes ...string) *log.Logger {
 // EnableFullFilePath enables full file path logging. Disabled by default
 // e.g "/home/Documents/GitHub/radiant/mainapp/" instead of "mainapp"
 func EnableFullFilePath(b bool) {
-	beeLogger.enableFullFilePath = b
+	radicalLogger.enableFullFilePath = b
 }
 
 // Reset will remove all the adapter
 func Reset() {
-	beeLogger.Reset()
+	radicalLogger.Reset()
 }
 
-// Async set the beelogger with Async mode and hold msglen messages
-func Async(msgLen ...int64) *BeeLogger {
-	return beeLogger.Async(msgLen...)
+// Async set the radicallogger with Async mode and hold msglen messages
+func Async(msgLen ...int64) *RadicalLogger {
+	return radicalLogger.Async(msgLen...)
 }
 
 // SetLevel sets the global log level used by the simple logger.
 func SetLevel(l int) {
-	beeLogger.SetLevel(l)
+	radicalLogger.SetLevel(l)
 }
 
 // SetPrefix sets the prefix
 func SetPrefix(s string) {
-	beeLogger.SetPrefix(s)
+	radicalLogger.SetPrefix(s)
 }
 
 // EnableFuncCallDepth enable log funcCallDepth
 func EnableFuncCallDepth(b bool) {
-	beeLogger.enableFuncCallDepth = b
+	radicalLogger.enableFuncCallDepth = b
 }
 
 // SetLogFuncCall set the CallDepth, default is 4
 func SetLogFuncCall(b bool) {
-	beeLogger.EnableFuncCallDepth(b)
-	beeLogger.SetLogFuncCallDepth(3)
+	radicalLogger.EnableFuncCallDepth(b)
+	radicalLogger.SetLogFuncCallDepth(3)
 }
 
 // SetLogFuncCallDepth set log funcCallDepth
 func SetLogFuncCallDepth(d int) {
-	beeLogger.loggerFuncCallDepth = d
+	radicalLogger.loggerFuncCallDepth = d
 }
 
 // SetLogger sets a new logger.
 func SetLogger(adapter string, config ...string) error {
-	return beeLogger.SetLogger(adapter, config...)
+	return radicalLogger.SetLogger(adapter, config...)
 }
 
 // Emergency logs a message at emergency level.
 func Emergency(f interface{}, v ...interface{}) {
-	beeLogger.Emergency(formatPattern(f, v...), v...)
+	radicalLogger.Emergency(formatPattern(f, v...), v...)
 }
 
 // Alert logs a message at alert level.
 func Alert(f interface{}, v ...interface{}) {
-	beeLogger.Alert(formatPattern(f, v...), v...)
+	radicalLogger.Alert(formatPattern(f, v...), v...)
 }
 
 // Critical logs a message at critical level.
 func Critical(f interface{}, v ...interface{}) {
-	beeLogger.Critical(formatPattern(f, v...), v...)
+	radicalLogger.Critical(formatPattern(f, v...), v...)
 }
 
 // Error logs a message at error level.
 func Error(f interface{}, v ...interface{}) {
-	beeLogger.Error(formatPattern(f, v...), v...)
+	radicalLogger.Error(formatPattern(f, v...), v...)
 }
 
 // Warning logs a message at warning level.
 func Warning(f interface{}, v ...interface{}) {
-	beeLogger.Warn(formatPattern(f, v...), v...)
+	radicalLogger.Warn(formatPattern(f, v...), v...)
 }
 
 // Warn compatibility alias for Warning()
 func Warn(f interface{}, v ...interface{}) {
-	beeLogger.Warn(formatPattern(f, v...), v...)
+	radicalLogger.Warn(formatPattern(f, v...), v...)
 }
 
 // Notice logs a message at notice level.
 func Notice(f interface{}, v ...interface{}) {
-	beeLogger.Notice(formatPattern(f, v...), v...)
+	radicalLogger.Notice(formatPattern(f, v...), v...)
 }
 
 // Informational logs a message at info level.
 func Informational(f interface{}, v ...interface{}) {
-	beeLogger.Info(formatPattern(f, v...), v...)
+	radicalLogger.Info(formatPattern(f, v...), v...)
 }
 
 // Info compatibility alias for Warning()
 func Info(f interface{}, v ...interface{}) {
-	beeLogger.Info(formatPattern(f, v...), v...)
+	radicalLogger.Info(formatPattern(f, v...), v...)
 }
 
 // Debug logs a message at debug level.
 func Debug(f interface{}, v ...interface{}) {
-	beeLogger.Debug(formatPattern(f, v...), v...)
+	radicalLogger.Debug(formatPattern(f, v...), v...)
 }
 
 // Trace logs a message at trace level.
 // compatibility alias for Warning()
 func Trace(f interface{}, v ...interface{}) {
-	beeLogger.Trace(formatPattern(f, v...), v...)
+	radicalLogger.Trace(formatPattern(f, v...), v...)
 }
 
 func formatPattern(f interface{}, v ...interface{}) string {

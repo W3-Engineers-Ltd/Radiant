@@ -48,11 +48,11 @@ var doRequestFilter = func(ctx context.Context, req *RadiantHTTPRequest) (*http.
 	return req.doRequest(ctx)
 }
 
-// NewradiantRequest returns *radiantHttpRequest with specific method
+// NewRadiantRequest returns *RadiantHttpRequest with specific method
 // TODO add error as return value
 // I think if we don't return error
-// users are hard to check whether we create radiant request successfully
-func NewradiantRequest(rawurl, method string) *RadiantHTTPRequest {
+// users are hard to check whether we create Radiant request successfully
+func NewRadiantRequest(rawurl, method string) *RadiantHTTPRequest {
 	var resp http.Response
 	u, err := url.Parse(rawurl)
 	if err != nil {
@@ -76,29 +76,29 @@ func NewradiantRequest(rawurl, method string) *RadiantHTTPRequest {
 	}
 }
 
-// Get returns *radiantHttpRequest with GET method.
+// Get returns *RadiantHttpRequest with GET method.
 func Get(url string) *RadiantHTTPRequest {
-	return NewradiantRequest(url, "GET")
+	return NewRadiantRequest(url, "GET")
 }
 
-// Post returns *radiantHttpRequest with POST method.
+// Post returns *RadiantHttpRequest with POST method.
 func Post(url string) *RadiantHTTPRequest {
-	return NewradiantRequest(url, "POST")
+	return NewRadiantRequest(url, "POST")
 }
 
-// Put returns *radiantHttpRequest with PUT method.
+// Put returns *RadiantHttpRequest with PUT method.
 func Put(url string) *RadiantHTTPRequest {
-	return NewradiantRequest(url, "PUT")
+	return NewRadiantRequest(url, "PUT")
 }
 
-// Delete returns *radiantHttpRequest DELETE method.
+// Delete returns *RadiantHttpRequest DELETE method.
 func Delete(url string) *RadiantHTTPRequest {
-	return NewradiantRequest(url, "DELETE")
+	return NewRadiantRequest(url, "DELETE")
 }
 
-// Head returns *radiantHttpRequest with HEAD method.
+// Head returns *RadiantHttpRequest with HEAD method.
 func Head(url string) *RadiantHTTPRequest {
-	return NewradiantRequest(url, "HEAD")
+	return NewRadiantRequest(url, "HEAD")
 }
 
 // RadiantHTTPRequest provides more useful methods than http.Request for requesting a url.
@@ -156,7 +156,7 @@ func (b *RadiantHTTPRequest) RetryDelay(delay time.Duration) *RadiantHTTPRequest
 	return b
 }
 
-// SetTimeout sets connect time out and read-write time out for radiantRequest.
+// SetTimeout sets connect time out and read-write time out for RadiantRequest.
 func (b *RadiantHTTPRequest) SetTimeout(connectTimeout, readWriteTimeout time.Duration) *RadiantHTTPRequest {
 	b.setting.ConnectTimeout = connectTimeout
 	b.setting.ReadWriteTimeout = readWriteTimeout

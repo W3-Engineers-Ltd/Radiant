@@ -19,9 +19,9 @@ const (
 	LevelDebug         = logs.LevelDebug
 )
 
-// BeeLogger references the used application logger.
+// RadicalLogger references the used application logger.
 // Deprecated: use github.com/W3-Engineers-Ltd/Radiant/core/logs instead.
-var BeeLogger = logs.GetBeeLogger()
+var RadicalLogger = logs.GetRadicalLogger()
 
 // SetLevel sets the global log level used by the simple logger.
 // Deprecated: use github.com/W3-Engineers-Ltd/Radiant/core/logs instead.

@@ -1,4 +1,4 @@
-// Copyright 2021 radiant
+// Copyright 2020 radiant
 //
 
 package berror
@@ -21,7 +21,7 @@ var defaultCodeRegistry = &codeRegistry{
 }
 
 // DefineCode defining a new Code
-// Before defining a new code, please read radiant specification.
+// Before defining a new code, please read Radiant specification.
 // desc could be markdown doc
 func DefineCode(code uint32, module string, name string, desc string) Code {
 	res := &codeDefinition{
@@ -33,7 +33,7 @@ func DefineCode(code uint32, module string, name string, desc string) Code {
 	defer defaultCodeRegistry.lock.Unlock()
 
 	if _, ok := defaultCodeRegistry.codes[code]; ok {
-		panic(fmt.Sprintf("duplicate code, code %d has been registered", code))
+		panic(fmt.Sprintf("duplicate code, code %d has radicaln registered", code))
 	}
 	defaultCodeRegistry.codes[code] = res
 	return res

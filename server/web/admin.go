@@ -9,7 +9,7 @@ import (
 	"github.com/W3-Engineers-Ltd/Radiant/core/logs"
 )
 
-// BeeAdminApp is the default adminApp used by admin module.
+// RadicalAdminApp is the default adminApp used by admin module.
 var radicalAdminApp *adminApp
 
 // FilterMonitorFunc is default monitor filter when admin module is enable.
@@ -66,7 +66,7 @@ type adminApp struct {
 	*HttpServer
 }
 
-// Run start radiant admin
+// Run start Radiant admin
 func (admin *adminApp) Run() {
 	logs.Debug("now we don't start tasks here, if you use task module," +
 		" please invoke task.StartTask, or task will not be executed")

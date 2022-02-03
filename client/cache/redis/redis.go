@@ -30,7 +30,7 @@ import (
 )
 
 // DefaultKey defines the collection name of redis for the cache adapter.
-var DefaultKey = "beecacheRedis"
+var DefaultKey = "radicalcacheRedis"
 
 // Cache is Redis cache adapter.
 type Cache struct {

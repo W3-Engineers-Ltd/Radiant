@@ -1,4 +1,4 @@
-// Copyright 2021 radiant
+// Copyright 2020 radiant
 //
 
 package berror
@@ -35,7 +35,7 @@ func Wrapf(err error, c Code, format string, a ...interface{}) error {
 	return Wrap(err, c, fmt.Sprintf(format, a...))
 }
 
-// FromError is very simple. It just parse error msg and check whether code has been register
+// FromError is very simple. It just parse error msg and check whether code has radicaln register
 // if code not being register, return unknown
 // if err.Error() is not valid radiant error code, return unknown
 func FromError(err error) (Code, bool) {

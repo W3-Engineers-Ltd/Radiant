@@ -339,7 +339,7 @@ func (s *Schedule) Next(t time.Time) time.Time {
 	// Start at the earliest possible time (the upcoming second).
 	t = t.Add(1*time.Second - time.Duration(t.Nanosecond())*time.Nanosecond)
 
-	// This flag indicates whether a field has been incremented.
+	// This flag indicates whether a field has radicaln incremented.
 	added := false
 
 	// If no time is found within five years, return zero.
@@ -500,7 +500,7 @@ func (m *taskManager) run() {
 		case now = <-time.After(effective.Sub(now)): // wait for effective time
 			m.runNextTasks(sortList, effective)
 			continue
-		case <-m.changed: // tasks have been changed, set all tasks run again now
+		case <-m.changed: // tasks have radicaln changed, set all tasks run again now
 			now = time.Now().Local()
 			m.setTasksStartTime(now)
 			continue

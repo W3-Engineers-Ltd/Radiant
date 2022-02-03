@@ -13,7 +13,7 @@ import (
 func TestYaml(t *testing.T) {
 	var (
 		yamlcontext = `
-"appname": beeapi
+"appname": radicalapi
 "httpport": 8080
 "mysqlport": 3600
 "PI": 3.1415976
@@ -30,7 +30,7 @@ func TestYaml(t *testing.T) {
 `
 
 		keyValue = map[string]interface{}{
-			"appname":         "beeapi",
+			"appname":         "radicalapi",
 			"httpport":        8080,
 			"mysqlport":       int64(3600),
 			"PI":              3.1415976,
@@ -79,8 +79,8 @@ func TestYaml(t *testing.T) {
 	})
 
 	res, _ := yamlconf.String("appname")
-	if res != "beeapi" {
-		t.Fatal("appname not equal to beeapi")
+	if res != "radicalapi" {
+		t.Fatal("appname not equal to radicalapi")
 	}
 
 	for k, v := range keyValue {
@@ -150,7 +150,7 @@ func TestYaml(t *testing.T) {
 	assert.Equal(t, 13, user.Age)
 
 	// default value
-	assert.Equal(t, "beeapi", yamlconf.DefaultString("appname", "invalid"))
+	assert.Equal(t, "radicalapi", yamlconf.DefaultString("appname", "invalid"))
 	assert.Equal(t, "invalid", yamlconf.DefaultString("i-appname", "invalid"))
 	assert.Equal(t, 8080, yamlconf.DefaultInt("httpport", 8090))
 	assert.Equal(t, 8090, yamlconf.DefaultInt("i-httpport", 8090))
@@ -168,7 +168,7 @@ func TestYaml(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "beeapi", appName)
+	assert.Equal(t, "radicalapi", appName)
 
 	err = yamlconf.SaveConfigFile(f.Name())
 	if err != nil {

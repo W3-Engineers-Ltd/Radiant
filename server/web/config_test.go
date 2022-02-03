@@ -5,15 +5,15 @@ import (
 	"reflect"
 	"testing"
 
-	beeJson "github.com/W3-Engineers-Ltd/Radiant/core/config/json"
+	radicalJson "github.com/W3-Engineers-Ltd/Radiant/core/config/json"
 )
 
 func TestDefaults(t *testing.T) {
-	if BConfig.WebConfig.FlashName != "radiant_FLASH" {
+	if BConfig.WebConfig.FlashName != "BEEGO_FLASH" {
 		t.Errorf("FlashName was not set to default.")
 	}
 
-	if BConfig.WebConfig.FlashSeparator != "radiantFLASH" {
+	if BConfig.WebConfig.FlashSeparator != "BEEGOFLASH" {
 		t.Errorf("FlashName was not set to default.")
 	}
 }
@@ -25,7 +25,7 @@ func TestLoadAppConfig(t *testing.T) {
 func TestAssignConfig_01(t *testing.T) {
 	_BConfig := &Config{}
 	_BConfig.AppName = "radiant_test"
-	jcf := &beeJson.JSONConfig{}
+	jcf := &radicalJson.JSONConfig{}
 	ac, _ := jcf.ParseData([]byte(`{"AppName":"radiant_json"}`))
 	assignSingleConfig(_BConfig, ac)
 	if _BConfig.AppName != "radiant_json" {
@@ -63,7 +63,7 @@ func TestAssignConfig_02(t *testing.T) {
 	configMap["SessionProviderConfig"] = "file"
 	configMap["FileLineNum"] = true
 
-	jcf := &beeJson.JSONConfig{}
+	jcf := &radicalJson.JSONConfig{}
 	bs, _ = json.Marshal(configMap)
 	ac, _ := jcf.ParseData(bs)
 
@@ -98,7 +98,7 @@ func TestAssignConfig_02(t *testing.T) {
 }
 
 func TestAssignConfig_03(t *testing.T) {
-	jcf := &beeJson.JSONConfig{}
+	jcf := &radicalJson.JSONConfig{}
 	ac, _ := jcf.ParseData([]byte(`{"AppName":"radiant"}`))
 	ac.Set("AppName", "test_app")
 	ac.Set("RunMode", "online")

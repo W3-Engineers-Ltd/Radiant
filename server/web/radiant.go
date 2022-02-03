@@ -69,15 +69,15 @@ func initBeforeHTTPRun() {
 	})
 }
 
-// TestradiantInit is for test package init
-func TestradiantInit(ap string) {
+// TestRadiantInit is for test package init
+func TestRadiantInit(ap string) {
 	path := filepath.Join(ap, "conf", "app.conf")
 	os.Chdir(ap)
-	InitradiantBeforeTest(path)
+	InitRadiantBeforeTest(path)
 }
 
-// InitradiantBeforeTest is for test package init
-func InitradiantBeforeTest(appConfigPath string) {
+// InitRadiantBeforeTest is for test package init
+func InitRadiantBeforeTest(appConfigPath string) {
 	if err := LoadAppConfig(appConfigProvider, appConfigPath); err != nil {
 		panic(err)
 	}

@@ -1,4 +1,4 @@
-// Copyright 2021 radiant
+// Copyright 2020 radiant
 //
 
 package ratelimit
@@ -136,7 +136,7 @@ func (l *limiter) createBucket(key string) bucket {
 }
 
 func defaultSessionKey(ctx *context.Context) string {
-	return "radiant_ALL"
+	return "BEEGO_ALL"
 }
 
 func RemoteIPSessionKey(ctx *context.Context) string {

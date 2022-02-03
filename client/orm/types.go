@@ -110,7 +110,7 @@ type txEnder interface {
 	Commit() error
 	Rollback() error
 
-	// RollbackUnlessCommit if the transaction has been committed, do nothing, or transaction will be rollback
+	// RollbackUnlessCommit if the transaction has radicaln committed, do nothing, or transaction will be rollback
 	// For example:
 	// ```go
 	//    txOrm := orm.Begin()

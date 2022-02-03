@@ -6,7 +6,7 @@ It is inspired by Tornado, Sinatra and Flask. radiant has some Go-specific featu
 
 ![architecture](https://cdn.nlark.com/yuque/0/2020/png/755700/1607857489109-1e267fce-d65f-4c5e-b915-5c475df33c58.png)
 
-radiant is composed of four parts:
+Radiant is composed of four parts:
 
 1. Base modules: including log module, config module, governor module;
 2. Task: is used for running timed tasks or periodic tasks;
@@ -17,11 +17,12 @@ radiant is composed of four parts:
 
 ## Quick Start
 
-[Official website](http://radiant.me)
+[//]: # ([Official website]&#40;http://radiant.me&#41;)
 
-[Example](https://github.com/W3-Engineers-Ltd/Radiant-example)
-
-> If you could not open official website, go to [beedoc](https://github.com/radiant/beedoc)
+[//]: # ()
+[//]: # ([Example]&#40;https://github.com/W3-Engineers-Ltd/Radiant-example&#41;)
+[//]: # ()
+[//]: # (> If you could not open official website, go to [radicaldoc]&#40;https://github.com/radiant/radicaldoc&#41;)
 
 ### Web Application
 
@@ -65,33 +66,36 @@ Congratulations! You've just built your first **radiant** app.
 ## Features
 
 * RESTful support
-* [MVC architecture](https://github.com/radiant/beedoc/tree/master/en-US/mvc)
+* [MVC architecture](https://github.com/radiant/radicaldoc/tree/master/en-US/mvc)
 * Modularity
-* [Auto API documents](https://github.com/radiant/beedoc/blob/master/en-US/advantage/docs.md)
-* [Annotation router](https://github.com/radiant/beedoc/blob/master/en-US/mvc/controller/router.md)
-* [Namespace](https://github.com/radiant/beedoc/blob/master/en-US/mvc/controller/router.md#namespace)
-* [Powerful development tools](https://github.com/radiant/bee)
+* [Auto API documents](https://github.com/radiant/radicaldoc/blob/master/en-US/advantage/docs.md)
+* [Annotation router](https://github.com/radiant/radicaldoc/blob/master/en-US/mvc/controller/router.md)
+* [Namespace](https://github.com/radiant/radicaldoc/blob/master/en-US/mvc/controller/router.md#namespace)
+* [Powerful development tools](https://github.com/radiant/radical)
 * Full stack for Web & API
 
 ## Modules
 
-* [orm](https://github.com/radiant/beedoc/tree/master/en-US/mvc/model)
-* [session](https://github.com/radiant/beedoc/blob/master/en-US/module/session.md)
-* [logs](https://github.com/radiant/beedoc/blob/master/en-US/module/logs.md)
-* [config](https://github.com/radiant/beedoc/blob/master/en-US/module/config.md)
-* [cache](https://github.com/radiant/beedoc/blob/master/en-US/module/cache.md)
-* [context](https://github.com/radiant/beedoc/blob/master/en-US/module/context.md)
-* [admin](https://github.com/radiant/beedoc/blob/master/en-US/module/admin.md)
-* [httplib](https://github.com/radiant/beedoc/blob/master/en-US/module/httplib.md)
-* [task](https://github.com/radiant/beedoc/blob/master/en-US/module/task.md)
-* [i18n](https://github.com/radiant/beedoc/blob/master/en-US/module/i18n.md)
+* [orm](https://github.com/radiant/radicaldoc/tree/master/en-US/mvc/model)
+* [session](https://github.com/radiant/radicaldoc/blob/master/en-US/module/session.md)
+* [logs](https://github.com/radiant/radicaldoc/blob/master/en-US/module/logs.md)
+* [config](https://github.com/radiant/radicaldoc/blob/master/en-US/module/config.md)
+* [cache](https://github.com/radiant/radicaldoc/blob/master/en-US/module/cache.md)
+* [context](https://github.com/radiant/radicaldoc/blob/master/en-US/module/context.md)
+* [admin](https://github.com/radiant/radicaldoc/blob/master/en-US/module/admin.md)
+* [httplib](https://github.com/radiant/radicaldoc/blob/master/en-US/module/httplib.md)
+* [task](https://github.com/radiant/radicaldoc/blob/master/en-US/module/task.md)
+* [i18n](https://github.com/radiant/radicaldoc/blob/master/en-US/module/i18n.md)
 
 ## Community
 
-* [http://radiant.me/community](http://radiant.me/community)
-* Welcome to join us in Slack: [https://radiant.slack.com invite](https://join.slack.com/t/radiant/shared_invite/zt-fqlfjaxs-_CRmiITCSbEqQG9NeBqXKA),
-* QQ Group Group ID:523992905
-* [Contribution Guide](https://github.com/radiant/beedoc/blob/master/en-US/intro/contributing.md).
+[//]: # (* [http://radiant.me/community]&#40;http://radiant.me/community&#41;)
+
+[//]: # (* Welcome to join us in Slack: [https://radiant.slack.com invite]&#40;https://join.slack.com/t/radiant/shared_invite/zt-fqlfjaxs-_CRmiITCSbEqQG9NeBqXKA&#41;,)
+
+[//]: # (* QQ Group Group ID:523992905)
+
+[//]: # (* [Contribution Guide]&#40;https://github.com/radiant/radicaldoc/blob/master/en-US/intro/contributing.md&#41;.)
 
 ## License
 

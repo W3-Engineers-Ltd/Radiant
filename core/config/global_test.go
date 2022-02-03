@@ -12,7 +12,7 @@ import (
 
 func TestGlobalInstance(t *testing.T) {
 	cfgStr := `
-appname = beeapi
+appname = radicalapi
 httpport = 8080
 mysqlport = 3600
 PI = 3.1415926
@@ -54,7 +54,7 @@ password = ${GOPATH}
 
 	val, err := String("appname")
 	assert.Nil(t, err)
-	assert.Equal(t, "beeapi", val)
+	assert.Equal(t, "radicalapi", val)
 
 	val = DefaultString("appname__", "404")
 	assert.Equal(t, "404", val)

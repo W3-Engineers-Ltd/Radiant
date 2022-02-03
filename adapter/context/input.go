@@ -257,12 +257,12 @@ func (input *RadiantInput) ParseFormOrMulitForm(maxMemory int64) error {
 
 // Bind data from request.Form[key] to dest
 // like /?id=123&isok=true&ft=1.2&ol[0]=1&ol[1]=2&ul[]=str&ul[]=array&user.Name=astaxie
-// var id int  RadiantInput.Bind(&id, "id")  id ==123
-// var isok bool  RadiantInput.Bind(&isok, "isok")  isok ==true
-// var ft float64  RadiantInput.Bind(&ft, "ft")  ft ==1.2
-// ol := make([]int, 0, 2)  RadiantInput.Bind(&ol, "ol")  ol ==[1 2]
-// ul := make([]string, 0, 2)  RadiantInput.Bind(&ul, "ul")  ul ==[str array]
-// user struct{Name}  RadiantInput.Bind(&user, "user")  user == {Name:"astaxie"}
+// var id int  radiantInput.Bind(&id, "id")  id ==123
+// var isok bool  radiantInput.Bind(&isok, "isok")  isok ==true
+// var ft float64  radiantInput.Bind(&ft, "ft")  ft ==1.2
+// ol := make([]int, 0, 2)  radiantInput.Bind(&ol, "ol")  ol ==[1 2]
+// ul := make([]string, 0, 2)  radiantInput.Bind(&ul, "ul")  ul ==[str array]
+// user struct{Name}  radiantInput.Bind(&user, "user")  user == {Name:"astaxie"}
 func (input *RadiantInput) Bind(dest interface{}, key string) error {
 	return (*context.RadiantInput)(input).Bind(dest, key)
 }

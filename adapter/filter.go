@@ -3,7 +3,7 @@ package adapter
 import (
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
 // FilterFunc defines a filter function which is invoked before the controller handler is executed.
@@ -18,5 +18,5 @@ type FilterRouter web.FilterRouter
 // If the request is matched, the values of the URL parameters defined
 // by the filter pattern are also returned.
 func (f *FilterRouter) ValidRouter(url string, ctx *context.Context) bool {
-	return (*web.FilterRouter)(f).ValidRouter(url, (*beecontext.Context)(ctx))
+	return (*web.FilterRouter)(f).ValidRouter(url, (*radicalcontext.Context)(ctx))
 }

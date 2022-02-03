@@ -24,7 +24,7 @@ package cors
 import (
 	radiant "github.com/W3-Engineers-Ltd/Radiant/adapter"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/filter/cors"
 )
 
@@ -51,6 +51,6 @@ func (o *Options) IsOriginAllowed(origin string) bool {
 func Allow(opts *Options) radiant.FilterFunc {
 	f := cors.Allow((*cors.Options)(opts))
 	return func(c *context.Context) {
-		f((*beecontext.Context)(c))
+		f((*radicalcontext.Context)(c))
 	}
 }

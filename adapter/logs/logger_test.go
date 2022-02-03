@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestBeeLoggerInfo(t *testing.T) {
+func TestRadicalLoggerInfo(t *testing.T) {
 	log := NewLogger(1000)
 	log.SetLogger("file", `{"net":"tcp","addr":":7020"}`)
 }

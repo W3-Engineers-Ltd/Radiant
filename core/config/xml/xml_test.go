@@ -15,7 +15,7 @@ func TestXML(t *testing.T) {
 		// xml parse should include in <config></config> tags
 		xmlcontext = `<?xml version="1.0" encoding="UTF-8"?>
 <config>
-<appname>beeapi</appname>
+<appname>radicalapi</appname>
 <httpport>8080</httpport>
 <mysqlport>3600</mysqlport>
 <PI>3.1415976</PI>
@@ -31,7 +31,7 @@ func TestXML(t *testing.T) {
 </config>
 `
 		keyValue = map[string]interface{}{
-			"appname":         "beeapi",
+			"appname":         "radicalapi",
 			"httpport":        8080,
 			"mysqlport":       int64(3600),
 			"PI":              3.1415976,
@@ -139,7 +139,7 @@ func TestXML(t *testing.T) {
 func TestXMLMissConfig(t *testing.T) {
 	xmlcontext1 := `
 	<?xml version="1.0" encoding="UTF-8"?>
-	<appname>beeapi</appname>
+	<appname>radicalapi</appname>
 	`
 
 	c := &Config{}

@@ -15,7 +15,7 @@
 // Advanced Usage:
 //
 //	func SecretAuth(username, password string) bool {
-//		return username == "astaxie" && password == "helloradiant"
+//		return username == "astaxie" && password == "helloRadiant"
 //	}
 //	authPlugin := auth.NewBasicAuthenticator(SecretAuth, "Authorization Required")
 //	radiant.InsertFilter("*", radiant.BeforeRouter,authPlugin)

@@ -1,7 +1,5 @@
 // Copyright 2021 radiant Author. All Rights Reserved.
 
-//
-
 // Package env is used to parse environment.
 package env
 

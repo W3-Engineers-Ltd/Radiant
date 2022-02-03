@@ -18,7 +18,7 @@
 - Add: Resp() method for web.Controller. [4588](https://github.com/W3-Engineers-Ltd/Radiant/pull/4588)
 - Web mock and test support. [4565](https://github.com/W3-Engineers-Ltd/Radiant/pull/4565) [4574](https://github.com/W3-Engineers-Ltd/Radiant/pull/4574)
 - Error codes definition of cache module. [4493](https://github.com/W3-Engineers-Ltd/Radiant/pull/4493)
-- Remove generateCommentRoute http hook. Using `bee generate routers` commands instead.[4486](https://github.com/W3-Engineers-Ltd/Radiant/pull/4486) [bee PR 762](https://github.com/radiant/bee/pull/762)
+- Remove generateCommentRoute http hook. Using `radical generate routers` commands instead.[4486](https://github.com/W3-Engineers-Ltd/Radiant/pull/4486) [radical PR 762](https://github.com/radiant/radical/pull/762)
 - Fix: /abc.html/aaa match /abc/aaa. [4459](https://github.com/W3-Engineers-Ltd/Radiant/pull/4459)
 - ORM mock. [4407](https://github.com/W3-Engineers-Ltd/Radiant/pull/4407)
 - Add sonar check and ignore test. [4432](https://github.com/W3-Engineers-Ltd/Radiant/pull/4432) [4433](https://github.com/W3-Engineers-Ltd/Radiant/pull/4433)

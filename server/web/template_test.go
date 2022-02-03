@@ -65,11 +65,11 @@ func TestTemplate(t *testing.T) {
 	if err := AddViewPath(dir); err != nil {
 		t.Fatal(err)
 	}
-	beeTemplates := beeViewPathTemplates[dir]
-	if len(beeTemplates) != 3 {
-		t.Fatalf("should be 3 but got %v", len(beeTemplates))
+	radicalTemplates := radicalViewPathTemplates[dir]
+	if len(radicalTemplates) != 3 {
+		t.Fatalf("should be 3 but got %v", len(radicalTemplates))
 	}
-	if err := beeTemplates["index.tpl"].ExecuteTemplate(os.Stdout, "index.tpl", nil); err != nil {
+	if err := radicalTemplates["index.tpl"].ExecuteTemplate(os.Stdout, "index.tpl", nil); err != nil {
 		t.Fatal(err)
 	}
 	for _, name := range files {
@@ -130,8 +130,8 @@ func TestRelativeTemplate(t *testing.T) {
 	if err := BuildTemplate(dir, files[1]); err != nil {
 		t.Fatal(err)
 	}
-	beeTemplates := beeViewPathTemplates[dir]
-	if err := beeTemplates["easyui/rbac/user.tpl"].ExecuteTemplate(os.Stdout, "easyui/rbac/user.tpl", nil); err != nil {
+	radicalTemplates := radicalViewPathTemplates[dir]
+	if err := radicalTemplates["easyui/rbac/user.tpl"].ExecuteTemplate(os.Stdout, "easyui/rbac/user.tpl", nil); err != nil {
 		t.Fatal(err)
 	}
 	for _, name := range files {
@@ -243,13 +243,13 @@ func TestTemplateLayout(t *testing.T) {
 	if err := AddViewPath(dir); err != nil {
 		t.Fatal(err)
 	}
-	beeTemplates := beeViewPathTemplates[dir]
-	if len(beeTemplates) != 2 {
-		t.Fatalf("should be 2 but got %v", len(beeTemplates))
+	radicalTemplates := radicalViewPathTemplates[dir]
+	if len(radicalTemplates) != 2 {
+		t.Fatalf("should be 2 but got %v", len(radicalTemplates))
 	}
 	out := bytes.NewBufferString("")
 
-	if err := beeTemplates["add.tpl"].ExecuteTemplate(out, "add.tpl", map[string]string{"Title": "Hello", "SomeVar": "val"}); err != nil {
+	if err := radicalTemplates["add.tpl"].ExecuteTemplate(out, "add.tpl", map[string]string{"Title": "Hello", "SomeVar": "val"}); err != nil {
 		t.Fatal(err)
 	}
 	if out.String() != output {
@@ -299,15 +299,15 @@ func TestFsBinData(t *testing.T) {
 	if err := AddViewPath("views"); err != nil {
 		t.Fatal(err)
 	}
-	beeTemplates := beeViewPathTemplates[dir]
-	if len(beeTemplates) != 3 {
-		t.Fatalf("should be 3 but got %v", len(beeTemplates))
+	radicalTemplates := radicalViewPathTemplates[dir]
+	if len(radicalTemplates) != 3 {
+		t.Fatalf("should be 3 but got %v", len(radicalTemplates))
 	}
-	if err := beeTemplates["index.tpl"].ExecuteTemplate(os.Stdout, "index.tpl", map[string]string{"Title": "Hello", "SomeVar": "val"}); err != nil {
+	if err := radicalTemplates["index.tpl"].ExecuteTemplate(os.Stdout, "index.tpl", map[string]string{"Title": "Hello", "SomeVar": "val"}); err != nil {
 		t.Fatal(err)
 	}
 	out := bytes.NewBufferString("")
-	if err := beeTemplates["index.tpl"].ExecuteTemplate(out, "index.tpl", map[string]string{"Title": "Hello", "SomeVar": "val"}); err != nil {
+	if err := radicalTemplates["index.tpl"].ExecuteTemplate(out, "index.tpl", map[string]string{"Title": "Hello", "SomeVar": "val"}); err != nil {
 		t.Fatal(err)
 	}
 

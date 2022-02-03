@@ -5,11 +5,11 @@ import (
 	"reflect"
 
 	"github.com/W3-Engineers-Ltd/Radiant/core/logs"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
 // ConvertParams converts http method params to values that will be passed to the method controller as arguments
-func ConvertParams(methodParams []*MethodParam, methodType reflect.Type, ctx *beecontext.Context) (result []reflect.Value) {
+func ConvertParams(methodParams []*MethodParam, methodType reflect.Type, ctx *radicalcontext.Context) (result []reflect.Value) {
 	result = make([]reflect.Value, 0, len(methodParams))
 	for i := 0; i < len(methodParams); i++ {
 		reflectValue := convertParam(methodParams[i], methodType.In(i), ctx)
@@ -18,7 +18,7 @@ func ConvertParams(methodParams []*MethodParam, methodType reflect.Type, ctx *be
 	return
 }
 
-func convertParam(param *MethodParam, paramType reflect.Type, ctx *beecontext.Context) (result reflect.Value) {
+func convertParam(param *MethodParam, paramType reflect.Type, ctx *radicalcontext.Context) (result reflect.Value) {
 	paramValue := getParamValue(param, ctx)
 	if paramValue == "" {
 		if param.required {
@@ -37,7 +37,7 @@ func convertParam(param *MethodParam, paramType reflect.Type, ctx *beecontext.Co
 	return reflectValue
 }
 
-func getParamValue(param *MethodParam, ctx *beecontext.Context) string {
+func getParamValue(param *MethodParam, ctx *radicalcontext.Context) string {
 	switch param.in {
 	case body:
 		return string(ctx.Input.RequestBody)

@@ -18,16 +18,16 @@ import (
 )
 
 var (
-	radiantTplFuncMap         = make(template.FuncMap)
-	beeViewPathTemplateLocked = false
-	// beeViewPathTemplates caching map and supported template file extensions per view
-	beeViewPathTemplates = make(map[string]map[string]*template.Template)
-	templatesLock        sync.RWMutex
-	// beeTemplateExt stores the template extension which will build
-	beeTemplateExt = []string{"tpl", "html", "gohtml"}
-	// beeTemplatePreprocessors stores associations of extension -> preprocessor handler
-	beeTemplateEngines = map[string]templatePreProcessor{}
-	beeTemplateFS      = defaultFSFunc
+	radiantTplFuncMap             = make(template.FuncMap)
+	radicalViewPathTemplateLocked = false
+	// radicalViewPathTemplates caching map and supported template file extensions per view
+	radicalViewPathTemplates = make(map[string]map[string]*template.Template)
+	templatesLock            sync.RWMutex
+	// radicalTemplateExt stores the template extension which will build
+	radicalTemplateExt = []string{"tpl", "html", "gohtml"}
+	// radicalTemplatePreprocessors stores associations of extension -> preprocessor handler
+	radicalTemplateEngines = map[string]templatePreProcessor{}
+	radicalTemplateFS      = defaultFSFunc
 )
 
 // ExecuteTemplate applies the template with name  to the specified data object,
@@ -45,8 +45,8 @@ func ExecuteViewPathTemplate(wr io.Writer, name string, viewPath string, data in
 		templatesLock.RLock()
 		defer templatesLock.RUnlock()
 	}
-	if beeTemplates, ok := beeViewPathTemplates[viewPath]; ok {
-		if t, ok := beeTemplates[name]; ok {
+	if radicalTemplates, ok := radicalViewPathTemplates[viewPath]; ok {
+		if t, ok := radicalTemplates[name]; ok {
 			var err error
 			if t.Lookup(name) != nil {
 				err = t.ExecuteTemplate(wr, name, data)
@@ -130,7 +130,7 @@ func (tf *templateFile) visit(paths string, f os.FileInfo, err error) error {
 
 // HasTemplateExt return this path contains supported template extension of radiant or not.
 func HasTemplateExt(paths string) bool {
-	for _, v := range beeTemplateExt {
+	for _, v := range radicalTemplateExt {
 		if strings.HasSuffix(paths, "."+v) {
 			return true
 		}
@@ -140,37 +140,37 @@ func HasTemplateExt(paths string) bool {
 
 // AddTemplateExt add new extension for template.
 func AddTemplateExt(ext string) {
-	for _, v := range beeTemplateExt {
+	for _, v := range radicalTemplateExt {
 		if v == ext {
 			return
 		}
 	}
-	beeTemplateExt = append(beeTemplateExt, ext)
+	radicalTemplateExt = append(radicalTemplateExt, ext)
 }
 
 // AddViewPath adds a new path to the supported view paths.
 // Can later be used by setting a controller ViewPath to this folder
 // will panic if called after radiant.Run()
 func AddViewPath(viewPath string) error {
-	if beeViewPathTemplateLocked {
-		if _, exist := beeViewPathTemplates[viewPath]; exist {
+	if radicalViewPathTemplateLocked {
+		if _, exist := radicalViewPathTemplates[viewPath]; exist {
 			return nil // Ignore if viewpath already exists
 		}
 		panic("Can not add new view paths after radiant.Run()")
 	}
-	beeViewPathTemplates[viewPath] = make(map[string]*template.Template)
+	radicalViewPathTemplates[viewPath] = make(map[string]*template.Template)
 	return BuildTemplate(viewPath)
 }
 
 func lockViewPaths() {
-	beeViewPathTemplateLocked = true
+	radicalViewPathTemplateLocked = true
 }
 
 // BuildTemplate will build all template files in a directory.
 // it makes radiant can render any template file in view directory.
 func BuildTemplate(dir string, files ...string) error {
 	var err error
-	fs := beeTemplateFS()
+	fs := radicalTemplateFS()
 	f, err := fs.Open(dir)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -180,7 +180,7 @@ func BuildTemplate(dir string, files ...string) error {
 	}
 	defer f.Close()
 
-	beeTemplates, ok := beeViewPathTemplates[dir]
+	radicalTemplates, ok := radicalViewPathTemplates[dir]
 	if !ok {
 		panic("Unknown view path: " + dir)
 	}
@@ -202,7 +202,7 @@ func BuildTemplate(dir string, files ...string) error {
 				var t *template.Template
 				if len(ext) == 0 {
 					t, err = getTemplate(self.root, fs, file, v...)
-				} else if fn, ok := beeTemplateEngines[ext[1:]]; ok {
+				} else if fn, ok := radicalTemplateEngines[ext[1:]]; ok {
 					t, err = fn(self.root, file, radiantTplFuncMap)
 				} else {
 					t, err = getTemplate(self.root, fs, file, v...)
@@ -212,7 +212,7 @@ func BuildTemplate(dir string, files ...string) error {
 					templatesLock.Unlock()
 					return err
 				}
-				beeTemplates[file] = t
+				radicalTemplates[file] = t
 				templatesLock.Unlock()
 			}
 		}
@@ -347,7 +347,7 @@ func defaultFSFunc() http.FileSystem {
 
 // SetTemplateFSFunc set default filesystem function
 func SetTemplateFSFunc(fnt templateFSFunc) {
-	beeTemplateFS = fnt
+	radicalTemplateFS = fnt
 }
 
 // SetViewsPath sets view directory path in radiant application.
@@ -384,6 +384,6 @@ func DelStaticPath(url string) *HttpServer {
 // AddTemplateEngine add a new templatePreProcessor which support extension
 func AddTemplateEngine(extension string, fn templatePreProcessor) *HttpServer {
 	AddTemplateExt(extension)
-	beeTemplateEngines[extension] = fn
+	radicalTemplateEngines[extension] = fn
 	return RadicalApp
 }

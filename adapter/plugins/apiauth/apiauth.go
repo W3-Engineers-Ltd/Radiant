@@ -46,7 +46,7 @@ import (
 
 	radiant "github.com/W3-Engineers-Ltd/Radiant/adapter"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/filter/apiauth"
 )
 
@@ -57,7 +57,7 @@ type AppIDToAppSecret apiauth.AppIDToAppSecret
 func APIBasicAuth(appid, appkey string) radiant.FilterFunc {
 	f := apiauth.APIBasicAuth(appid, appkey)
 	return func(c *context.Context) {
-		f((*beecontext.Context)(c))
+		f((*radicalcontext.Context)(c))
 	}
 }
 
@@ -70,7 +70,7 @@ func APIBaiscAuth(appid, appkey string) radiant.FilterFunc {
 func APISecretAuth(f AppIDToAppSecret, timeout int) radiant.FilterFunc {
 	ft := apiauth.APISecretAuth(apiauth.AppIDToAppSecret(f), timeout)
 	return func(ctx *context.Context) {
-		ft((*beecontext.Context)(ctx))
+		ft((*radicalcontext.Context)(ctx))
 	}
 }
 

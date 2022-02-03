@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strings"
 
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
-type namespaceCond func(*beecontext.Context) bool
+type namespaceCond func(*radicalcontext.Context) bool
 
 // LinkNamespace used as link action
 type LinkNamespace func(*Namespace)
@@ -41,7 +41,7 @@ func NewNamespace(prefix string, params ...LinkNamespace) *Namespace {
 //   })
 // Cond as the first filter
 func (n *Namespace) Cond(cond namespaceCond) *Namespace {
-	fn := func(ctx *beecontext.Context) {
+	fn := func(ctx *radicalcontext.Context) {
 		if !cond(ctx) {
 			exception("405", ctx)
 		}

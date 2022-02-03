@@ -14,7 +14,7 @@ import (
 
 	"github.com/W3-Engineers-Ltd/Radiant/core/logs"
 	"github.com/W3-Engineers-Ltd/Radiant/core/utils"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/context/param"
 )
 
@@ -28,7 +28,7 @@ const (
 )
 
 const (
-	routerTyperadiant = iota
+	routerTypeRadiant = iota
 	routerTypeRESTFul
 	routerTypeHandler
 )
@@ -64,13 +64,13 @@ var (
 
 // FilterHandler is an interface for
 type FilterHandler interface {
-	Filter(*beecontext.Context) bool
+	Filter(*radicalcontext.Context) bool
 }
 
 // default log filter static file will not show
 type logFilter struct{}
 
-func (l *logFilter) Filter(ctx *beecontext.Context) bool {
+func (l *logFilter) Filter(ctx *radicalcontext.Context) bool {
 	requestPath := path.Clean(ctx.Request.URL.Path)
 	if requestPath == "/favicon.ico" || requestPath == "/robots.txt" {
 		return true
@@ -167,7 +167,7 @@ func NewControllerRegisterWithCfg(cfg *Config) *ControllerRegister {
 		policies: make(map[string]*Tree),
 		pool: sync.Pool{
 			New: func() interface{} {
-				return beecontext.NewContext()
+				return radicalcontext.NewContext()
 			},
 		},
 		cfg:          cfg,
@@ -182,7 +182,7 @@ func (p *ControllerRegister) Init() {
 	for i := len(p.filterChains) - 1; i >= 0; i-- {
 		fc := p.filterChains[i]
 		root := p.chainRoot
-		filterFunc := fc.chain(func(ctx *beecontext.Context) {
+		filterFunc := fc.chain(func(ctx *radicalcontext.Context) {
 			var preFilterParams map[string]string
 			root.filter(ctx, p.getUrlPath(ctx), preFilterParams)
 		})
@@ -258,7 +258,7 @@ func (p *ControllerRegister) addWithMethodParams(pattern string, c ControllerInt
 	reflectVal := reflect.ValueOf(c)
 	t := reflect.Indirect(reflectVal).Type()
 
-	route := p.createradiantRouter(t, pattern)
+	route := p.createRadiantRouter(t, pattern)
 	route.initialize = func() ControllerInterface {
 		vc := reflect.New(route.controllerType)
 		execController, ok := vc.Interface().(ControllerInterface)
@@ -333,12 +333,12 @@ func (p *ControllerRegister) Include(cList ...ControllerInterface) {
 //  ctx := p.GetContext()
 //  ctx.Reset(w, q)
 //  defer p.GiveBackContext(ctx)
-func (p *ControllerRegister) GetContext() *beecontext.Context {
-	return p.pool.Get().(*beecontext.Context)
+func (p *ControllerRegister) GetContext() *radicalcontext.Context {
+	return p.pool.Get().(*radicalcontext.Context)
 }
 
 // GiveBackContext put the ctx into pool so that it could be reuse
-func (p *ControllerRegister) GiveBackContext(ctx *beecontext.Context) {
+func (p *ControllerRegister) GiveBackContext(ctx *radicalcontext.Context) {
 	p.pool.Put(ctx)
 }
 
@@ -472,23 +472,23 @@ func (p *ControllerRegister) AddRouterMethod(httpMethod, pattern string, f inter
 	httpMethod = p.getUpperMethodString(httpMethod)
 	ct, methodName := getReflectTypeAndMethod(f)
 
-	p.addradiantTypeRouter(ct, methodName, httpMethod, pattern)
+	p.addRadiantTypeRouter(ct, methodName, httpMethod, pattern)
 }
 
-// addradiantTypeRouter add radiant type router
-func (p *ControllerRegister) addradiantTypeRouter(ct reflect.Type, ctMethod, httpMethod, pattern string) {
-	route := p.createradiantRouter(ct, pattern)
+// addRadiantTypeRouter add radiant type router
+func (p *ControllerRegister) addRadiantTypeRouter(ct reflect.Type, ctMethod, httpMethod, pattern string) {
+	route := p.createRadiantRouter(ct, pattern)
 	methods := p.getHttpMethodMapMethod(httpMethod, ctMethod)
 	route.methods = methods
 
 	p.addRouterForMethod(route)
 }
 
-// createradiantRouter create radiant router base on reflect type and pattern
-func (p *ControllerRegister) createradiantRouter(ct reflect.Type, pattern string) *ControllerInfo {
+// createRadiantRouter create radiant router base on reflect type and pattern
+func (p *ControllerRegister) createRadiantRouter(ct reflect.Type, pattern string) *ControllerInfo {
 	route := &ControllerInfo{}
 	route.pattern = pattern
-	route.routerType = routerTyperadiant
+	route.routerType = routerTypeRadiant
 	route.sessionOn = p.cfg.WebConfig.Session.SessionOn
 	route.controllerType = ct
 	return route
@@ -602,7 +602,7 @@ func getReflectTypeAndMethod(f interface{}) (controllerType reflect.Type, method
 }
 
 // HandleFunc define how to process the request
-type HandleFunc func(ctx *beecontext.Context)
+type HandleFunc func(ctx *radicalcontext.Context)
 
 // Get add get method
 // usage:
@@ -737,7 +737,7 @@ func (p *ControllerRegister) addAutoPrefixMethod(prefix, controllerName, methodN
 	patternFix := path.Join(prefix, strings.ToLower(controllerName), strings.ToLower(methodName))
 	patternFixInit := path.Join(prefix, controllerName, methodName)
 
-	route := p.createradiantRouter(ctrl, pattern)
+	route := p.createRadiantRouter(ctrl, pattern)
 	route.methods = map[string]string{"*": methodName}
 	for m := range HTTPMETHOD {
 
@@ -843,7 +843,7 @@ func (p *ControllerRegister) getURL(t *Tree, url, controllerName, methodName str
 	}
 	for _, l := range t.leaves {
 		if c, ok := l.runObject.(*ControllerInfo); ok {
-			if c.routerType == routerTyperadiant &&
+			if c.routerType == routerTypeRadiant &&
 				strings.HasSuffix(path.Join(c.controllerType.PkgPath(), c.controllerType.Name()), `/`+controllerName) {
 				find := false
 				if HTTPMETHOD[strings.ToUpper(methodName)] {
@@ -937,7 +937,7 @@ func (p *ControllerRegister) getURL(t *Tree, url, controllerName, methodName str
 	return false, ""
 }
 
-func (p *ControllerRegister) execFilter(context *beecontext.Context, urlPath string, pos int) (started bool) {
+func (p *ControllerRegister) execFilter(context *radicalcontext.Context, urlPath string, pos int) (started bool) {
 	var preFilterParams map[string]string
 	for _, filterR := range p.filters[pos] {
 		b, done := filterR.filter(context, urlPath, preFilterParams)
@@ -959,7 +959,7 @@ func (p *ControllerRegister) ServeHTTP(rw http.ResponseWriter, r *http.Request) 
 	p.chainRoot.filter(ctx, p.getUrlPath(ctx), preFilterParams)
 }
 
-func (p *ControllerRegister) serveHttp(ctx *beecontext.Context) {
+func (p *ControllerRegister) serveHttp(ctx *radicalcontext.Context) {
 	var err error
 	startTime := time.Now()
 	r := ctx.Request
@@ -1257,13 +1257,13 @@ Admin:
 
 		logs.Debug(devInfo)
 	}
-	// Call WriteHeader if status code has been set changed
+	// Call WriteHeader if status code has radicaln set changed
 	if ctx.Output.Status != 0 {
 		ctx.ResponseWriter.WriteHeader(ctx.Output.Status)
 	}
 }
 
-func (p *ControllerRegister) getUrlPath(ctx *beecontext.Context) string {
+func (p *ControllerRegister) getUrlPath(ctx *radicalcontext.Context) string {
 	urlPath := ctx.Request.URL.Path
 	if !p.cfg.RouterCaseSensitive {
 		urlPath = strings.ToLower(urlPath)
@@ -1271,7 +1271,7 @@ func (p *ControllerRegister) getUrlPath(ctx *beecontext.Context) string {
 	return urlPath
 }
 
-func (p *ControllerRegister) handleParamResponse(context *beecontext.Context, execController ControllerInterface, results []reflect.Value) {
+func (p *ControllerRegister) handleParamResponse(context *radicalcontext.Context, execController ControllerInterface, results []reflect.Value) {
 	// looping in reverse order for the case when both error and value are returned and error sets the response status code
 	for i := len(results) - 1; i >= 0; i-- {
 		result := results[i]
@@ -1286,7 +1286,7 @@ func (p *ControllerRegister) handleParamResponse(context *beecontext.Context, ex
 }
 
 // FindRouter Find Router info for URL
-func (p *ControllerRegister) FindRouter(context *beecontext.Context) (routerInfo *ControllerInfo, isFind bool) {
+func (p *ControllerRegister) FindRouter(context *radicalcontext.Context) (routerInfo *ControllerInfo, isFind bool) {
 	urlPath := context.Input.URL()
 	if !p.cfg.RouterCaseSensitive {
 		urlPath = strings.ToLower(urlPath)
@@ -1313,6 +1313,6 @@ func toURL(params map[string]string) string {
 }
 
 // LogAccess logging info HTTP Access
-func LogAccess(ctx *beecontext.Context, startTime *time.Time, statusCode int) {
+func LogAccess(ctx *radicalcontext.Context, startTime *time.Time, statusCode int) {
 	RadicalApp.LogAccess(ctx, startTime, statusCode)
 }

@@ -21,7 +21,7 @@ import (
 )
 
 // DefaultKey the collection name of redis for cache adapter.
-var DefaultKey = "beecacheRedis"
+var DefaultKey = "radicalcacheRedis"
 
 // NewRedisCache create new redis cache with default collection name.
 func NewRedisCache() cache.Cache {

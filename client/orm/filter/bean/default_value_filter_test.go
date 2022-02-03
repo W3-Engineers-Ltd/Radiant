@@ -55,6 +55,6 @@ type defaultValueTestOrm struct {
 type DefaultValueTestEntity struct {
 	Id            int
 	Age           int `default:"12"`
-	AgeInOldStyle int `orm:"default(13);bee()"`
+	AgeInOldStyle int `orm:"default(13);radical()"`
 	AgeIgnore     int
 }

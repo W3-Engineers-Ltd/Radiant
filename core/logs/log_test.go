@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBeeLoggerDelLogger(t *testing.T) {
+func TestRadicalLoggerDelLogger(t *testing.T) {
 	prefix := "My-Cus"
 	l := GetLogger(prefix)
 	assert.NotNil(t, l)

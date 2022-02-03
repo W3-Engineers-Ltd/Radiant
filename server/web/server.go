@@ -19,7 +19,7 @@ import (
 
 	"github.com/W3-Engineers-Ltd/Radiant/core/logs"
 	"github.com/W3-Engineers-Ltd/Radiant/core/utils"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/grace"
 )
 
@@ -779,7 +779,7 @@ func (app *HttpServer) initAddr(addr string) {
 	}
 }
 
-func (app *HttpServer) LogAccess(ctx *beecontext.Context, startTime *time.Time, statusCode int) {
+func (app *HttpServer) LogAccess(ctx *radicalcontext.Context, startTime *time.Time, statusCode int) {
 	// Skip logging if AccessLogs config is false
 	if !app.Cfg.Log.AccessLogs {
 		return
@@ -845,7 +845,7 @@ func printTree(resultList *[][]string, t *Tree) {
 	}
 	for _, l := range t.leaves {
 		if v, ok := l.runObject.(*ControllerInfo); ok {
-			if v.routerType == routerTyperadiant {
+			if v.routerType == routerTypeRadiant {
 				result := []string{
 					template.HTMLEscapeString(v.pattern),
 					template.HTMLEscapeString(fmt.Sprintf("%s", v.methods)),

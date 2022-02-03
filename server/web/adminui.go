@@ -2,7 +2,7 @@ package web
 
 var indexTpl = `
 {{define "content"}}
-<h1>radiant Admin Dashboard</h1>
+<h1>Radiant Admin Dashboard</h1>
 <p>
 For detail usage please check our document:
 </p>
@@ -235,7 +235,7 @@ var dashboardTpl = `
 
 <title>
 
-Welcome to radiant Admin Dashboard
+Welcome to Radiant Admin Dashboard
 
 </title>
 

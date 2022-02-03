@@ -15,7 +15,7 @@
 // Advanced Usage:
 //
 //	func SecretAuth(username, password string) bool {
-//		return username == "astaxie" && password == "helloradiant"
+//		return username == "astaxie" && password == "helloRadiant"
 //	}
 //	authPlugin := auth.NewBasicAuthenticator(SecretAuth, "Authorization Required")
 //	radiant.InsertFilter("*", radiant.BeforeRouter,authPlugin)
@@ -26,7 +26,7 @@ import (
 
 	radiant "github.com/W3-Engineers-Ltd/Radiant/adapter"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/filter/auth"
 )
 
@@ -34,7 +34,7 @@ import (
 func Basic(username string, password string) radiant.FilterFunc {
 	return func(c *context.Context) {
 		f := auth.Basic(username, password)
-		f((*beecontext.Context)(c))
+		f((*radicalcontext.Context)(c))
 	}
 }
 
@@ -42,7 +42,7 @@ func Basic(username string, password string) radiant.FilterFunc {
 func NewBasicAuthenticator(secrets SecretProvider, realm string) radiant.FilterFunc {
 	f := auth.NewBasicAuthenticator(auth.SecretProvider(secrets), realm)
 	return func(c *context.Context) {
-		f((*beecontext.Context)(c))
+		f((*radicalcontext.Context)(c))
 	}
 }
 

@@ -1,7 +1,5 @@
 // Copyright 2021 radiant Author. All Rights Reserved.
 
-//
-
 package env
 
 import (

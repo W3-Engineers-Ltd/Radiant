@@ -77,13 +77,13 @@ func TestBind(t *testing.T) {
 	}
 	for _, c := range cases {
 		r, _ := http.NewRequest("GET", c.request, nil)
-		RadiantInput := NewInput()
-		RadiantInput.Context = NewContext()
-		RadiantInput.Context.Reset(httptest.NewRecorder(), r)
+		radiantInput := NewInput()
+		radiantInput.Context = NewContext()
+		radiantInput.Context.Reset(httptest.NewRecorder(), r)
 
 		for _, item := range c.valueGp {
 			got := item.empty
-			err := RadiantInput.Bind(&got, item.field)
+			err := radiantInput.Bind(&got, item.field)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -97,45 +97,45 @@ func TestBind(t *testing.T) {
 
 func TestSubDomain(t *testing.T) {
 	r, _ := http.NewRequest("GET", "http://www.example.com/?id=123&isok=true&ft=1.2&ol[0]=1&ol[1]=2&ul[]=str&ul[]=array&user.Name=astaxie", nil)
-	RadiantInput := NewInput()
-	RadiantInput.Context = NewContext()
-	RadiantInput.Context.Reset(httptest.NewRecorder(), r)
+	radiantInput := NewInput()
+	radiantInput.Context = NewContext()
+	radiantInput.Context.Reset(httptest.NewRecorder(), r)
 
-	subdomain := RadiantInput.SubDomains()
+	subdomain := radiantInput.SubDomains()
 	if subdomain != "www" {
 		t.Fatal("Subdomain parse error, got" + subdomain)
 	}
 
 	r, _ = http.NewRequest("GET", "http://localhost/", nil)
-	RadiantInput.Context.Request = r
-	if RadiantInput.SubDomains() != "" {
-		t.Fatal("Subdomain parse error, should be empty, got " + RadiantInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "" {
+		t.Fatal("Subdomain parse error, should be empty, got " + radiantInput.SubDomains())
 	}
 
 	r, _ = http.NewRequest("GET", "http://aa.bb.example.com/", nil)
-	RadiantInput.Context.Request = r
-	if RadiantInput.SubDomains() != "aa.bb" {
-		t.Fatal("Subdomain parse error, got " + RadiantInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "aa.bb" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 
 	/* TODO Fix this
 	r, _ = http.NewRequest("GET", "http://127.0.0.1/", nil)
-	RadiantInput.Context.Request = r
-	if RadiantInput.SubDomains() != "" {
-		t.Fatal("Subdomain parse error, got " + RadiantInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 	*/
 
 	r, _ = http.NewRequest("GET", "http://example.com/", nil)
-	RadiantInput.Context.Request = r
-	if RadiantInput.SubDomains() != "" {
-		t.Fatal("Subdomain parse error, got " + RadiantInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 
 	r, _ = http.NewRequest("GET", "http://aa.bb.cc.dd.example.com/", nil)
-	RadiantInput.Context.Request = r
-	if RadiantInput.SubDomains() != "aa.bb.cc.dd" {
-		t.Fatal("Subdomain parse error, got " + RadiantInput.SubDomains())
+	radiantInput.Context.Request = r
+	if radiantInput.SubDomains() != "aa.bb.cc.dd" {
+		t.Fatal("Subdomain parse error, got " + radiantInput.SubDomains())
 	}
 }
 
@@ -192,12 +192,12 @@ func TestParams(t *testing.T) {
 }
 
 func BenchmarkQuery(b *testing.B) {
-	RadiantInput := NewInput()
-	RadiantInput.Context = NewContext()
-	RadiantInput.Context.Request, _ = http.NewRequest("POST", "http://www.example.com/?q=foo", nil)
+	radiantInput := NewInput()
+	radiantInput.Context = NewContext()
+	radiantInput.Context.Request, _ = http.NewRequest("POST", "http://www.example.com/?q=foo", nil)
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			RadiantInput.Query("q")
+			radiantInput.Query("q")
 		}
 	})
 }

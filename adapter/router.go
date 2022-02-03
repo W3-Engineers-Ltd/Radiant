@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/adapter/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/adapter/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
@@ -30,14 +30,14 @@ var (
 
 // FilterHandler is an interface for
 type FilterHandler interface {
-	Filter(*beecontext.Context) bool
+	Filter(*radicalcontext.Context) bool
 }
 
 type newToOldFtHdlAdapter struct {
 	delegate web.FilterHandler
 }
 
-func (n *newToOldFtHdlAdapter) Filter(ctx *beecontext.Context) bool {
+func (n *newToOldFtHdlAdapter) Filter(ctx *radicalcontext.Context) bool {
 	return n.delegate.Filter((*context.Context)(ctx))
 }
 
@@ -88,12 +88,12 @@ func (p *ControllerRegister) Include(cList ...ControllerInterface) {
 //  ctx := p.GetContext()
 //  ctx.Reset(w, q)
 //  defer p.GiveBackContext(ctx)
-func (p *ControllerRegister) GetContext() *beecontext.Context {
-	return (*beecontext.Context)((*web.ControllerRegister)(p).GetContext())
+func (p *ControllerRegister) GetContext() *radicalcontext.Context {
+	return (*radicalcontext.Context)((*web.ControllerRegister)(p).GetContext())
 }
 
 // GiveBackContext put the ctx into pool so that it could be reuse
-func (p *ControllerRegister) GiveBackContext(ctx *beecontext.Context) {
+func (p *ControllerRegister) GiveBackContext(ctx *radicalcontext.Context) {
 	(*web.ControllerRegister)(p).GiveBackContext((*context.Context)(ctx))
 }
 
@@ -104,7 +104,7 @@ func (p *ControllerRegister) GiveBackContext(ctx *beecontext.Context) {
 //    })
 func (p *ControllerRegister) Get(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Get(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -115,7 +115,7 @@ func (p *ControllerRegister) Get(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) Post(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Post(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -126,7 +126,7 @@ func (p *ControllerRegister) Post(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) Put(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Put(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -137,7 +137,7 @@ func (p *ControllerRegister) Put(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) Delete(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Delete(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -148,7 +148,7 @@ func (p *ControllerRegister) Delete(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) Head(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Head(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -159,7 +159,7 @@ func (p *ControllerRegister) Head(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) Patch(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Patch(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -170,7 +170,7 @@ func (p *ControllerRegister) Patch(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) Options(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Options(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -181,7 +181,7 @@ func (p *ControllerRegister) Options(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) Any(pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).Any(pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -192,7 +192,7 @@ func (p *ControllerRegister) Any(pattern string, f FilterFunc) {
 //    })
 func (p *ControllerRegister) AddMethod(method, pattern string, f FilterFunc) {
 	(*web.ControllerRegister)(p).AddMethod(method, pattern, func(ctx *context.Context) {
-		f((*beecontext.Context)(ctx))
+		f((*radicalcontext.Context)(ctx))
 	})
 }
 
@@ -226,7 +226,7 @@ func (p *ControllerRegister) AddAutoPrefix(prefix string, c ControllerInterface)
 func (p *ControllerRegister) InsertFilter(pattern string, pos int, filter FilterFunc, params ...bool) error {
 	opts := oldToNewFilterOpts(params)
 	return (*web.ControllerRegister)(p).InsertFilter(pattern, pos, func(ctx *context.Context) {
-		filter((*beecontext.Context)(ctx))
+		filter((*radicalcontext.Context)(ctx))
 	}, opts...)
 }
 
@@ -256,12 +256,12 @@ func (p *ControllerRegister) ServeHTTP(rw http.ResponseWriter, r *http.Request) 
 }
 
 // FindRouter Find Router info for URL
-func (p *ControllerRegister) FindRouter(ctx *beecontext.Context) (routerInfo *ControllerInfo, isFind bool) {
+func (p *ControllerRegister) FindRouter(ctx *radicalcontext.Context) (routerInfo *ControllerInfo, isFind bool) {
 	r, ok := (*web.ControllerRegister)(p).FindRouter((*context.Context)(ctx))
 	return (*ControllerInfo)(r), ok
 }
 
 // LogAccess logging info HTTP Access
-func LogAccess(ctx *beecontext.Context, startTime *time.Time, statusCode int) {
+func LogAccess(ctx *radicalcontext.Context, startTime *time.Time, statusCode int) {
 	web.LogAccess((*context.Context)(ctx), startTime, statusCode)
 }

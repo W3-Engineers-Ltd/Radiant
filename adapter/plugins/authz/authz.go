@@ -32,7 +32,7 @@ import (
 
 	radiant "github.com/W3-Engineers-Ltd/Radiant/adapter"
 	"github.com/W3-Engineers-Ltd/Radiant/adapter/context"
-	beecontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
+	radicalcontext "github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/filter/authz"
 )
 
@@ -41,7 +41,7 @@ import (
 func NewAuthorizer(e *casbin.Enforcer) radiant.FilterFunc {
 	f := authz.NewAuthorizer(e)
 	return func(context *context.Context) {
-		f((*beecontext.Context)(context))
+		f((*radicalcontext.Context)(context))
 	}
 }
 

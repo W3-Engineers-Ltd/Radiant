@@ -11,7 +11,7 @@ import (
 func TestYaml(t *testing.T) {
 	var (
 		yamlcontext = `
-"appname": beeapi
+"appname": radicalapi
 "httpport": 8080
 "mysqlport": 3600
 "PI": 3.1415976
@@ -25,7 +25,7 @@ func TestYaml(t *testing.T) {
 `
 
 		keyValue = map[string]interface{}{
-			"appname":         "beeapi",
+			"appname":         "radicalapi",
 			"httpport":        8080,
 			"mysqlport":       int64(3600),
 			"PI":              3.1415976,
@@ -56,8 +56,8 @@ func TestYaml(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if yamlconf.String("appname") != "beeapi" {
-		t.Fatal("appname not equal to beeapi")
+	if yamlconf.String("appname") != "radicalapi" {
+		t.Fatal("appname not equal to radicalapi")
 	}
 
 	for k, v := range keyValue {

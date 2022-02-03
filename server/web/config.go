@@ -33,7 +33,7 @@ type Config struct {
 	// and the RunMode should be set as test
 	// when you completed all tests, you want to deploy it to prod, you should set it to prod
 	// You should never set RunMode="dev" when you deploy the application to prod
-	// because radiant will do more things which need Go SDK and other tools when it found out the RunMode="dev"
+	// because Radiant will do more things which need Go SDK and other tools when it found out the RunMode="dev"
 	// @Default dev
 	RunMode string // Running Mode: dev | prod
 
@@ -45,27 +45,27 @@ type Config struct {
 	// @Default true
 	RouterCaseSensitive bool
 	// RecoverPanic
-	// @Description if it was true, radiant will try to recover from panic when it serves your http request
-	// So you should notice that it doesn't mean that radiant will recover all panic cases.
+	// @Description if it was true, Radiant will try to recover from panic when it serves your http request
+	// So you should notice that it doesn't mean that Radiant will recover all panic cases.
 	// @Default true
 	RecoverPanic bool
 	// CopyRequestBody
-	// @Description if it's true, radiant will copy the request body. But if the request body's size > MaxMemory,
-	// radiant will return 413 as http status
+	// @Description if it's true, Radiant will copy the request body. But if the request body's size > MaxMemory,
+	// Radiant will return 413 as http status
 	// If you are building RESTful API, please set it to true.
 	// And if you want to read data from request Body multiple times, please set it to true
 	// In general, if you don't meet any performance issue, you could set it to true
 	// @Default false
 	CopyRequestBody bool
 	// EnableGzip
-	// @Description If it was true, radiant will try to compress data by using zip algorithm.
+	// @Description If it was true, Radiant will try to compress data by using zip algorithm.
 	// But there are two points:
 	// 1. Only static resources will be compressed
 	// 2. Only those static resource which has the extension specified by StaticExtensionsToGzip will be compressed
 	// @Default false
 	EnableGzip bool
 	// EnableErrorsShow
-	// @Description If it's true, radiant will show error message to page
+	// @Description If it's true, Radiant will show error message to page
 	// it will work with ErrorMaps which allows you register some error handler
 	// You may want to set it to false when application was deploy to prod environment
 	// because you may not want to expose your internal error msg to your users
@@ -80,13 +80,13 @@ type Config struct {
 	// ServerName
 	// @Description server name. For example, in large scale system,
 	// you may want to deploy your application to several machines, so that each of them has a server name
-	// we suggest you'd better set value because radiant use this to output some DEBUG msg,
+	// we suggest you'd better set value because Radiant use this to output some DEBUG msg,
 	// or integrated with other tools such as tracing, metrics
 	// @Default
 	ServerName string
 
 	// RecoverFunc
-	// @Description when radiant want to recover from panic, it will use this func as callback
+	// @Description when Radiant want to recover from panic, it will use this func as callback
 	// see RecoverPanic
 	// @Default defaultRecoverPanic
 	RecoverFunc func(*context.Context, *Config)
@@ -123,37 +123,37 @@ type Listen struct {
 	// @Default false
 	Graceful bool
 	// ListenTCP4
-	// @Description if it's true, means that radiant only work for TCP4
+	// @Description if it's true, means that Radiant only work for TCP4
 	// please check net.Listen function
 	// In general, you should not set it to true
 	// @Default false
 	ListenTCP4 bool
 	// EnableHTTP
-	// @Description if it's true, radiant will accept HTTP request.
+	// @Description if it's true, Radiant will accept HTTP request.
 	// But if you want to use HTTPS only, please set it to false
 	// see EnableHTTPS
 	// @Default true
 	EnableHTTP bool
 	// AutoTLS
-	// @Description If it's true, radiant will use default value to initialize the TLS configure
+	// @Description If it's true, Radiant will use default value to initialize the TLS configure
 	// But those values could be override if you have custom value.
 	// see Domains, TLSCacheDir
 	// @Default false
 	AutoTLS bool
 	// EnableHTTPS
-	// @Description If it's true, radiant will accept HTTPS request.
+	// @Description If it's true, Radiant will accept HTTPS request.
 	// Now, you'd better use HTTPS protocol on prod environment to get better security
 	// In prod, the best option is EnableHTTPS=true and EnableHTTP=false
 	// see EnableHTTP
 	// @Default false
 	EnableHTTPS bool
 	// EnableMutualHTTPS
-	// @Description if it's true, radiant will handle requests on incoming mutual TLS connections
+	// @Description if it's true, Radiant will handle requests on incoming mutual TLS connections
 	// see Server.ListenAndServeMutualTLS
 	// @Default false
 	EnableMutualHTTPS bool
 	// EnableAdmin
-	// @Description if it's true, radiant will provide admin service.
+	// @Description if it's true, Radiant will provide admin service.
 	// You can visit the admin service via browser.
 	// The default port is 8088
 	// see AdminPort
@@ -168,63 +168,63 @@ type Listen struct {
 	// @Default false
 	EnableStdIo bool
 	// ServerTimeOut
-	// @Description radiant use this as ReadTimeout and WriteTimeout
+	// @Description Radiant use this as ReadTimeout and WriteTimeout
 	// The unit is second.
 	// see http.Server.ReadTimeout, WriteTimeout
 	// @Default 0
 	ServerTimeOut int64
 	// HTTPAddr
-	// @Description radiant listen to this address when the application start up.
+	// @Description Radiant listen to this address when the application start up.
 	// @Default ""
 	HTTPAddr string
 	// HTTPPort
-	// @Description radiant listen to this port
+	// @Description Radiant listen to this port
 	// you'd better change this value when you deploy to prod environment
 	// @Default 8080
 	HTTPPort int
 	// Domains
-	// @Description radiant use this to configure TLS. Those domains are "white list" domain
+	// @Description Radiant use this to configure TLS. Those domains are "white list" domain
 	// @Default []
 	Domains []string
 	// TLSCacheDir
-	// @Description radiant use this as cache dir to store TLS cert data
+	// @Description Radiant use this as cache dir to store TLS cert data
 	// @Default ""
 	TLSCacheDir string
 	// HTTPSAddr
-	// @Description radiant will listen to this address to accept HTTPS request
+	// @Description Radiant will listen to this address to accept HTTPS request
 	// see EnableHTTPS
 	// @Default ""
 	HTTPSAddr string
 	// HTTPSPort
-	// @Description  radiant will listen to this port to accept HTTPS request
+	// @Description  Radiant will listen to this port to accept HTTPS request
 	// @Default 10443
 	HTTPSPort int
 	// HTTPSCertFile
-	// @Description radiant read this file as cert file
+	// @Description Radiant read this file as cert file
 	// When you are using HTTPS protocol, please configure it
 	// see HTTPSKeyFile
 	// @Default ""
 	HTTPSCertFile string
 	// HTTPSKeyFile
-	// @Description radiant read this file as key file
+	// @Description Radiant read this file as key file
 	// When you are using HTTPS protocol, please configure it
 	// see HTTPSCertFile
 	// @Default ""
 	HTTPSKeyFile string
 	// TrustCaFile
-	// @Description radiant read this file as CA file
+	// @Description Radiant read this file as CA file
 	// @Default ""
 	TrustCaFile string
 	// AdminAddr
-	// @Description radiant will listen to this address to provide admin service
+	// @Description Radiant will listen to this address to provide admin service
 	// In general, it should be the same with your application address, HTTPAddr or HTTPSAddr
 	// @Default ""
 	AdminAddr string
 	// AdminPort
-	// @Description  radiant will listen to this port to provide admin service
+	// @Description  Radiant will listen to this port to provide admin service
 	// @Default 8088
 	AdminPort int
-	// @Description radiant use this tls.ClientAuthType to initialize TLS connection
+	// @Description Radiant use this tls.ClientAuthType to initialize TLS connection
 	// The default value is tls.RequireAndVerifyClientCert
 	// @Default 4
 	ClientAuth int
@@ -233,46 +233,46 @@ type Listen struct {
 // WebConfig holds web related config
 type WebConfig struct {
 	// AutoRender
-	// @Description If it's true, radiant will render the page based on your template and data
+	// @Description If it's true, Radiant will render the page based on your template and data
 	// In general, keep it as true.
 	// But if you are building RESTFul API and you don't have any page,
 	// you can set it to false
 	// @Default true
 	AutoRender bool
-	// Deprecated: radiant didn't use it anymore
+	// Deprecated: Radiant didn't use it anymore
 	EnableDocs bool
 	// EnableXSRF
-	// @Description If it's true, radiant will help to provide XSRF support
-	// But you should notice that, now radiant only work for HTTPS protocol with XSRF
+	// @Description If it's true, Radiant will help to provide XSRF support
+	// But you should notice that, now Radiant only work for HTTPS protocol with XSRF
 	// because it's not safe if using HTTP protocol
 	// And, the cookie storing XSRF token has two more flags HttpOnly and Secure
 	// It means that you must use HTTPS protocol and you can not read the token from JS script
-	// This is completed different from radiant 1.x because we got many security reports
+	// This is completed different from Radiant 1.x because we got many security reports
 	// And if you are in dev environment, you could set it to false
 	// @Default false
 	EnableXSRF bool
 	// DirectoryIndex
-	// @Description When radiant serves static resources request, it will look up the file.
-	// If the file is directory, radiant will try to find the index.html as the response
+	// @Description When Radiant serves static resources request, it will look up the file.
+	// If the file is directory, Radiant will try to find the index.html as the response
 	// But if the index.html is not exist or it's a directory,
-	// radiant will return 403 response if DirectoryIndex is **false**
+	// Radiant will return 403 response if DirectoryIndex is **false**
 	// @Default false
 	DirectoryIndex bool
 	// FlashName
-	// @Description the cookie's name when radiant try to store the flash data into cookie
-	// @Default radiant_FLASH
+	// @Description the cookie's name when Radiant try to store the flash data into cookie
+	// @Default BEEGO_FLASH
 	FlashName string
 	// FlashSeparator
-	// @Description When radiant read flash data from request, it uses this as the separator
-	// @Default radiantFLASH
+	// @Description When Radiant read flash data from request, it uses this as the separator
+	// @Default BEEGOFLASH
 	FlashSeparator string
 	// StaticDir
-	// @Description radiant uses this as static resources' root directory.
-	// It means that radiant will try to search static resource from this start point
+	// @Description Radiant uses this as static resources' root directory.
+	// It means that Radiant will try to search static resource from this start point
 	// It's a map, the key is the path and the value is the directory
 	// For example, the default value is /static => static,
-	// which means that when radiant got a request with path /static/xxx
-	// radiant will try to find the resource from static directory
+	// which means that when Radiant got a request with path /static/xxx
+	// Radiant will try to find the resource from static directory
 	// @Default /static => static
 	StaticDir map[string]string
 	// StaticExtensionsToGzip
@@ -280,38 +280,38 @@ type WebConfig struct {
 	// @Default [".css", ".js" ]
 	StaticExtensionsToGzip []string
 	// StaticCacheFileSize
-	// @Description If the size of static resource < StaticCacheFileSize, radiant will try to handle it by itself,
-	// it means that radiant will compressed the file data (if enable) and cache this file.
-	// But if the file size > StaticCacheFileSize, radiant just simply delegate the request to http.ServeFile
+	// @Description If the size of static resource < StaticCacheFileSize, Radiant will try to handle it by itself,
+	// it means that Radiant will compressed the file data (if enable) and cache this file.
+	// But if the file size > StaticCacheFileSize, Radiant just simply delegate the request to http.ServeFile
 	// the default value is 100KB.
 	// the max memory size of caching static files is StaticCacheFileSize * StaticCacheFileNum
 	// see StaticCacheFileNum
 	// @Default 102400
 	StaticCacheFileSize int
 	// StaticCacheFileNum
-	// @Description radiant use it to control the memory usage of caching static resource file
-	// If the caching files > StaticCacheFileNum, radiant use LRU algorithm to remove caching file
+	// @Description Radiant use it to control the memory usage of caching static resource file
+	// If the caching files > StaticCacheFileNum, Radiant use LRU algorithm to remove caching file
 	// the max memory size of caching static files is StaticCacheFileSize * StaticCacheFileNum
 	// see StaticCacheFileSize
 	// @Default 1000
 	StaticCacheFileNum int
 	// TemplateLeft
-	// @Description radiant use this to render page
+	// @Description Radiant use this to render page
 	// see TemplateRight
 	// @Default {{
 	TemplateLeft string
 	// TemplateRight
-	// @Description radiant use this to render page
+	// @Description Radiant use this to render page
 	// see TemplateLeft
 	// @Default }}
 	TemplateRight string
 	// ViewsPath
-	// @Description The directory of radiant application storing template
+	// @Description The directory of Radiant application storing template
 	// @Default views
 	ViewsPath string
 	// CommentRouterPath
-	// @Description radiant scans this directory and its sub directory to generate router
-	// radiant only scans this directory when it's in dev environment
+	// @Description Radiant scans this directory and its sub directory to generate router
+	// Radiant only scans this directory when it's in dev environment
 	// @Default controllers
 	CommentRouterPath string
 	// XSRFKey
@@ -331,11 +331,11 @@ type WebConfig struct {
 // SessionConfig holds session related config
 type SessionConfig struct {
 	// SessionOn
-	// @Description if it's true, radiant will auto manage session
+	// @Description if it's true, Radiant will auto manage session
 	// @Default false
 	SessionOn bool
 	// SessionAutoSetCookie
-	// @Description if it's true, radiant will put the session token into cookie too
+	// @Description if it's true, Radiant will put the session token into cookie too
 	// @Default true
 	SessionAutoSetCookie bool
 	// SessionDisableHTTPOnly
@@ -353,7 +353,7 @@ type SessionConfig struct {
 	SessionEnableSidInURLQuery bool
 	// SessionProvider
 	// @Description session provider's name.
-	// You should confirm that this provider has been register via session.Register method
+	// You should confirm that this provider has radicaln register via session.Register method
 	// the default value is memory. This is not suitable for distributed system
 	// @Default memory
 	SessionProvider string
@@ -362,7 +362,7 @@ type SessionConfig struct {
 	// @Default radiantsessionID
 	SessionName string
 	// SessionGCMaxLifetime
-	// @Description radiant will GC session to clean useless session.
+	// @Description Radiant will GC session to clean useless session.
 	// unit: second
 	// @Default 3600
 	SessionGCMaxLifetime int64
@@ -384,7 +384,7 @@ type SessionConfig struct {
 	SessionDomain string
 	// SessionNameInHTTPHeader
 	// @Description if SessionEnableSidInHTTPHeader is true, this value will be used as the http header
-	// @Default radiantsessionid
+	// @Default Radiantsessionid
 	SessionNameInHTTPHeader string
 	// SessionCookieSameSite
 	// @Description If SessionAutoSetCookie is true, we use this value as the cookie's same site policy
@@ -401,7 +401,7 @@ type SessionConfig struct {
 // LogConfig holds Log related config
 type LogConfig struct {
 	// AccessLogs
-	// @Description If it's true, radiant will log the HTTP request info
+	// @Description If it's true, Radiant will log the HTTP request info
 	// @Default false
 	AccessLogs bool
 	// EnableStaticLogs
@@ -452,8 +452,8 @@ func init() {
 		panic(err)
 	}
 	filename := "app.conf"
-	if os.Getenv("radiant_RUNMODE") != "" {
-		filename = os.Getenv("radiant_RUNMODE") + ".app.conf"
+	if os.Getenv("BEEGO_RUNMODE") != "" {
+		filename = os.Getenv("BEEGO_RUNMODE") + ".app.conf"
 	}
 	appConfigPath = filepath.Join(WorkPath, "conf", filename)
 	if !utils.FileExists(appConfigPath) {
@@ -545,8 +545,8 @@ func newBConfig() *Config {
 		WebConfig: WebConfig{
 			AutoRender:             true,
 			EnableDocs:             false,
-			FlashName:              "radiant_FLASH",
-			FlashSeparator:         "radiantFLASH",
+			FlashName:              "BEEGO_FLASH",
+			FlashSeparator:         "BEEGOFLASH",
 			DirectoryIndex:         false,
 			StaticDir:              map[string]string{"/static": "static"},
 			StaticExtensionsToGzip: []string{".css", ".js"},
@@ -570,7 +570,7 @@ func newBConfig() *Config {
 				SessionAutoSetCookie:         true,
 				SessionDomain:                "",
 				SessionEnableSidInHTTPHeader: false, // enable store/get the sessionId into/from http headers
-				SessionNameInHTTPHeader:      "radiantsessionid",
+				SessionNameInHTTPHeader:      "Radiantsessionid",
 				SessionEnableSidInURLQuery:   false, // enable get the sessionId from Url Query params
 				SessionCookieSameSite:        http.SameSiteDefaultMode,
 			},
@@ -629,7 +629,7 @@ func parseConfigForV1(ac config.Configer) {
 	}
 
 	// set the run mode first
-	if envRunMode := os.Getenv("radiant_RUNMODE"); envRunMode != "" {
+	if envRunMode := os.Getenv("BEEGO_RUNMODE"); envRunMode != "" {
 		BConfig.RunMode = envRunMode
 	} else if runMode, err := ac.String("RunMode"); runMode != "" && err == nil {
 		BConfig.RunMode = runMode

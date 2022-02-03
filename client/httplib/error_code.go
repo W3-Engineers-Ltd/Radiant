@@ -1,4 +1,4 @@
-// Copyright 2021 radiant
+// Copyright 2020 radiant
 //
 
 package httplib
@@ -43,7 +43,7 @@ If you do this, you got this code. Instead, you should call Header to set Conten
 // start with 5 --------------------------------------------------------------------------
 
 var CreateFormFileFailed = berror.DefineCode(5001001, moduleName, "CreateFormFileFailed", `
-In normal case than handling files with radiantRequest, you should not see this error code.
+In normal case than handling files with RadiantRequest, you should not see this error code.
 Unexpected EOF, invalid characters, bad file descriptor may cause this error.
 `)
 
@@ -51,8 +51,8 @@ var ReadFileFailed = berror.DefineCode(5001002, moduleName, "ReadFileFailed", `
 There are several cases that cause this error:
 1. file not found. Please check the file name;
 2. file not found, but file name is correct. If you use relative file path, it's very possible for you to see this code.
-make sure that this file is in correct directory which radiant looks for;
-3. radiant don't have the privilege to read this file, please change file mode; 
+make sure that this file is in correct directory which Radiant looks for;
+3. Radiant don't have the privilege to read this file, please change file mode; 
 `)
 
 var CopyFileFailed = berror.DefineCode(5001003, moduleName, "CopyFileFailed", `
@@ -65,12 +65,12 @@ Please check your file content, and confirm that file is not processed by other 
 `)
 
 var CloseFileFailed = berror.DefineCode(5001004, moduleName, "CloseFileFailed", `
-After handling files, radiant try to close file but failed. Usually it was caused by bad file descriptor.
+After handling files, Radiant try to close file but failed. Usually it was caused by bad file descriptor.
 `)
 
 var SendRequestFailed = berror.DefineCode(5001005, moduleName, "SendRequestRetryExhausted", `
-radiant send HTTP request, but it failed.
-If you config retry times, it means that radiant had retried and failed.
+Radiant send HTTP request, but it failed.
+If you config retry times, it means that Radiant had retried and failed.
 When you got this error, there are vary kind of reason:
 1. Network unstable and timeout. In this case, sometimes server has received the request.
 2. Server error. Make sure that server works well.
@@ -78,21 +78,21 @@ When you got this error, there are vary kind of reason:
 `)
 
 var ReadGzipBodyFailed = berror.DefineCode(5001006, moduleName, "BuildGzipReaderFailed", `
-radiant parse gzip-encode body failed. Usually radiant got invalid response.
+Radiant parse gzip-encode body failed. Usually Radiant got invalid response.
 Please confirm that server returns gzip data.
 `)
 
 var CreateFileIfNotExistFailed = berror.DefineCode(5001007, moduleName, "CreateFileIfNotExist", `
-radiant want to create file if not exist and failed. 
-In most cases, it means that radiant doesn't have the privilege to create this file.
-Please change file mode to ensure that radiant is able to create files on specific directory.
-Or you can run radiant with higher authority.
+Radiant want to create file if not exist and failed. 
+In most cases, it means that Radiant doesn't have the privilege to create this file.
+Please change file mode to ensure that Radiant is able to create files on specific directory.
+Or you can run Radiant with higher authority.
 In some cases, you pass invalid filename. Make sure that the file name is valid on your system.
 `)
 
 var UnmarshalJSONResponseToObjectFailed = berror.DefineCode(5001008, moduleName,
 	"UnmarshalResponseToObjectFailed", `
-radiant trying to unmarshal response's body to structure but failed.
+Radiant trying to unmarshal response's body to structure but failed.
 Make sure that:
 1. You pass valid structure pointer to the function;
 2. The body is valid json document
@@ -100,7 +100,7 @@ Make sure that:
 
 var UnmarshalXMLResponseToObjectFailed = berror.DefineCode(5001009, moduleName,
 	"UnmarshalResponseToObjectFailed", `
-radiant trying to unmarshal response's body to structure but failed.
+Radiant trying to unmarshal response's body to structure but failed.
 Make sure that:
 1. You pass valid structure pointer to the function;
 2. The body is valid XML document
@@ -108,7 +108,7 @@ Make sure that:
 
 var UnmarshalYAMLResponseToObjectFailed = berror.DefineCode(5001010, moduleName,
 	"UnmarshalResponseToObjectFailed", `
-radiant trying to unmarshal response's body to structure but failed.
+Radiant trying to unmarshal response's body to structure but failed.
 Make sure that:
 1. You pass valid structure pointer to the function;
 2. The body is valid YAML document
@@ -116,7 +116,7 @@ Make sure that:
 
 var UnmarshalResponseToObjectFailed = berror.DefineCode(5001011, moduleName,
 	"UnmarshalResponseToObjectFailed", `
-radiant trying to unmarshal response's body to structure but failed.
+Radiant trying to unmarshal response's body to structure but failed.
 There are several cases that cause this error:
 1. You pass valid structure pointer to the function;
 2. The body is valid json, Yaml or XML document

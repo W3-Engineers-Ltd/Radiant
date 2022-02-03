@@ -8,7 +8,7 @@ import (
 )
 
 // Try each log level in decreasing order of priority.
-func testConsoleCalls(bl *BeeLogger) {
+func testConsoleCalls(bl *RadicalLogger) {
 	bl.Emergency("emergency")
 	bl.Alert("alert")
 	bl.Critical("critical")

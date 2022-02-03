@@ -55,7 +55,7 @@ func AccessLog(r *AccessLogRecord, format string) {
 		When:  time.Now(),
 		Level: levelLoggerImpl,
 	}
-	beeLogger.writeMsg(lm)
+	radicalLogger.writeMsg(lm)
 }
 
 func (r *AccessLogRecord) format(format string) string {

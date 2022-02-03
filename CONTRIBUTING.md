@@ -29,7 +29,7 @@ staticcheck -show-ignored -checks "-ST1017,-U1000,-ST1005,-S1034,-S1012,-SA4006,
 
 ## Prepare middleware
 
-radiant uses many middlewares, including MySQL, Redis, SSDB and so on.
+Radiant uses many middlewares, including MySQL, Redis, SSDB and so on.
 
 We provide docker compose file to start all middlewares.
 
@@ -74,7 +74,7 @@ anybody starts working on it.
 
 Also when filing an issue, make sure to answer these five questions:
 
-- What version of radiant are you using (bee version)?
+- What version of radiant are you using (radical version)?
 - What operating system and processor architecture are you using?
 - What did you do?
 - What did you expect to see?

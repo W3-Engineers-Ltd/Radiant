@@ -1,4 +1,4 @@
-// Copyright 2021 radiant
+// Copyright 2020 radiant
 //
 
 package httplib
@@ -71,9 +71,9 @@ func WithEnableGzip(enable bool) ClientOption {
 	}
 }
 
-// radiantHttpRequestOption
+// RadiantHttpRequestOption
 
-// WithTimeout sets connect time out and read-write time out for radiantRequest.
+// WithTimeout sets connect time out and read-write time out for RadiantRequest.
 func WithTimeout(connectTimeout, readWriteTimeout time.Duration) RadiantHTTPRequestOption {
 	return func(request *RadiantHTTPRequest) {
 		request.SetTimeout(connectTimeout, readWriteTimeout)

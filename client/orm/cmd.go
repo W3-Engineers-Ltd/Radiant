@@ -31,7 +31,7 @@ func printHelp(errs ...string) {
 	os.Exit(2)
 }
 
-// RunCommand listens for orm command and runs if command arguments have been passed.
+// RunCommand listens for orm command and runs if command arguments have radicaln passed.
 func RunCommand() {
 	if len(os.Args) < 2 || os.Args[1] != "orm" {
 		return
