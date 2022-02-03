@@ -2,9 +2,9 @@
 
 Radiant is used for rapid development of enterprise application in Go, including RESTful APIs, web apps and backend services.
 
-It is inspired by Tornado, Sinatra and Flask. radiant has some Go-specific features such as interfaces and struct embedding.
+It is inspired and made possible by Beego golang web framework which was inspired by Tornado, Sinatra and Flask. radiant has some Go-specific features such as interfaces and struct embedding.
 
-![architecture](https://cdn.nlark.com/yuque/0/2020/png/755700/1607857489109-1e267fce-d65f-4c5e-b915-5c475df33c58.png)
+TODO:: Architecture 
 
 Radiant is composed of four parts:
 
@@ -26,7 +26,7 @@ Radiant is composed of four parts:
 
 ### Web Application
 
-![Http Request](https://cdn.nlark.com/yuque/0/2020/png/755700/1607857462507-855ec543-7ce3-402d-a0cb-b2524d5a4b60.png)
+TODO:: HTTP REQUEST 
 
 #### Create `hello` directory, cd `hello` directory
 
@@ -91,9 +91,7 @@ Congratulations! You've just built your first **radiant** app.
 
 [//]: # (* [http://radiant.me/community]&#40;http://radiant.me/community&#41;)
 
-[//]: # (* Welcome to join us in Slack: [https://radiant.slack.com invite]&#40;https://join.slack.com/t/radiant/shared_invite/zt-fqlfjaxs-_CRmiITCSbEqQG9NeBqXKA&#41;,)
-
-[//]: # (* QQ Group Group ID:523992905)
+[//]: # (* Welcome to join us in Slack: TODO:: Slack 
 
 [//]: # (* [Contribution Guide]&#40;https://github.com/radiant/radicaldoc/blob/master/en-US/intro/contributing.md&#41;.)
 
