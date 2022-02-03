@@ -383,7 +383,7 @@ type Group struct {
 type Permission struct {
 	ID     int `orm:"column(id)"`
 	Name   string
-	Groups []*Group `orm:"rel(m2m);rel_through(github.com/W3-Engineers-Ltd/Radiant/tree/master/client/orm.GroupPermissions)"`
+	Groups []*Group `orm:"rel(m2m);rel_through(github.com/W3-Engineers-Ltd/Radiant/client/orm.GroupPermissions)"`
 }
 
 type GroupPermissions struct {
