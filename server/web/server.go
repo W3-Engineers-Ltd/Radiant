@@ -23,14 +23,14 @@ import (
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/grace"
 )
 
-// BeeApp is an application instance
+// RadicalApp is an application instance
 // If you are using single server, you could use this
 // But if you need multiple servers, do not use this
-var BeeApp *HttpServer
+var RadicalApp *HttpServer
 
 func init() {
 	// create radiant application
-	BeeApp = NewHttpSever()
+	RadicalApp = NewHttpSever()
 }
 
 // HttpServer defines radiant application with a new PatternServeMux.
@@ -254,10 +254,10 @@ func Router(rootpath string, c ControllerInterface, mappingMethods ...string) *H
 }
 
 func RouterWithOpts(rootpath string, c ControllerInterface, opts ...ControllerOption) *HttpServer {
-	return BeeApp.RouterWithOpts(rootpath, c, opts...)
+	return RadicalApp.RouterWithOpts(rootpath, c, opts...)
 }
 
-// Router adds a patterned controller handler to BeeApp.
+// Router adds a patterned controller handler to RadicalApp.
 // it's an alias method of HttpServer.Router.
 // usage:
 //  simple router
@@ -284,7 +284,7 @@ func (app *HttpServer) RouterWithOpts(rootPath string, c ControllerInterface, op
 
 // UnregisterFixedRoute see HttpServer.UnregisterFixedRoute
 func UnregisterFixedRoute(fixedRoute string, method string) *HttpServer {
-	return BeeApp.UnregisterFixedRoute(fixedRoute, method)
+	return RadicalApp.UnregisterFixedRoute(fixedRoute, method)
 }
 
 // UnregisterFixedRoute unregisters the route with the specified fixedRoute. It is particularly useful
@@ -367,7 +367,7 @@ func findAndRemoveSingleTree(entryPointTree *Tree) {
 
 // Include see HttpServer.Include
 func Include(cList ...ControllerInterface) *HttpServer {
-	return BeeApp.Include(cList...)
+	return RadicalApp.Include(cList...)
 }
 
 // Include will generate router file in the router/xxx.go from the controller's comments
@@ -404,10 +404,10 @@ func (app *HttpServer) Include(cList ...ControllerInterface) *HttpServer {
 
 // RESTRouter see HttpServer.RESTRouter
 func RESTRouter(rootpath string, c ControllerInterface) *HttpServer {
-	return BeeApp.RESTRouter(rootpath, c)
+	return RadicalApp.RESTRouter(rootpath, c)
 }
 
-// RESTRouter adds a restful controller handler to BeeApp.
+// RESTRouter adds a restful controller handler to RadicalApp.
 // its' controller implements radiant.ControllerInterface and
 // defines a param "pattern/:objectId" to visit each resource.
 func (app *HttpServer) RESTRouter(rootpath string, c ControllerInterface) *HttpServer {
@@ -418,10 +418,10 @@ func (app *HttpServer) RESTRouter(rootpath string, c ControllerInterface) *HttpS
 
 // AutoRouter see HttpServer.AutoRouter
 func AutoRouter(c ControllerInterface) *HttpServer {
-	return BeeApp.AutoRouter(c)
+	return RadicalApp.AutoRouter(c)
 }
 
-// AutoRouter adds defined controller handler to BeeApp.
+// AutoRouter adds defined controller handler to RadicalApp.
 // it's same to HttpServer.AutoRouter.
 // if radiant.AddAuto(&MainController{}) and MainController has methods List and Page,
 // visit the url /main/list to exec List function or /main/page to exec Page function.
@@ -432,10 +432,10 @@ func (app *HttpServer) AutoRouter(c ControllerInterface) *HttpServer {
 
 // AutoPrefix see HttpServer.AutoPrefix
 func AutoPrefix(prefix string, c ControllerInterface) *HttpServer {
-	return BeeApp.AutoPrefix(prefix, c)
+	return RadicalApp.AutoPrefix(prefix, c)
 }
 
-// AutoPrefix adds controller handler to BeeApp with prefix.
+// AutoPrefix adds controller handler to RadicalApp with prefix.
 // it's same to HttpServer.AutoRouterWithPrefix.
 // if radiant.AutoPrefix("/admin",&MainController{}) and MainController has methods List and Page,
 // visit the url /admin/main/list to exec List function or /admin/main/page to exec Page function.
@@ -446,7 +446,7 @@ func (app *HttpServer) AutoPrefix(prefix string, c ControllerInterface) *HttpSer
 
 // CtrlGet see HttpServer.CtrlGet
 func CtrlGet(rootpath string, f interface{}) {
-	BeeApp.CtrlGet(rootpath, f)
+	RadicalApp.CtrlGet(rootpath, f)
 }
 
 // CtrlGet used to register router for CtrlGet method
@@ -466,7 +466,7 @@ func (app *HttpServer) CtrlGet(rootpath string, f interface{}) *HttpServer {
 
 // CtrlPost see HttpServer.CtrlGet
 func CtrlPost(rootpath string, f interface{}) {
-	BeeApp.CtrlPost(rootpath, f)
+	RadicalApp.CtrlPost(rootpath, f)
 }
 
 // CtrlPost used to register router for CtrlPost method
@@ -486,7 +486,7 @@ func (app *HttpServer) CtrlPost(rootpath string, f interface{}) *HttpServer {
 
 // CtrlHead see HttpServer.CtrlHead
 func CtrlHead(rootpath string, f interface{}) {
-	BeeApp.CtrlHead(rootpath, f)
+	RadicalApp.CtrlHead(rootpath, f)
 }
 
 // CtrlHead used to register router for CtrlHead method
@@ -506,7 +506,7 @@ func (app *HttpServer) CtrlHead(rootpath string, f interface{}) *HttpServer {
 
 // CtrlPut see HttpServer.CtrlPut
 func CtrlPut(rootpath string, f interface{}) {
-	BeeApp.CtrlPut(rootpath, f)
+	RadicalApp.CtrlPut(rootpath, f)
 }
 
 // CtrlPut used to register router for CtrlPut method
@@ -526,7 +526,7 @@ func (app *HttpServer) CtrlPut(rootpath string, f interface{}) *HttpServer {
 
 // CtrlPatch see HttpServer.CtrlPatch
 func CtrlPatch(rootpath string, f interface{}) {
-	BeeApp.CtrlPatch(rootpath, f)
+	RadicalApp.CtrlPatch(rootpath, f)
 }
 
 // CtrlPatch used to register router for CtrlPatch method
@@ -546,7 +546,7 @@ func (app *HttpServer) CtrlPatch(rootpath string, f interface{}) *HttpServer {
 
 // CtrlDelete see HttpServer.CtrlDelete
 func CtrlDelete(rootpath string, f interface{}) {
-	BeeApp.CtrlDelete(rootpath, f)
+	RadicalApp.CtrlDelete(rootpath, f)
 }
 
 // CtrlDelete used to register router for CtrlDelete method
@@ -566,7 +566,7 @@ func (app *HttpServer) CtrlDelete(rootpath string, f interface{}) *HttpServer {
 
 // CtrlOptions see HttpServer.CtrlOptions
 func CtrlOptions(rootpath string, f interface{}) {
-	BeeApp.CtrlOptions(rootpath, f)
+	RadicalApp.CtrlOptions(rootpath, f)
 }
 
 // CtrlOptions used to register router for CtrlOptions method
@@ -586,7 +586,7 @@ func (app *HttpServer) CtrlOptions(rootpath string, f interface{}) *HttpServer {
 
 // CtrlAny see HttpServer.CtrlAny
 func CtrlAny(rootpath string, f interface{}) {
-	BeeApp.CtrlAny(rootpath, f)
+	RadicalApp.CtrlAny(rootpath, f)
 }
 
 // CtrlAny used to register router for CtrlAny method
@@ -606,7 +606,7 @@ func (app *HttpServer) CtrlAny(rootpath string, f interface{}) *HttpServer {
 
 // Get see HttpServer.Get
 func Get(rootpath string, f HandleFunc) *HttpServer {
-	return BeeApp.Get(rootpath, f)
+	return RadicalApp.Get(rootpath, f)
 }
 
 // Get used to register router for Get method
@@ -621,7 +621,7 @@ func (app *HttpServer) Get(rootpath string, f HandleFunc) *HttpServer {
 
 // Post see HttpServer.Post
 func Post(rootpath string, f HandleFunc) *HttpServer {
-	return BeeApp.Post(rootpath, f)
+	return RadicalApp.Post(rootpath, f)
 }
 
 // Post used to register router for Post method
@@ -636,7 +636,7 @@ func (app *HttpServer) Post(rootpath string, f HandleFunc) *HttpServer {
 
 // Delete see HttpServer.Delete
 func Delete(rootpath string, f HandleFunc) *HttpServer {
-	return BeeApp.Delete(rootpath, f)
+	return RadicalApp.Delete(rootpath, f)
 }
 
 // Delete used to register router for Delete method
@@ -651,7 +651,7 @@ func (app *HttpServer) Delete(rootpath string, f HandleFunc) *HttpServer {
 
 // Put see HttpServer.Put
 func Put(rootpath string, f HandleFunc) *HttpServer {
-	return BeeApp.Put(rootpath, f)
+	return RadicalApp.Put(rootpath, f)
 }
 
 // Put used to register router for Put method
@@ -666,7 +666,7 @@ func (app *HttpServer) Put(rootpath string, f HandleFunc) *HttpServer {
 
 // Head see HttpServer.Head
 func Head(rootpath string, f HandleFunc) *HttpServer {
-	return BeeApp.Head(rootpath, f)
+	return RadicalApp.Head(rootpath, f)
 }
 
 // Head used to register router for Head method
@@ -681,8 +681,8 @@ func (app *HttpServer) Head(rootpath string, f HandleFunc) *HttpServer {
 
 // Options see HttpServer.Options
 func Options(rootpath string, f HandleFunc) *HttpServer {
-	BeeApp.Handlers.Options(rootpath, f)
-	return BeeApp
+	RadicalApp.Handlers.Options(rootpath, f)
+	return RadicalApp
 }
 
 // Options used to register router for Options method
@@ -697,7 +697,7 @@ func (app *HttpServer) Options(rootpath string, f HandleFunc) *HttpServer {
 
 // Patch see HttpServer.Patch
 func Patch(rootpath string, f HandleFunc) *HttpServer {
-	return BeeApp.Patch(rootpath, f)
+	return RadicalApp.Patch(rootpath, f)
 }
 
 // Patch used to register router for Patch method
@@ -712,7 +712,7 @@ func (app *HttpServer) Patch(rootpath string, f HandleFunc) *HttpServer {
 
 // Any see HttpServer.Any
 func Any(rootpath string, f HandleFunc) *HttpServer {
-	return BeeApp.Any(rootpath, f)
+	return RadicalApp.Any(rootpath, f)
 }
 
 // Any used to register router for all methods
@@ -727,7 +727,7 @@ func (app *HttpServer) Any(rootpath string, f HandleFunc) *HttpServer {
 
 // Handler see HttpServer.Handler
 func Handler(rootpath string, h http.Handler, options ...interface{}) *HttpServer {
-	return BeeApp.Handler(rootpath, h, options...)
+	return RadicalApp.Handler(rootpath, h, options...)
 }
 
 // Handler used to register a Handler router
@@ -742,7 +742,7 @@ func (app *HttpServer) Handler(rootpath string, h http.Handler, options ...inter
 
 // InserFilter see HttpServer.InsertFilter
 func InsertFilter(pattern string, pos int, filter FilterFunc, opts ...FilterOpt) *HttpServer {
-	return BeeApp.InsertFilter(pattern, pos, filter, opts...)
+	return RadicalApp.InsertFilter(pattern, pos, filter, opts...)
 }
 
 // InsertFilter adds a FilterFunc with pattern condition and action constant.
@@ -756,7 +756,7 @@ func (app *HttpServer) InsertFilter(pattern string, pos int, filter FilterFunc, 
 
 // InsertFilterChain see HttpServer.InsertFilterChain
 func InsertFilterChain(pattern string, filterChain FilterChain, opts ...FilterOpt) *HttpServer {
-	return BeeApp.InsertFilterChain(pattern, filterChain, opts...)
+	return RadicalApp.InsertFilterChain(pattern, filterChain, opts...)
 }
 
 // InsertFilterChain adds a FilterFunc built by filterChain.

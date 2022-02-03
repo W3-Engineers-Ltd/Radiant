@@ -2,24 +2,24 @@ package utils
 
 import "testing"
 
-var safeMap *BeeMap
+var safeMap *RadicalMap
 
-func TestNewBeeMap(t *testing.T) {
-	safeMap = NewBeeMap()
+func TestNewRadicalMap(t *testing.T) {
+	safeMap = NewRadicalMap()
 	if safeMap == nil {
-		t.Fatal("expected to return non-nil BeeMap", "got", safeMap)
+		t.Fatal("expected to return non-nil RadicalMap", "got", safeMap)
 	}
 }
 
 func TestSet(t *testing.T) {
-	safeMap = NewBeeMap()
+	safeMap = NewRadicalMap()
 	if ok := safeMap.Set("astaxie", 1); !ok {
 		t.Error("expected", true, "got", false)
 	}
 }
 
 func TestReSet(t *testing.T) {
-	safeMap := NewBeeMap()
+	safeMap := NewRadicalMap()
 	if ok := safeMap.Set("astaxie", 1); !ok {
 		t.Error("expected", true, "got", false)
 	}
@@ -54,7 +54,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestItems(t *testing.T) {
-	safeMap := NewBeeMap()
+	safeMap := NewRadicalMap()
 	safeMap.Set("astaxie", "hello")
 	for k, v := range safeMap.Items() {
 		key := k.(string)

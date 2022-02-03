@@ -158,7 +158,7 @@ type ControllerRegister struct {
 // Usually you should not use this method
 // please use NewControllerRegisterWithCfg
 func NewControllerRegister() *ControllerRegister {
-	return NewControllerRegisterWithCfg(BeeApp.Cfg)
+	return NewControllerRegisterWithCfg(RadicalApp.Cfg)
 }
 
 func NewControllerRegisterWithCfg(cfg *Config) *ControllerRegister {
@@ -1314,5 +1314,5 @@ func toURL(params map[string]string) string {
 
 // LogAccess logging info HTTP Access
 func LogAccess(ctx *beecontext.Context, startTime *time.Time, statusCode int) {
-	BeeApp.LogAccess(ctx, startTime, statusCode)
+	RadicalApp.LogAccess(ctx, startTime, statusCode)
 }

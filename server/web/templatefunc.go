@@ -230,7 +230,7 @@ func Htmlunquote(text string) string {
 //
 //  more detail http://radiant.me/docs/mvc/controller/urlbuilding.md
 func URLFor(endpoint string, values ...interface{}) string {
-	return BeeApp.Handlers.URLFor(endpoint, values...)
+	return RadicalApp.Handlers.URLFor(endpoint, values...)
 }
 
 // AssetsJs returns script tag with src string.

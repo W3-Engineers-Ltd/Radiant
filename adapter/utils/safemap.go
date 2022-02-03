@@ -4,41 +4,41 @@ import (
 	"github.com/W3-Engineers-Ltd/Radiant/core/utils"
 )
 
-// BeeMap is a map with lock
-type BeeMap utils.BeeMap
+// RadicalMap is a map with lock
+type RadicalMap utils.RadicalMap
 
-// NewBeeMap return new safemap
-func NewBeeMap() *BeeMap {
-	return (*BeeMap)(utils.NewBeeMap())
+// NewRadicalMap return new safemap
+func NewRadicalMap() *RadicalMap {
+	return (*RadicalMap)(utils.NewRadicalMap())
 }
 
 // Get from maps return the k's value
-func (m *BeeMap) Get(k interface{}) interface{} {
-	return (*utils.BeeMap)(m).Get(k)
+func (m *RadicalMap) Get(k interface{}) interface{} {
+	return (*utils.RadicalMap)(m).Get(k)
 }
 
 // Set Maps the given key and value. Returns false
 // if the key is already in the map and changes nothing.
-func (m *BeeMap) Set(k interface{}, v interface{}) bool {
-	return (*utils.BeeMap)(m).Set(k, v)
+func (m *RadicalMap) Set(k interface{}, v interface{}) bool {
+	return (*utils.RadicalMap)(m).Set(k, v)
 }
 
 // Check Returns true if k is exist in the map.
-func (m *BeeMap) Check(k interface{}) bool {
-	return (*utils.BeeMap)(m).Check(k)
+func (m *RadicalMap) Check(k interface{}) bool {
+	return (*utils.RadicalMap)(m).Check(k)
 }
 
 // Delete the given key and value.
-func (m *BeeMap) Delete(k interface{}) {
-	(*utils.BeeMap)(m).Delete(k)
+func (m *RadicalMap) Delete(k interface{}) {
+	(*utils.RadicalMap)(m).Delete(k)
 }
 
 // Items returns all items in safemap.
-func (m *BeeMap) Items() map[interface{}]interface{} {
-	return (*utils.BeeMap)(m).Items()
+func (m *RadicalMap) Items() map[interface{}]interface{} {
+	return (*utils.RadicalMap)(m).Items()
 }
 
 // Count returns the number of items within the map.
-func (m *BeeMap) Count() int {
-	return (*utils.BeeMap)(m).Count()
+func (m *RadicalMap) Count() int {
+	return (*utils.RadicalMap)(m).Count()
 }

@@ -55,11 +55,11 @@ func NewContext() *Context {
 	}
 }
 
-// Context Http request context struct including radiantInput, radiantOutput, http.Request and http.ResponseWriter.
-// radiantInput and radiantOutput provides an api to operate request and response more easily.
+// Context Http request context struct including RadiantInput, RadiantOutput, http.Request and http.ResponseWriter.
+// RadiantInput and RadiantOutput provides an api to operate request and response more easily.
 type Context struct {
-	Input          *radiantInput
-	Output         *radiantOutput
+	Input          *RadiantInput
+	Output         *RadiantOutput
 	Request        *http.Request
 	ResponseWriter *Response
 	_xsrfToken     string
@@ -167,7 +167,7 @@ func isStructPtr(t reflect.Type) bool {
 	return t.Kind() == reflect.Ptr && t.Elem().Kind() == reflect.Struct
 }
 
-// Reset initializes Context, radiantInput and radiantOutput
+// Reset initializes Context, RadiantInput and RadiantOutput
 func (ctx *Context) Reset(rw http.ResponseWriter, r *http.Request) {
 	ctx.Request = r
 	if ctx.ResponseWriter == nil {
@@ -197,13 +197,13 @@ func (ctx *Context) WriteString(content string) {
 }
 
 // GetCookie gets a cookie from a request for a given key.
-// (Alias of radiantInput.Cookie)
+// (Alias of RadiantInput.Cookie)
 func (ctx *Context) GetCookie(key string) string {
 	return ctx.Input.Cookie(key)
 }
 
 // SetCookie sets a cookie for a response.
-// (Alias of radiantOutput.Cookie)
+// (Alias of RadiantOutput.Cookie)
 func (ctx *Context) SetCookie(name string, value string, others ...interface{}) {
 	ctx.Output.Cookie(name, value, others...)
 }

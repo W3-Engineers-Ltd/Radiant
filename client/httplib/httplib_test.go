@@ -179,7 +179,7 @@ func TestWithUserAgent(t *testing.T) {
 
 func TestWithSetting(t *testing.T) {
 	v := "radiant"
-	var setting radiantHTTPSettings
+	var setting RadiantHTTPSettings
 	setting.EnableCookie = true
 	setting.UserAgent = v
 	setting.Transport = &http.Transport{
@@ -278,7 +278,7 @@ func TestHeader(t *testing.T) {
 func TestAddFilter(t *testing.T) {
 	req := Get("http://radiant.me")
 	req.AddFilters(func(next Filter) Filter {
-		return func(ctx context.Context, req *radiantHTTPRequest) (*http.Response, error) {
+		return func(ctx context.Context, req *RadiantHTTPRequest) (*http.Response, error) {
 			return next(ctx, req)
 		}
 	})
@@ -290,13 +290,13 @@ func TestAddFilter(t *testing.T) {
 func TestFilterChainOrder(t *testing.T) {
 	req := Get("http://radiant.me")
 	req.AddFilters(func(next Filter) Filter {
-		return func(ctx context.Context, req *radiantHTTPRequest) (*http.Response, error) {
+		return func(ctx context.Context, req *RadiantHTTPRequest) (*http.Response, error) {
 			return NewHttpResponseWithJsonBody("first"), nil
 		}
 	})
 
 	req.AddFilters(func(next Filter) Filter {
-		return func(ctx context.Context, req *radiantHTTPRequest) (*http.Response, error) {
+		return func(ctx context.Context, req *RadiantHTTPRequest) (*http.Response, error) {
 			return NewHttpResponseWithJsonBody("second"), nil
 		}
 	})
@@ -336,7 +336,7 @@ func TestNewradiantRequest(t *testing.T) {
 	assert.NotNil(t, req)
 }
 
-func TestradiantHTTPRequestSetProtocolVersion(t *testing.T) {
+func TestRadiantHTTPRequestSetProtocolVersion(t *testing.T) {
 	req := NewradiantRequest("http://radiant.me", "GET")
 	req.SetProtocolVersion("HTTP/3.10")
 	assert.Equal(t, "HTTP/3.10", req.req.Proto)
@@ -361,21 +361,21 @@ func TestPut(t *testing.T) {
 	assert.Equal(t, "PUT", req.req.Method)
 }
 
-func TestradiantHTTPRequestHeader(t *testing.T) {
+func TestRadiantHTTPRequestHeader(t *testing.T) {
 	req := Post("http://radiant.me")
 	key, value := "test-header", "test-header-value"
 	req.Header(key, value)
 	assert.Equal(t, value, req.req.Header.Get(key))
 }
 
-func TestradiantHTTPRequestSetHost(t *testing.T) {
+func TestRadiantHTTPRequestSetHost(t *testing.T) {
 	req := Post("http://radiant.me")
 	host := "test-hose"
 	req.SetHost(host)
 	assert.Equal(t, host, req.req.Host)
 }
 
-func TestradiantHTTPRequestParam(t *testing.T) {
+func TestRadiantHTTPRequestParam(t *testing.T) {
 	req := Post("http://radiant.me")
 	key, value := "test-param", "test-param-value"
 	req.Param(key, value)
@@ -386,7 +386,7 @@ func TestradiantHTTPRequestParam(t *testing.T) {
 	assert.Equal(t, value1, req.params[key][1])
 }
 
-func TestradiantHTTPRequestBody(t *testing.T) {
+func TestRadiantHTTPRequestBody(t *testing.T) {
 	req := Post("http://radiant.me")
 	body := `hello, world`
 	req.Body([]byte(body))
@@ -408,7 +408,7 @@ type user struct {
 	Name string `xml:"name"`
 }
 
-func TestradiantHTTPRequestXMLBody(t *testing.T) {
+func TestRadiantHTTPRequestXMLBody(t *testing.T) {
 	req := Post("http://radiant.me")
 	body := &user{
 		Name: "Tom",
@@ -420,10 +420,10 @@ func TestradiantHTTPRequestXMLBody(t *testing.T) {
 }
 
 // TODO
-func TestradiantHTTPRequestResponseForValue(t *testing.T) {
+func TestRadiantHTTPRequestResponseForValue(t *testing.T) {
 }
 
-func TestradiantHTTPRequestJSONMarshal(t *testing.T) {
+func TestRadiantHTTPRequestJSONMarshal(t *testing.T) {
 	req := Post("http://radiant.me")
 	req.SetEscapeHTML(false)
 	body := map[string]interface{}{

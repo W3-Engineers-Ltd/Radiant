@@ -747,8 +747,8 @@ func TestRouterEntityTooLargeCopyBody(t *testing.T) {
 	BConfig.CopyRequestBody = true
 	BConfig.MaxMemory = 20
 
-	BeeApp.Cfg.CopyRequestBody = true
-	BeeApp.Cfg.MaxMemory = 20
+	RadicalApp.Cfg.CopyRequestBody = true
+	RadicalApp.Cfg.MaxMemory = 20
 	b := bytes.NewBuffer([]byte("barbarbarbarbarbarbarbarbarbar"))
 	r, _ := http.NewRequest("POST", "/user/123", b)
 	w := httptest.NewRecorder()

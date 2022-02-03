@@ -35,14 +35,14 @@ func AddAPPStartHook(hf ...hookfunc) {
 // radiant.Run("127.0.0.1:8089")
 func Run(params ...string) {
 	if len(params) > 0 && params[0] != "" {
-		BeeApp.Run(params[0])
+		RadicalApp.Run(params[0])
 	}
-	BeeApp.Run("")
+	RadicalApp.Run("")
 }
 
 // RunWithMiddleWares Run radiant application with middlewares.
 func RunWithMiddleWares(addr string, mws ...MiddleWare) {
-	BeeApp.Run(addr, mws...)
+	RadicalApp.Run(addr, mws...)
 }
 
 var initHttpOnce sync.Once

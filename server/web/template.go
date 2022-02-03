@@ -353,7 +353,7 @@ func SetTemplateFSFunc(fnt templateFSFunc) {
 // SetViewsPath sets view directory path in radiant application.
 func SetViewsPath(path string) *HttpServer {
 	BConfig.WebConfig.ViewsPath = path
-	return BeeApp
+	return RadicalApp
 }
 
 // SetStaticPath sets static directory path and proper url pattern in radiant application.
@@ -366,7 +366,7 @@ func SetStaticPath(url string, path string) *HttpServer {
 		url = strings.TrimRight(url, "/")
 	}
 	BConfig.WebConfig.StaticDir[url] = path
-	return BeeApp
+	return RadicalApp
 }
 
 // DelStaticPath removes the static folder setting in this url pattern in radiant application.
@@ -378,12 +378,12 @@ func DelStaticPath(url string) *HttpServer {
 		url = strings.TrimRight(url, "/")
 	}
 	delete(BConfig.WebConfig.StaticDir, url)
-	return BeeApp
+	return RadicalApp
 }
 
 // AddTemplateEngine add a new templatePreProcessor which support extension
 func AddTemplateEngine(extension string, fn templatePreProcessor) *HttpServer {
 	AddTemplateExt(extension)
 	beeTemplateEngines[extension] = fn
-	return BeeApp
+	return RadicalApp
 }

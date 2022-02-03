@@ -29,11 +29,11 @@ func NewContext() *Context {
 	return (*Context)(context.NewContext())
 }
 
-// Context Http request context struct including radiantInput, radiantOutput, http.Request and http.ResponseWriter.
-// radiantInput and radiantOutput provides some api to operate request and response more easily.
+// Context Http request context struct including RadiantInput, RadiantOutput, http.Request and http.ResponseWriter.
+// RadiantInput and RadiantOutput provides some api to operate request and response more easily.
 type Context context.Context
 
-// Reset init Context, radiantInput and radiantOutput
+// Reset init Context, RadiantInput and RadiantOutput
 func (ctx *Context) Reset(rw http.ResponseWriter, r *http.Request) {
 	(*context.Context)(ctx).Reset(rw, r)
 }
@@ -56,13 +56,13 @@ func (ctx *Context) WriteString(content string) {
 }
 
 // GetCookie Get cookie from request by a given key.
-// It's alias of radiantInput.Cookie.
+// It's alias of RadiantInput.Cookie.
 func (ctx *Context) GetCookie(key string) string {
 	return (*context.Context)(ctx).GetCookie(key)
 }
 
 // SetCookie Set cookie for response.
-// It's alias of radiantOutput.Cookie.
+// It's alias of RadiantOutput.Cookie.
 func (ctx *Context) SetCookie(name string, value string, others ...interface{}) {
 	(*context.Context)(ctx).SetCookie(name, value, others)
 }

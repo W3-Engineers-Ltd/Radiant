@@ -1,16 +1,5 @@
-// Copyright 2020 radiant
+// Copyright 2021 radiant
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 package httplib
 
@@ -23,7 +12,7 @@ import (
 
 type (
 	ClientOption             func(client *Client)
-	radiantHTTPRequestOption func(request *radiantHTTPRequest)
+	RadiantHTTPRequestOption func(request *RadiantHTTPRequest)
 )
 
 // WithEnableCookie will enable cookie in all subsequent request
@@ -69,7 +58,7 @@ func WithCheckRedirect(redirect func(req *http.Request, via []*http.Request) err
 }
 
 // WithHTTPSetting can replace radiantHTTPSeting
-func WithHTTPSetting(setting radiantHTTPSettings) ClientOption {
+func WithHTTPSetting(setting RadiantHTTPSettings) ClientOption {
 	return func(client *Client) {
 		client.Setting = setting
 	}
@@ -85,29 +74,29 @@ func WithEnableGzip(enable bool) ClientOption {
 // radiantHttpRequestOption
 
 // WithTimeout sets connect time out and read-write time out for radiantRequest.
-func WithTimeout(connectTimeout, readWriteTimeout time.Duration) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithTimeout(connectTimeout, readWriteTimeout time.Duration) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		request.SetTimeout(connectTimeout, readWriteTimeout)
 	}
 }
 
 // WithHeader adds header item string in request.
-func WithHeader(key, value string) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithHeader(key, value string) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		request.Header(key, value)
 	}
 }
 
 // WithCookie adds a cookie to the request.
-func WithCookie(cookie *http.Cookie) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithCookie(cookie *http.Cookie) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		request.Header("Cookie", cookie.String())
 	}
 }
 
 // Withtokenfactory adds a custom function to set Authorization
-func WithTokenFactory(tokenFactory func() string) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithTokenFactory(tokenFactory func() string) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		t := tokenFactory()
 
 		request.Header("Authorization", t)
@@ -115,30 +104,30 @@ func WithTokenFactory(tokenFactory func() string) radiantHTTPRequestOption {
 }
 
 // WithBasicAuth adds a custom function to set basic auth
-func WithBasicAuth(basicAuth func() (string, string)) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithBasicAuth(basicAuth func() (string, string)) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		username, password := basicAuth()
 		request.SetBasicAuth(username, password)
 	}
 }
 
 // WithFilters will use the filter as the invocation filters
-func WithFilters(fcs ...FilterChain) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithFilters(fcs ...FilterChain) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		request.SetFilters(fcs...)
 	}
 }
 
 // WithContentType adds ContentType in header
-func WithContentType(contentType string) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithContentType(contentType string) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		request.Header(contentTypeKey, contentType)
 	}
 }
 
 // WithParam adds query param in to request.
-func WithParam(key, value string) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithParam(key, value string) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		request.Param(key, value)
 	}
 }
@@ -147,8 +136,8 @@ func WithParam(key, value string) radiantHTTPRequestOption {
 // default is 0 (never retry)
 // -1 retry indefinitely (forever)
 // Other numbers specify the exact retry amount
-func WithRetry(times int, delay time.Duration) radiantHTTPRequestOption {
-	return func(request *radiantHTTPRequest) {
+func WithRetry(times int, delay time.Duration) RadiantHTTPRequestOption {
+	return func(request *RadiantHTTPRequest) {
 		request.Retries(times)
 		request.RetryDelay(delay)
 	}

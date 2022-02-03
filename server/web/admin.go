@@ -10,7 +10,7 @@ import (
 )
 
 // BeeAdminApp is the default adminApp used by admin module.
-var beeAdminApp *adminApp
+var radicalAdminApp *adminApp
 
 // FilterMonitorFunc is default monitor filter when admin module is enable.
 // if this func returns, admin module records qps for this request by condition of this function logic.
@@ -61,7 +61,7 @@ func writeJSON(rw http.ResponseWriter, jsonData []byte) {
 	rw.Write(jsonData)
 }
 
-// adminApp is an http.HandlerFunc map used as beeAdminApp.
+// adminApp is an http.HandlerFunc map used as radicalAdminApp.
 type adminApp struct {
 	*HttpServer
 }
@@ -87,19 +87,19 @@ func registerAdmin() error {
 
 		// copy config to avoid conflict
 		adminCfg := *BConfig
-		beeAdminApp = &adminApp{
+		radicalAdminApp = &adminApp{
 			HttpServer: NewHttpServerWithCfg(&adminCfg),
 		}
 		// keep in mind that all data should be html escaped to avoid XSS attack
-		beeAdminApp.Router("/", c, "get:AdminIndex")
-		beeAdminApp.Router("/qps", c, "get:QpsIndex")
-		beeAdminApp.Router("/prof", c, "get:ProfIndex")
-		beeAdminApp.Router("/healthcheck", c, "get:Healthcheck")
-		beeAdminApp.Router("/task", c, "get:TaskStatus")
-		beeAdminApp.Router("/listconf", c, "get:ListConf")
-		beeAdminApp.Router("/metrics", c, "get:PrometheusMetrics")
+		radicalAdminApp.Router("/", c, "get:AdminIndex")
+		radicalAdminApp.Router("/qps", c, "get:QpsIndex")
+		radicalAdminApp.Router("/prof", c, "get:ProfIndex")
+		radicalAdminApp.Router("/healthcheck", c, "get:Healthcheck")
+		radicalAdminApp.Router("/task", c, "get:TaskStatus")
+		radicalAdminApp.Router("/listconf", c, "get:ListConf")
+		radicalAdminApp.Router("/metrics", c, "get:PrometheusMetrics")
 
-		go beeAdminApp.Run()
+		go radicalAdminApp.Run()
 	}
 	return nil
 }

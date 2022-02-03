@@ -1,16 +1,5 @@
-// Copyright 2020 radiant
+// Copyright 2021 radiant
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 package httplib
 
@@ -25,9 +14,9 @@ import (
 type Client struct {
 	Name       string
 	Endpoint   string
-	CommonOpts []radiantHTTPRequestOption
+	CommonOpts []RadiantHTTPRequestOption
 
-	Setting radiantHTTPSettings
+	Setting RadiantHTTPSettings
 }
 
 // HTTPResponseCarrier If value implement HTTPResponseCarrier. http.Response will pass to SetHTTPResponse
@@ -70,7 +59,7 @@ func NewClient(name string, endpoint string, opts ...ClientOption) (*Client, err
 	return res, nil
 }
 
-func (c *Client) customReq(req *radiantHTTPRequest, opts []radiantHTTPRequestOption) {
+func (c *Client) customReq(req *RadiantHTTPRequest, opts []RadiantHTTPRequestOption) {
 	req.Setting(c.Setting)
 	opts = append(c.CommonOpts, opts...)
 	for _, o := range opts {
@@ -79,7 +68,7 @@ func (c *Client) customReq(req *radiantHTTPRequest, opts []radiantHTTPRequestOpt
 }
 
 // handleResponse try to parse body to meaningful value
-func (c *Client) handleResponse(value interface{}, req *radiantHTTPRequest) error {
+func (c *Client) handleResponse(value interface{}, req *RadiantHTTPRequest) error {
 	// make sure req.resp is not nil
 	_, err := req.Bytes()
 	if err != nil {
@@ -95,7 +84,7 @@ func (c *Client) handleResponse(value interface{}, req *radiantHTTPRequest) erro
 }
 
 // handleCarrier set http data to value
-func (c *Client) handleCarrier(value interface{}, req *radiantHTTPRequest) error {
+func (c *Client) handleCarrier(value interface{}, req *RadiantHTTPRequest) error {
 	if value == nil {
 		return nil
 	}
@@ -133,14 +122,14 @@ func (c *Client) handleCarrier(value interface{}, req *radiantHTTPRequest) error
 }
 
 // Get Send a GET request and try to give its result value
-func (c *Client) Get(value interface{}, path string, opts ...radiantHTTPRequestOption) error {
+func (c *Client) Get(value interface{}, path string, opts ...RadiantHTTPRequestOption) error {
 	req := Get(c.Endpoint + path)
 	c.customReq(req, opts)
 	return c.handleResponse(value, req)
 }
 
 // Post Send a POST request and try to give its result value
-func (c *Client) Post(value interface{}, path string, body interface{}, opts ...radiantHTTPRequestOption) error {
+func (c *Client) Post(value interface{}, path string, body interface{}, opts ...RadiantHTTPRequestOption) error {
 	req := Post(c.Endpoint + path)
 	c.customReq(req, opts)
 	if body != nil {
@@ -150,7 +139,7 @@ func (c *Client) Post(value interface{}, path string, body interface{}, opts ...
 }
 
 // Put Send a Put request and try to give its result value
-func (c *Client) Put(value interface{}, path string, body interface{}, opts ...radiantHTTPRequestOption) error {
+func (c *Client) Put(value interface{}, path string, body interface{}, opts ...RadiantHTTPRequestOption) error {
 	req := Put(c.Endpoint + path)
 	c.customReq(req, opts)
 	if body != nil {
@@ -160,14 +149,14 @@ func (c *Client) Put(value interface{}, path string, body interface{}, opts ...r
 }
 
 // Delete Send a Delete request and try to give its result value
-func (c *Client) Delete(value interface{}, path string, opts ...radiantHTTPRequestOption) error {
+func (c *Client) Delete(value interface{}, path string, opts ...RadiantHTTPRequestOption) error {
 	req := Delete(c.Endpoint + path)
 	c.customReq(req, opts)
 	return c.handleResponse(value, req)
 }
 
 // Head Send a Head request and try to give its result value
-func (c *Client) Head(value interface{}, path string, opts ...radiantHTTPRequestOption) error {
+func (c *Client) Head(value interface{}, path string, opts ...RadiantHTTPRequestOption) error {
 	req := Head(c.Endpoint + path)
 	c.customReq(req, opts)
 	return c.handleResponse(value, req)

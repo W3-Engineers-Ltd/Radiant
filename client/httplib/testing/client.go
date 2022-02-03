@@ -11,7 +11,7 @@ var (
 
 // TestHTTPRequest radiant test request client
 type TestHTTPRequest struct {
-	httplib.radiantHTTPRequest
+	httplib.RadiantHTTPRequest
 }
 
 func SetTestingPort(p string) {

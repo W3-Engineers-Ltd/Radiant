@@ -270,14 +270,14 @@ func (n *Namespace) Namespace(ns ...*Namespace) *Namespace {
 func AddNamespace(nl ...*Namespace) {
 	for _, n := range nl {
 		for k, v := range n.handlers.routers {
-			if _, ok := BeeApp.Handlers.routers[k]; ok {
+			if _, ok := RadicalApp.Handlers.routers[k]; ok {
 				addPrefix(v, n.prefix)
-				BeeApp.Handlers.routers[k].AddTree(n.prefix, v)
+				RadicalApp.Handlers.routers[k].AddTree(n.prefix, v)
 			} else {
 				t := NewTree()
 				t.AddTree(n.prefix, v)
 				addPrefix(t, n.prefix)
-				BeeApp.Handlers.routers[k] = t
+				RadicalApp.Handlers.routers[k] = t
 			}
 		}
 		if n.handlers.enableFilter {
@@ -286,7 +286,7 @@ func AddNamespace(nl ...*Namespace) {
 					t := NewTree()
 					t.AddTree(n.prefix, mr.tree)
 					mr.tree = t
-					BeeApp.Handlers.insertFilterRouter(pos, mr)
+					RadicalApp.Handlers.insertFilterRouter(pos, mr)
 				}
 			}
 		}

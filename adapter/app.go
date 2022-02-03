@@ -8,12 +8,12 @@ import (
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
 
-// BeeApp is an application instance
-var BeeApp *App
+// RadicalApp is an application instance
+var RadicalApp *App
 
 func init() {
 	// create radiant application
-	BeeApp = (*App)(web.BeeApp)
+	RadicalApp = (*App)(web.RadicalApp)
 }
 
 // App defines radiant application with a new PatternServeMux.
@@ -41,7 +41,7 @@ func oldMiddlewareToNew(mws []MiddleWare) []web.MiddleWare {
 	return newMws
 }
 
-// Router adds a patterned controller handler to BeeApp.
+// Router adds a patterned controller handler to RadicalApp.
 // it's an alias method of HttpServer.Router.
 // usage:
 //  simple router
@@ -114,14 +114,14 @@ func oldToNewCtrlIntfs(cList []ControllerInterface) []web.ControllerInterface {
 	return newList
 }
 
-// RESTRouter adds a restful controller handler to BeeApp.
+// RESTRouter adds a restful controller handler to RadicalApp.
 // its' controller implements radiant.ControllerInterface and
 // defines a param "pattern/:objectId" to visit each resource.
 func RESTRouter(rootpath string, c ControllerInterface) *App {
 	return (*App)(web.RESTRouter(rootpath, c))
 }
 
-// AutoRouter adds defined controller handler to BeeApp.
+// AutoRouter adds defined controller handler to RadicalApp.
 // it's same to HttpServer.AutoRouter.
 // if radiant.AddAuto(&MainController{}) and MainController has methods List and Page,
 // visit the url /main/list to exec List function or /main/page to exec Page function.
@@ -129,7 +129,7 @@ func AutoRouter(c ControllerInterface) *App {
 	return (*App)(web.AutoRouter(c))
 }
 
-// AutoPrefix adds controller handler to BeeApp with prefix.
+// AutoPrefix adds controller handler to RadicalApp with prefix.
 // it's same to HttpServer.AutoRouterWithPrefix.
 // if radiant.AutoPrefix("/admin",&MainController{}) and MainController has methods List and Page,
 // visit the url /admin/main/list to exec List function or /admin/main/page to exec Page function.

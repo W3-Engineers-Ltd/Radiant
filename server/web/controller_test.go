@@ -178,7 +178,7 @@ func TestBindJson(t *testing.T) {
 	}
 	header := map[string][]string{"Content-Type": {"application/json"}}
 	request := &http.Request{Header: header}
-	input := &context.radiantInput{RequestBody: []byte(`{"foo": "FOO"}`)}
+	input := &context.RadiantInput{RequestBody: []byte(`{"foo": "FOO"}`)}
 	ctx := &context.Context{Request: request, Input: input}
 	ctrlr := Controller{Ctx: ctx}
 	err := ctrlr.Bind(&s)
@@ -192,7 +192,7 @@ func TestBindNoContentType(t *testing.T) {
 	}
 	header := map[string][]string{}
 	request := &http.Request{Header: header}
-	input := &context.radiantInput{RequestBody: []byte(`{"foo": "FOO"}`)}
+	input := &context.RadiantInput{RequestBody: []byte(`{"foo": "FOO"}`)}
 	ctx := &context.Context{Request: request, Input: input}
 	ctrlr := Controller{Ctx: ctx}
 	err := ctrlr.Bind(&s)
@@ -210,7 +210,7 @@ func TestBindXML(t *testing.T) {
 </root>`
 	header := map[string][]string{"Content-Type": {"text/xml"}}
 	request := &http.Request{Header: header}
-	input := &context.radiantInput{RequestBody: []byte(xmlBody)}
+	input := &context.RadiantInput{RequestBody: []byte(xmlBody)}
 	ctx := &context.Context{Request: request, Input: input}
 	ctrlr := Controller{Ctx: ctx}
 	err := ctrlr.Bind(&s)
@@ -224,7 +224,7 @@ func TestBindYAML(t *testing.T) {
 	}
 	header := map[string][]string{"Content-Type": {"application/x-yaml"}}
 	request := &http.Request{Header: header}
-	input := &context.radiantInput{RequestBody: []byte("foo: FOO")}
+	input := &context.RadiantInput{RequestBody: []byte("foo: FOO")}
 	ctx := &context.Context{Request: request, Input: input}
 	ctrlr := Controller{Ctx: ctx}
 	err := ctrlr.Bind(&s)

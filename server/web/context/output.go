@@ -21,34 +21,34 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// radiantOutput does work for sending response header.
-type radiantOutput struct {
+// RadiantOutput does work for sending response header.
+type RadiantOutput struct {
 	Context    *Context
 	Status     int
 	EnableGzip bool
 }
 
-// NewOutput returns new radiantOutput.
+// NewOutput returns new RadiantOutput.
 // Empty when initialized
-func NewOutput() *radiantOutput {
-	return &radiantOutput{}
+func NewOutput() *RadiantOutput {
+	return &RadiantOutput{}
 }
 
-// Reset initializes radiantOutput
-func (output *radiantOutput) Reset(ctx *Context) {
+// Reset initializes RadiantOutput
+func (output *RadiantOutput) Reset(ctx *Context) {
 	output.Context = ctx
 	output.Status = 0
 }
 
 // Header sets response header item string via given key.
-func (output *radiantOutput) Header(key, val string) {
+func (output *RadiantOutput) Header(key, val string) {
 	output.Context.ResponseWriter.Header().Set(key, val)
 }
 
 // Body sets the response body content.
 // if EnableGzip, content is compressed.
 // Sends out response body directly.
-func (output *radiantOutput) Body(content []byte) error {
+func (output *RadiantOutput) Body(content []byte) error {
 	var encoding string
 	buf := &bytes.Buffer{}
 	if output.EnableGzip {
@@ -74,7 +74,7 @@ func (output *radiantOutput) Body(content []byte) error {
 
 // Cookie sets a cookie value via given key.
 // others: used to set a cookie's max age time, path,domain, secure and httponly.
-func (output *radiantOutput) Cookie(name string, value string, others ...interface{}) {
+func (output *RadiantOutput) Cookie(name string, value string, others ...interface{}) {
 	var b bytes.Buffer
 	fmt.Fprintf(&b, "%s=%s", sanitizeName(name), sanitizeValue(value))
 
@@ -179,7 +179,7 @@ func errorRenderer(err error) Renderer {
 
 // JSON writes json to the response body.
 // if encoding is true, it converts utf-8 to \u0000 type.
-func (output *radiantOutput) JSON(data interface{}, hasIndent bool, encoding bool) error {
+func (output *RadiantOutput) JSON(data interface{}, hasIndent bool, encoding bool) error {
 	output.Header("Content-Type", "application/json; charset=utf-8")
 	var content []byte
 	var err error
@@ -199,7 +199,7 @@ func (output *radiantOutput) JSON(data interface{}, hasIndent bool, encoding boo
 }
 
 // YAML writes yaml to the response body.
-func (output *radiantOutput) YAML(data interface{}) error {
+func (output *RadiantOutput) YAML(data interface{}) error {
 	output.Header("Content-Type", "application/x-yaml; charset=utf-8")
 	var content []byte
 	var err error
@@ -212,7 +212,7 @@ func (output *radiantOutput) YAML(data interface{}) error {
 }
 
 // Proto writes protobuf to the response body.
-func (output *radiantOutput) Proto(data proto.Message) error {
+func (output *RadiantOutput) Proto(data proto.Message) error {
 	output.Header("Content-Type", "application/x-protobuf; charset=utf-8")
 	var content []byte
 	var err error
@@ -225,7 +225,7 @@ func (output *radiantOutput) Proto(data proto.Message) error {
 }
 
 // JSONP writes jsonp to the response body.
-func (output *radiantOutput) JSONP(data interface{}, hasIndent bool) error {
+func (output *RadiantOutput) JSONP(data interface{}, hasIndent bool) error {
 	output.Header("Content-Type", "application/javascript; charset=utf-8")
 	var content []byte
 	var err error
@@ -251,7 +251,7 @@ func (output *radiantOutput) JSONP(data interface{}, hasIndent bool) error {
 }
 
 // XML writes xml string to the response body.
-func (output *radiantOutput) XML(data interface{}, hasIndent bool) error {
+func (output *RadiantOutput) XML(data interface{}, hasIndent bool) error {
 	output.Header("Content-Type", "application/xml; charset=utf-8")
 	var content []byte
 	var err error
@@ -268,7 +268,7 @@ func (output *radiantOutput) XML(data interface{}, hasIndent bool) error {
 }
 
 // ServeFormatted serves YAML, XML or JSON, depending on the value of the Accept header
-func (output *radiantOutput) ServeFormatted(data interface{}, hasIndent bool, hasEncode ...bool) error {
+func (output *RadiantOutput) ServeFormatted(data interface{}, hasIndent bool, hasEncode ...bool) error {
 	accept := output.Context.Input.Header("Accept")
 	switch accept {
 	case ApplicationYAML:
@@ -282,7 +282,7 @@ func (output *radiantOutput) ServeFormatted(data interface{}, hasIndent bool, ha
 
 // Download forces response for download file.
 // Prepares the download response header automatically.
-func (output *radiantOutput) Download(file string, filename ...string) {
+func (output *RadiantOutput) Download(file string, filename ...string) {
 	// check get file error, file not found or other error.
 	if _, err := os.Stat(file); err != nil {
 		http.ServeFile(output.Context.ResponseWriter, output.Context.Request, file)
@@ -320,7 +320,7 @@ func (output *radiantOutput) Download(file string, filename ...string) {
 
 // ContentType sets the content type from ext string.
 // MIME type is given in mime package.
-func (output *radiantOutput) ContentType(ext string) {
+func (output *RadiantOutput) ContentType(ext string) {
 	if !strings.HasPrefix(ext, ".") {
 		ext = "." + ext
 	}
@@ -332,61 +332,61 @@ func (output *radiantOutput) ContentType(ext string) {
 
 // SetStatus sets the response status code.
 // Writes response header directly.
-func (output *radiantOutput) SetStatus(status int) {
+func (output *RadiantOutput) SetStatus(status int) {
 	output.Status = status
 }
 
 // IsCachable returns boolean of if this request is cached.
 // HTTP 304 means cached.
-func (output *radiantOutput) IsCachable() bool {
+func (output *RadiantOutput) IsCachable() bool {
 	return output.Status >= 200 && output.Status < 300 || output.Status == 304
 }
 
 // IsEmpty returns boolean of if this request is empty.
 // HTTP 201，204 and 304 means empty.
-func (output *radiantOutput) IsEmpty() bool {
+func (output *RadiantOutput) IsEmpty() bool {
 	return output.Status == 201 || output.Status == 204 || output.Status == 304
 }
 
 // IsOk returns boolean of if this request was ok.
 // HTTP 200 means ok.
-func (output *radiantOutput) IsOk() bool {
+func (output *RadiantOutput) IsOk() bool {
 	return output.Status == 200
 }
 
 // IsSuccessful returns boolean of this request was successful.
 // HTTP 2xx means ok.
-func (output *radiantOutput) IsSuccessful() bool {
+func (output *RadiantOutput) IsSuccessful() bool {
 	return output.Status >= 200 && output.Status < 300
 }
 
 // IsRedirect returns boolean of if this request is redirected.
 // HTTP 301,302,307 means redirection.
-func (output *radiantOutput) IsRedirect() bool {
+func (output *RadiantOutput) IsRedirect() bool {
 	return output.Status == 301 || output.Status == 302 || output.Status == 303 || output.Status == 307
 }
 
 // IsForbidden returns boolean of if this request is forbidden.
 // HTTP 403 means forbidden.
-func (output *radiantOutput) IsForbidden() bool {
+func (output *RadiantOutput) IsForbidden() bool {
 	return output.Status == 403
 }
 
 // IsNotFound returns boolean of if this request is not found.
 // HTTP 404 means not found.
-func (output *radiantOutput) IsNotFound() bool {
+func (output *RadiantOutput) IsNotFound() bool {
 	return output.Status == 404
 }
 
 // IsClientError returns boolean of if this request client sends error data.
 // HTTP 4xx means client error.
-func (output *radiantOutput) IsClientError() bool {
+func (output *RadiantOutput) IsClientError() bool {
 	return output.Status >= 400 && output.Status < 500
 }
 
 // IsServerError returns boolean of if this server handler errors.
 // HTTP 5xx means server internal error.
-func (output *radiantOutput) IsServerError() bool {
+func (output *RadiantOutput) IsServerError() bool {
 	return output.Status >= 500 && output.Status < 600
 }
 
@@ -410,6 +410,6 @@ func stringsToJSON(str string) string {
 }
 
 // Session sets session item value with given key.
-func (output *radiantOutput) Session(name interface{}, value interface{}) {
+func (output *RadiantOutput) Session(name interface{}, value interface{}) {
 	output.Context.Input.CruSession.Set(nil, name, value)
 }

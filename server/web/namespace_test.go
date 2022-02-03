@@ -53,7 +53,7 @@ func TestNamespaceGet(t *testing.T) {
 		ctx.Output.Body([]byte("v1_user"))
 	})
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "v1_user" {
 		t.Errorf("TestNamespaceGet can't run, get the response is " + w.Body.String())
 	}
@@ -68,7 +68,7 @@ func TestNamespacePost(t *testing.T) {
 		ctx.Output.Body([]byte(ctx.Input.Param(":id")))
 	})
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "123" {
 		t.Errorf("TestNamespacePost can't run, get the response is " + w.Body.String())
 	}
@@ -86,7 +86,7 @@ func TestNamespaceNest(t *testing.T) {
 			}),
 	)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "order" {
 		t.Errorf("TestNamespaceNest can't run, get the response is " + w.Body.String())
 	}
@@ -104,7 +104,7 @@ func TestNamespaceNestParam(t *testing.T) {
 			}),
 	)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "123" {
 		t.Errorf("TestNamespaceNestParam can't run, get the response is " + w.Body.String())
 	}
@@ -117,7 +117,7 @@ func TestNamespaceRouter(t *testing.T) {
 	ns := NewNamespace("/v1")
 	ns.Router("/api/list", &TestController{}, "*:List")
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "i am list" {
 		t.Errorf("TestNamespaceRouter can't run, get the response is " + w.Body.String())
 	}
@@ -130,7 +130,7 @@ func TestNamespaceAutoFunc(t *testing.T) {
 	ns := NewNamespace("/v1")
 	ns.AutoRouter(&TestController{})
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "i am list" {
 		t.Errorf("user define func can't run")
 	}
@@ -148,7 +148,7 @@ func TestNamespaceFilter(t *testing.T) {
 			ctx.Output.Body([]byte(ctx.Input.Param(":id")))
 		})
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "this is Filter" {
 		t.Errorf("TestNamespaceFilter can't run, get the response is " + w.Body.String())
 	}
@@ -164,7 +164,7 @@ func TestNamespaceCond(t *testing.T) {
 	}).
 		AutoRouter(&TestController{})
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Code != 405 {
 		t.Errorf("TestNamespaceCond can't run get the result " + strconv.Itoa(w.Code))
 	}
@@ -182,7 +182,7 @@ func TestNamespaceInside(t *testing.T) {
 		),
 	)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != "123" {
 		t.Errorf("TestNamespaceInside can't run, get the response is " + w.Body.String())
 	}
@@ -195,7 +195,7 @@ func TestNamespaceCtrlGet(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	ns.CtrlGet(nsPath, ExampleController.Ping)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceCtrlGet can't run, get the response is " + w.Body.String())
 	}
@@ -208,7 +208,7 @@ func TestNamespaceCtrlPost(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	ns.CtrlPost(nsPath, ExampleController.Ping)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceCtrlPost can't run, get the response is " + w.Body.String())
 	}
@@ -221,7 +221,7 @@ func TestNamespaceCtrlDelete(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	ns.CtrlDelete(nsPath, ExampleController.Ping)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceCtrlDelete can't run, get the response is " + w.Body.String())
 	}
@@ -234,7 +234,7 @@ func TestNamespaceCtrlPut(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	ns.CtrlPut(nsPath, ExampleController.Ping)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceCtrlPut can't run, get the response is " + w.Body.String())
 	}
@@ -247,7 +247,7 @@ func TestNamespaceCtrlHead(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	ns.CtrlHead(nsPath, ExampleController.Ping)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceCtrlHead can't run, get the response is " + w.Body.String())
 	}
@@ -260,7 +260,7 @@ func TestNamespaceCtrlOptions(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	ns.CtrlOptions(nsPath, ExampleController.Ping)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceCtrlOptions can't run, get the response is " + w.Body.String())
 	}
@@ -273,7 +273,7 @@ func TestNamespaceCtrlPatch(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	ns.CtrlPatch(nsPath, ExampleController.Ping)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceCtrlPatch can't run, get the response is " + w.Body.String())
 	}
@@ -287,7 +287,7 @@ func TestNamespaceCtrlAny(t *testing.T) {
 	for method := range HTTPMETHOD {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest(method, nsNamespacePath, nil)
-		BeeApp.Handlers.ServeHTTP(w, r)
+		RadicalApp.Handlers.ServeHTTP(w, r)
 		if w.Body.String() != exampleBody {
 			t.Errorf("TestNamespaceCtrlAny can't run, get the response is " + w.Body.String())
 		}
@@ -301,7 +301,7 @@ func TestNamespaceNSCtrlGet(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	NSCtrlGet(nsPath, ExampleController.Ping)(ns)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceNSCtrlGet can't run, get the response is " + w.Body.String())
 	}
@@ -314,7 +314,7 @@ func TestNamespaceNSCtrlPost(t *testing.T) {
 	ns := NewNamespace("/router")
 	NSCtrlPost(nsPath, ExampleController.Ping)(ns)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceNSCtrlPost can't run, get the response is " + w.Body.String())
 	}
@@ -327,7 +327,7 @@ func TestNamespaceNSCtrlDelete(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	NSCtrlDelete(nsPath, ExampleController.Ping)(ns)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceNSCtrlDelete can't run, get the response is " + w.Body.String())
 	}
@@ -340,7 +340,7 @@ func TestNamespaceNSCtrlPut(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	NSCtrlPut(nsPath, ExampleController.Ping)(ns)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceNSCtrlPut can't run, get the response is " + w.Body.String())
 	}
@@ -353,7 +353,7 @@ func TestNamespaceNSCtrlHead(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	NSCtrlHead(nsPath, ExampleController.Ping)(ns)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceNSCtrlHead can't run, get the response is " + w.Body.String())
 	}
@@ -366,7 +366,7 @@ func TestNamespaceNSCtrlOptions(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	NSCtrlOptions(nsPath, ExampleController.Ping)(ns)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceNSCtrlOptions can't run, get the response is " + w.Body.String())
 	}
@@ -379,7 +379,7 @@ func TestNamespaceNSCtrlPatch(t *testing.T) {
 	ns := NewNamespace(nsNamespace)
 	NSCtrlPatch("/user", ExampleController.Ping)(ns)
 	AddNamespace(ns)
-	BeeApp.Handlers.ServeHTTP(w, r)
+	RadicalApp.Handlers.ServeHTTP(w, r)
 	if w.Body.String() != exampleBody {
 		t.Errorf("TestNamespaceNSCtrlPatch can't run, get the response is " + w.Body.String())
 	}
@@ -393,7 +393,7 @@ func TestNamespaceNSCtrlAny(t *testing.T) {
 	for method := range HTTPMETHOD {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest(method, nsNamespacePath, nil)
-		BeeApp.Handlers.ServeHTTP(w, r)
+		RadicalApp.Handlers.ServeHTTP(w, r)
 		if w.Body.String() != exampleBody {
 			t.Errorf("TestNamespaceNSCtrlAny can't run, get the response is " + w.Body.String())
 		}

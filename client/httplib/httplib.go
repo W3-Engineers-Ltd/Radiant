@@ -44,7 +44,7 @@ import (
 const contentTypeKey = "Content-Type"
 
 // it will be the last filter and execute request.Do
-var doRequestFilter = func(ctx context.Context, req *radiantHTTPRequest) (*http.Response, error) {
+var doRequestFilter = func(ctx context.Context, req *RadiantHTTPRequest) (*http.Response, error) {
 	return req.doRequest(ctx)
 }
 
@@ -52,7 +52,7 @@ var doRequestFilter = func(ctx context.Context, req *radiantHTTPRequest) (*http.
 // TODO add error as return value
 // I think if we don't return error
 // users are hard to check whether we create radiant request successfully
-func NewradiantRequest(rawurl, method string) *radiantHTTPRequest {
+func NewradiantRequest(rawurl, method string) *RadiantHTTPRequest {
 	var resp http.Response
 	u, err := url.Parse(rawurl)
 	if err != nil {
@@ -66,7 +66,7 @@ func NewradiantRequest(rawurl, method string) *radiantHTTPRequest {
 		ProtoMajor: 1,
 		ProtoMinor: 1,
 	}
-	return &radiantHTTPRequest{
+	return &RadiantHTTPRequest{
 		url:     rawurl,
 		req:     &req,
 		params:  map[string][]string{},
@@ -77,66 +77,66 @@ func NewradiantRequest(rawurl, method string) *radiantHTTPRequest {
 }
 
 // Get returns *radiantHttpRequest with GET method.
-func Get(url string) *radiantHTTPRequest {
+func Get(url string) *RadiantHTTPRequest {
 	return NewradiantRequest(url, "GET")
 }
 
 // Post returns *radiantHttpRequest with POST method.
-func Post(url string) *radiantHTTPRequest {
+func Post(url string) *RadiantHTTPRequest {
 	return NewradiantRequest(url, "POST")
 }
 
 // Put returns *radiantHttpRequest with PUT method.
-func Put(url string) *radiantHTTPRequest {
+func Put(url string) *RadiantHTTPRequest {
 	return NewradiantRequest(url, "PUT")
 }
 
 // Delete returns *radiantHttpRequest DELETE method.
-func Delete(url string) *radiantHTTPRequest {
+func Delete(url string) *RadiantHTTPRequest {
 	return NewradiantRequest(url, "DELETE")
 }
 
 // Head returns *radiantHttpRequest with HEAD method.
-func Head(url string) *radiantHTTPRequest {
+func Head(url string) *RadiantHTTPRequest {
 	return NewradiantRequest(url, "HEAD")
 }
 
-// radiantHTTPRequest provides more useful methods than http.Request for requesting a url.
-type radiantHTTPRequest struct {
+// RadiantHTTPRequest provides more useful methods than http.Request for requesting a url.
+type RadiantHTTPRequest struct {
 	url     string
 	req     *http.Request
 	params  map[string][]string
 	files   map[string]string
-	setting radiantHTTPSettings
+	setting RadiantHTTPSettings
 	resp    *http.Response
 	body    []byte
 }
 
 // GetRequest returns the request object
-func (b *radiantHTTPRequest) GetRequest() *http.Request {
+func (b *RadiantHTTPRequest) GetRequest() *http.Request {
 	return b.req
 }
 
 // Setting changes request settings
-func (b *radiantHTTPRequest) Setting(setting radiantHTTPSettings) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) Setting(setting RadiantHTTPSettings) *RadiantHTTPRequest {
 	b.setting = setting
 	return b
 }
 
 // SetBasicAuth sets the request's Authorization header to use HTTP Basic Authentication with the provided username and password.
-func (b *radiantHTTPRequest) SetBasicAuth(username, password string) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetBasicAuth(username, password string) *RadiantHTTPRequest {
 	b.req.SetBasicAuth(username, password)
 	return b
 }
 
 // SetEnableCookie sets enable/disable cookiejar
-func (b *radiantHTTPRequest) SetEnableCookie(enable bool) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetEnableCookie(enable bool) *RadiantHTTPRequest {
 	b.setting.EnableCookie = enable
 	return b
 }
 
 // SetUserAgent sets User-Agent header field
-func (b *radiantHTTPRequest) SetUserAgent(useragent string) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetUserAgent(useragent string) *RadiantHTTPRequest {
 	b.setting.UserAgent = useragent
 	return b
 }
@@ -145,45 +145,45 @@ func (b *radiantHTTPRequest) SetUserAgent(useragent string) *radiantHTTPRequest 
 // default is 0 (never retry)
 // -1 retry indefinitely (forever)
 // Other numbers specify the exact retry amount
-func (b *radiantHTTPRequest) Retries(times int) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) Retries(times int) *RadiantHTTPRequest {
 	b.setting.Retries = times
 	return b
 }
 
 // RetryDelay sets the time to sleep between reconnection attempts
-func (b *radiantHTTPRequest) RetryDelay(delay time.Duration) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) RetryDelay(delay time.Duration) *RadiantHTTPRequest {
 	b.setting.RetryDelay = delay
 	return b
 }
 
 // SetTimeout sets connect time out and read-write time out for radiantRequest.
-func (b *radiantHTTPRequest) SetTimeout(connectTimeout, readWriteTimeout time.Duration) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetTimeout(connectTimeout, readWriteTimeout time.Duration) *RadiantHTTPRequest {
 	b.setting.ConnectTimeout = connectTimeout
 	b.setting.ReadWriteTimeout = readWriteTimeout
 	return b
 }
 
 // SetTLSClientConfig sets TLS connection configuration if visiting HTTPS url.
-func (b *radiantHTTPRequest) SetTLSClientConfig(config *tls.Config) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetTLSClientConfig(config *tls.Config) *RadiantHTTPRequest {
 	b.setting.TLSClientConfig = config
 	return b
 }
 
 // Header adds header item string in request.
-func (b *radiantHTTPRequest) Header(key, value string) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) Header(key, value string) *RadiantHTTPRequest {
 	b.req.Header.Set(key, value)
 	return b
 }
 
 // SetHost set the request host
-func (b *radiantHTTPRequest) SetHost(host string) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetHost(host string) *RadiantHTTPRequest {
 	b.req.Host = host
 	return b
 }
 
 // SetProtocolVersion sets the protocol version for incoming requests.
 // Client requests always use HTTP/1.1
-func (b *radiantHTTPRequest) SetProtocolVersion(vers string) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetProtocolVersion(vers string) *RadiantHTTPRequest {
 	if vers == "" {
 		vers = "HTTP/1.1"
 	}
@@ -200,13 +200,13 @@ func (b *radiantHTTPRequest) SetProtocolVersion(vers string) *radiantHTTPRequest
 }
 
 // SetCookie adds a cookie to the request.
-func (b *radiantHTTPRequest) SetCookie(cookie *http.Cookie) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetCookie(cookie *http.Cookie) *RadiantHTTPRequest {
 	b.req.Header.Add("Cookie", cookie.String())
 	return b
 }
 
 // SetTransport sets the transport field
-func (b *radiantHTTPRequest) SetTransport(transport http.RoundTripper) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetTransport(transport http.RoundTripper) *RadiantHTTPRequest {
 	b.setting.Transport = transport
 	return b
 }
@@ -218,7 +218,7 @@ func (b *radiantHTTPRequest) SetTransport(transport http.RoundTripper) *radiantH
 // 		u, _ := url.ParseRequestURI("http://127.0.0.1:8118")
 // 		return u, nil
 // 	}
-func (b *radiantHTTPRequest) SetProxy(proxy func(*http.Request) (*url.URL, error)) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetProxy(proxy func(*http.Request) (*url.URL, error)) *RadiantHTTPRequest {
 	b.setting.Proxy = proxy
 	return b
 }
@@ -227,32 +227,32 @@ func (b *radiantHTTPRequest) SetProxy(proxy func(*http.Request) (*url.URL, error
 //
 // If CheckRedirect is nil, the Client uses its default policy,
 // which is to stop after 10 consecutive requests.
-func (b *radiantHTTPRequest) SetCheckRedirect(redirect func(req *http.Request, via []*http.Request) error) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetCheckRedirect(redirect func(req *http.Request, via []*http.Request) error) *RadiantHTTPRequest {
 	b.setting.CheckRedirect = redirect
 	return b
 }
 
 // SetFilters will use the filter as the invocation filters
-func (b *radiantHTTPRequest) SetFilters(fcs ...FilterChain) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetFilters(fcs ...FilterChain) *RadiantHTTPRequest {
 	b.setting.FilterChains = fcs
 	return b
 }
 
 // AddFilters adds filter
-func (b *radiantHTTPRequest) AddFilters(fcs ...FilterChain) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) AddFilters(fcs ...FilterChain) *RadiantHTTPRequest {
 	b.setting.FilterChains = append(b.setting.FilterChains, fcs...)
 	return b
 }
 
 // SetEscapeHTML is used to set the flag whether escape HTML special characters during processing
-func (b *radiantHTTPRequest) SetEscapeHTML(isEscape bool) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) SetEscapeHTML(isEscape bool) *RadiantHTTPRequest {
 	b.setting.EscapeHTML = isEscape
 	return b
 }
 
 // Param adds query param in to request.
 // params build query string as ?key1=value1&key2=value2...
-func (b *radiantHTTPRequest) Param(key, value string) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) Param(key, value string) *RadiantHTTPRequest {
 	if param, ok := b.params[key]; ok {
 		b.params[key] = append(param, value)
 	} else {
@@ -262,7 +262,7 @@ func (b *radiantHTTPRequest) Param(key, value string) *radiantHTTPRequest {
 }
 
 // PostFile adds a post file to the request
-func (b *radiantHTTPRequest) PostFile(formname, filename string) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) PostFile(formname, filename string) *RadiantHTTPRequest {
 	b.files[formname] = filename
 	return b
 }
@@ -270,7 +270,7 @@ func (b *radiantHTTPRequest) PostFile(formname, filename string) *radiantHTTPReq
 // Body adds request raw body.
 // Supports string and []byte.
 // TODO return error if data is invalid
-func (b *radiantHTTPRequest) Body(data interface{}) *radiantHTTPRequest {
+func (b *RadiantHTTPRequest) Body(data interface{}) *RadiantHTTPRequest {
 	switch t := data.(type) {
 	case string:
 		bf := bytes.NewBufferString(t)
@@ -293,7 +293,7 @@ func (b *radiantHTTPRequest) Body(data interface{}) *radiantHTTPRequest {
 }
 
 // XMLBody adds the request raw body encoded in XML.
-func (b *radiantHTTPRequest) XMLBody(obj interface{}) (*radiantHTTPRequest, error) {
+func (b *RadiantHTTPRequest) XMLBody(obj interface{}) (*RadiantHTTPRequest, error) {
 	if b.req.Body == nil && obj != nil {
 		byts, err := xml.Marshal(obj)
 		if err != nil {
@@ -310,7 +310,7 @@ func (b *radiantHTTPRequest) XMLBody(obj interface{}) (*radiantHTTPRequest, erro
 }
 
 // YAMLBody adds the request raw body encoded in YAML.
-func (b *radiantHTTPRequest) YAMLBody(obj interface{}) (*radiantHTTPRequest, error) {
+func (b *RadiantHTTPRequest) YAMLBody(obj interface{}) (*RadiantHTTPRequest, error) {
 	if b.req.Body == nil && obj != nil {
 		byts, err := yaml.Marshal(obj)
 		if err != nil {
@@ -324,7 +324,7 @@ func (b *radiantHTTPRequest) YAMLBody(obj interface{}) (*radiantHTTPRequest, err
 }
 
 // JSONBody adds the request raw body encoded in JSON.
-func (b *radiantHTTPRequest) JSONBody(obj interface{}) (*radiantHTTPRequest, error) {
+func (b *RadiantHTTPRequest) JSONBody(obj interface{}) (*RadiantHTTPRequest, error) {
 	if b.req.Body == nil && obj != nil {
 		byts, err := b.JSONMarshal(obj)
 		if err != nil {
@@ -337,7 +337,7 @@ func (b *radiantHTTPRequest) JSONBody(obj interface{}) (*radiantHTTPRequest, err
 	return b, nil
 }
 
-func (b *radiantHTTPRequest) JSONMarshal(obj interface{}) ([]byte, error) {
+func (b *RadiantHTTPRequest) JSONMarshal(obj interface{}) ([]byte, error) {
 	bf := bytes.NewBuffer([]byte{})
 	jsonEncoder := json.NewEncoder(bf)
 	jsonEncoder.SetEscapeHTML(b.setting.EscapeHTML)
@@ -348,7 +348,7 @@ func (b *radiantHTTPRequest) JSONMarshal(obj interface{}) ([]byte, error) {
 	return bf.Bytes(), nil
 }
 
-func (b *radiantHTTPRequest) buildURL(paramBody string) {
+func (b *RadiantHTTPRequest) buildURL(paramBody string) {
 	// build GET url with query string
 	if b.req.Method == "GET" && len(paramBody) > 0 {
 		if strings.Contains(b.url, "?") {
@@ -375,7 +375,7 @@ func (b *radiantHTTPRequest) buildURL(paramBody string) {
 	}
 }
 
-func (b *radiantHTTPRequest) handleFiles() {
+func (b *RadiantHTTPRequest) handleFiles() {
 	pr, pw := io.Pipe()
 	bodyWriter := multipart.NewWriter(pw)
 	go func() {
@@ -395,7 +395,7 @@ func (b *radiantHTTPRequest) handleFiles() {
 	b.Header("Transfer-Encoding", "chunked")
 }
 
-func (b *radiantHTTPRequest) handleFileToBody(bodyWriter *multipart.Writer, formname string, filename string) {
+func (b *RadiantHTTPRequest) handleFileToBody(bodyWriter *multipart.Writer, formname string, filename string) {
 	fileWriter, err := bodyWriter.CreateFormFile(formname, filename)
 	const errFmt = "Httplib: %+v"
 	if err != nil {
@@ -417,7 +417,7 @@ func (b *radiantHTTPRequest) handleFileToBody(bodyWriter *multipart.Writer, form
 	}
 }
 
-func (b *radiantHTTPRequest) getResponse() (*http.Response, error) {
+func (b *RadiantHTTPRequest) getResponse() (*http.Response, error) {
 	if b.resp.StatusCode != 0 {
 		return b.resp, nil
 	}
@@ -430,11 +430,11 @@ func (b *radiantHTTPRequest) getResponse() (*http.Response, error) {
 }
 
 // DoRequest executes client.Do
-func (b *radiantHTTPRequest) DoRequest() (resp *http.Response, err error) {
+func (b *RadiantHTTPRequest) DoRequest() (resp *http.Response, err error) {
 	return b.DoRequestWithCtx(context.Background())
 }
 
-func (b *radiantHTTPRequest) DoRequestWithCtx(ctx context.Context) (resp *http.Response, err error) {
+func (b *RadiantHTTPRequest) DoRequestWithCtx(ctx context.Context) (resp *http.Response, err error) {
 	root := doRequestFilter
 	if len(b.setting.FilterChains) > 0 {
 		for i := len(b.setting.FilterChains) - 1; i >= 0; i-- {
@@ -444,7 +444,7 @@ func (b *radiantHTTPRequest) DoRequestWithCtx(ctx context.Context) (resp *http.R
 	return root(ctx, b)
 }
 
-func (b *radiantHTTPRequest) doRequest(ctx context.Context) (*http.Response, error) {
+func (b *RadiantHTTPRequest) doRequest(ctx context.Context) (*http.Response, error) {
 	paramBody := b.buildParamBody()
 
 	b.buildURL(paramBody)
@@ -475,7 +475,7 @@ func (b *radiantHTTPRequest) doRequest(ctx context.Context) (*http.Response, err
 	return b.sendRequest(client)
 }
 
-func (b *radiantHTTPRequest) sendRequest(client *http.Client) (resp *http.Response, err error) {
+func (b *RadiantHTTPRequest) sendRequest(client *http.Client) (resp *http.Response, err error) {
 	// retries default value is 0, it will run once.
 	// retries equal to -1, it will run forever until success
 	// retries is setted, it will retries fixed times.
@@ -490,7 +490,7 @@ func (b *radiantHTTPRequest) sendRequest(client *http.Client) (resp *http.Respon
 	return nil, berror.Wrap(err, SendRequestFailed, "sending request fail")
 }
 
-func (b *radiantHTTPRequest) buildCookieJar() http.CookieJar {
+func (b *RadiantHTTPRequest) buildCookieJar() http.CookieJar {
 	var jar http.CookieJar
 	if b.setting.EnableCookie {
 		if defaultCookieJar == nil {
@@ -501,7 +501,7 @@ func (b *radiantHTTPRequest) buildCookieJar() http.CookieJar {
 	return jar
 }
 
-func (b *radiantHTTPRequest) buildTrans() http.RoundTripper {
+func (b *RadiantHTTPRequest) buildTrans() http.RoundTripper {
 	trans := b.setting.Transport
 
 	if trans == nil {
@@ -527,7 +527,7 @@ func (b *radiantHTTPRequest) buildTrans() http.RoundTripper {
 	return trans
 }
 
-func (b *radiantHTTPRequest) buildParamBody() string {
+func (b *RadiantHTTPRequest) buildParamBody() string {
 	var paramBody string
 	if len(b.params) > 0 {
 		var buf bytes.Buffer
@@ -547,7 +547,7 @@ func (b *radiantHTTPRequest) buildParamBody() string {
 
 // String returns the body string in response.
 // Calls Response inner.
-func (b *radiantHTTPRequest) String() (string, error) {
+func (b *RadiantHTTPRequest) String() (string, error) {
 	data, err := b.Bytes()
 	if err != nil {
 		return "", err
@@ -558,7 +558,7 @@ func (b *radiantHTTPRequest) String() (string, error) {
 
 // Bytes returns the body []byte in response.
 // Calls Response inner.
-func (b *radiantHTTPRequest) Bytes() ([]byte, error) {
+func (b *RadiantHTTPRequest) Bytes() ([]byte, error) {
 	if b.body != nil {
 		return b.body, nil
 	}
@@ -584,7 +584,7 @@ func (b *radiantHTTPRequest) Bytes() ([]byte, error) {
 
 // ToFile saves the body data in response to one file.
 // Calls Response inner.
-func (b *radiantHTTPRequest) ToFile(filename string) error {
+func (b *RadiantHTTPRequest) ToFile(filename string) error {
 	resp, err := b.getResponse()
 	if err != nil {
 		return err
@@ -624,7 +624,7 @@ func pathExistAndMkdir(filename string) (err error) {
 
 // ToJSON returns the map that marshals from the body bytes as json in response.
 // Calls Response inner.
-func (b *radiantHTTPRequest) ToJSON(v interface{}) error {
+func (b *RadiantHTTPRequest) ToJSON(v interface{}) error {
 	data, err := b.Bytes()
 	if err != nil {
 		return err
@@ -635,7 +635,7 @@ func (b *radiantHTTPRequest) ToJSON(v interface{}) error {
 
 // ToXML returns the map that marshals from the body bytes as xml in response .
 // Calls Response inner.
-func (b *radiantHTTPRequest) ToXML(v interface{}) error {
+func (b *RadiantHTTPRequest) ToXML(v interface{}) error {
 	data, err := b.Bytes()
 	if err != nil {
 		return err
@@ -646,7 +646,7 @@ func (b *radiantHTTPRequest) ToXML(v interface{}) error {
 
 // ToYAML returns the map that marshals from the body bytes as yaml in response .
 // Calls Response inner.
-func (b *radiantHTTPRequest) ToYAML(v interface{}) error {
+func (b *RadiantHTTPRequest) ToYAML(v interface{}) error {
 	data, err := b.Bytes()
 	if err != nil {
 		return err
@@ -659,7 +659,7 @@ func (b *radiantHTTPRequest) ToYAML(v interface{}) error {
 // Calls Response inner.
 // If response header contain Content-Type, func will call ToJSON\ToXML\ToYAML.
 // Else it will try to parse body as json\yaml\xml, If all attempts fail, an error will be returned
-func (b *radiantHTTPRequest) ToValue(value interface{}) error {
+func (b *RadiantHTTPRequest) ToValue(value interface{}) error {
 	if value == nil {
 		return nil
 	}
@@ -690,7 +690,7 @@ func (b *radiantHTTPRequest) ToValue(value interface{}) error {
 }
 
 // Response executes request client gets response manually.
-func (b *radiantHTTPRequest) Response() (*http.Response, error) {
+func (b *RadiantHTTPRequest) Response() (*http.Response, error) {
 	return b.getResponse()
 }
 

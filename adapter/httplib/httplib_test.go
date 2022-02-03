@@ -180,7 +180,7 @@ func TestWithUserAgent(t *testing.T) {
 
 func TestWithSetting(t *testing.T) {
 	v := "radiant"
-	var setting radiantHTTPSettings
+	var setting RadiantHTTPSettings
 	setting.EnableCookie = true
 	setting.UserAgent = v
 	setting.Transport = &http.Transport{
