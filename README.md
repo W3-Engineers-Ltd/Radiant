@@ -1,6 +1,6 @@
-# radiant [![Test](https://github.com/W3-Engineers-Ltd/Radiant/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/W3-Engineers-Ltd/Radiant/actions/workflows/test.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/W3-Engineers-Ltd/Radiant)](https://goreportcard.com/report/github.com/W3-Engineers-Ltd/Radiant) [![Go Reference](https://pkg.go.dev/badge/github.com/W3-Engineers-Ltd/Radiant.svg)](https://pkg.go.dev/github.com/W3-Engineers-Ltd/Radiant)
+# Radiant [![Test](https://github.com/W3-Engineers-Ltd/Radiant/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/W3-Engineers-Ltd/Radiant/actions/workflows/test.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/W3-Engineers-Ltd/Radiant)](https://goreportcard.com/report/github.com/W3-Engineers-Ltd/Radiant) [![Go Reference](https://pkg.go.dev/badge/github.com/W3-Engineers-Ltd/Radiant.svg)](https://pkg.go.dev/github.com/W3-Engineers-Ltd/Radiant)
 
-radiant is used for rapid development of enterprise application in Go, including RESTful APIs, web apps and backend services.
+Radiant is used for rapid development of enterprise application in Go, including RESTful APIs, web apps and backend services.
 
 It is inspired by Tornado, Sinatra and Flask. radiant has some Go-specific features such as interfaces and struct embedding.
 
