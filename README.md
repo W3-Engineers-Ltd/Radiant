@@ -61,37 +61,37 @@ func main() {
 
 #### Go to [http://localhost:8080](http://localhost:8080)
 
-Congratulations! You've just built your first **radiant** app.
+Congratulations! You've just built your first **Radiant** app.
 
 ## Features
 
 * RESTful support
-* [MVC architecture](https://github.com/radiant/radicaldoc/tree/master/en-US/mvc)
+* MVC architecture
 * Modularity
-* [Auto API documents](https://github.com/radiant/radicaldoc/blob/master/en-US/advantage/docs.md)
-* [Annotation router](https://github.com/radiant/radicaldoc/blob/master/en-US/mvc/controller/router.md)
-* [Namespace](https://github.com/radiant/radicaldoc/blob/master/en-US/mvc/controller/router.md#namespace)
-* [Powerful development tools](https://github.com/radiant/radical)
+* Auto API documents
+* Annotation router
+* Namespace
+* Powerful development tools
 * Full stack for Web & API
 
 ## Modules
 
-* [orm](https://github.com/radiant/radicaldoc/tree/master/en-US/mvc/model)
-* [session](https://github.com/radiant/radicaldoc/blob/master/en-US/module/session.md)
-* [logs](https://github.com/radiant/radicaldoc/blob/master/en-US/module/logs.md)
-* [config](https://github.com/radiant/radicaldoc/blob/master/en-US/module/config.md)
-* [cache](https://github.com/radiant/radicaldoc/blob/master/en-US/module/cache.md)
-* [context](https://github.com/radiant/radicaldoc/blob/master/en-US/module/context.md)
-* [admin](https://github.com/radiant/radicaldoc/blob/master/en-US/module/admin.md)
-* [httplib](https://github.com/radiant/radicaldoc/blob/master/en-US/module/httplib.md)
-* [task](https://github.com/radiant/radicaldoc/blob/master/en-US/module/task.md)
-* [i18n](https://github.com/radiant/radicaldoc/blob/master/en-US/module/i18n.md)
+* orm
+* session
+* logs
+* config
+* cache
+* context
+* admin
+* httplib
+* task
+* i18n
 
 ## Community
 
 [//]: # (* [http://radiant.me/community]&#40;http://radiant.me/community&#41;)
 
-[//]: # (* Welcome to join us in Slack: TODO:: Slack 
+[//]: # (* Welcome to join us in Slack: TODO:: Slack )
 
 [//]: # (* [Contribution Guide]&#40;https://github.com/radiant/radicaldoc/blob/master/en-US/intro/contributing.md&#41;.)
 
