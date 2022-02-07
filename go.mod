@@ -1,6 +1,6 @@
 module github.com/W3-Engineers-Ltd/Radiant
 
-go 1.17
+go 1.14
 
 require (
 	github.com/beego/x2j v0.0.0-20131220205130-a0352aadc542

@@ -17,5 +17,5 @@ var (
 
 const (
 	// VERSION represent radiant web framework version.
-	VERSION = "1.0.4"
+	VERSION = "1.0.5"
 )
