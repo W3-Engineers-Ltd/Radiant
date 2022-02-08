@@ -1,4 +1,4 @@
-package Sentry
+package sentry
 
 import (
 	"fmt"
@@ -164,9 +164,9 @@ func SentryInit() {
 		Debug:       false,
 	})
 	if err != nil {
-		logs.Error("Sentry initialization error: %s", err)
+		logs.Error("sentry initialization error: %s", err)
 	} else {
-		fmt.Println("Sentry running....")
+		fmt.Println("sentry running....")
 	}
 	defer sentry.Flush(2 * time.Second)
 }
