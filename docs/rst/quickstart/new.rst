@@ -3,7 +3,7 @@ Requirements
 
 Before starting any Radiant project make sure that you have installed
 the ``radical`` tool and the ``radiant`` package. If you don’t have them
-yet please read `Installing radiant <../install>`__ and `Installing
+yet please read `Installing radiant <../install/install.html>`__ and `Installing
 radical tool <../install/radical.html>`__ before you proceed.
 
 Creating a new project
