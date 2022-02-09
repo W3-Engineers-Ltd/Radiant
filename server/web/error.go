@@ -499,7 +499,7 @@ func SentryCaptureMessage(ctx *context.Context, msg string) {
 	sentry.CaptureMessage(msg)
 }
 
-var ErrorTracker = func(ctx *context.Context, config Config) {
+var ErrorTracker = func(ctx *context.Context, config *Config) {
 	if err := recover(); err != nil {
 		if err == ErrAbort {
 			return
