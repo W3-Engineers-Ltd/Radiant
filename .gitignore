@@ -1,3 +1,4 @@
+
 .idea
 .vscode
 .DS_Store
@@ -15,3 +16,7 @@ core/config/env/pkg/
 my save path/
 
 profile.out
+
+*.exe
+*.exe~
+Radiant

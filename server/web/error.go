@@ -2,14 +2,17 @@ package web
 
 import (
 	"fmt"
+	"github.com/getsentry/sentry-go"
 	"html/template"
 	"net/http"
 	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/W3-Engineers-Ltd/Radiant"
+	"github.com/W3-Engineers-Ltd/Radiant/core/logs"
 	"github.com/W3-Engineers-Ltd/Radiant/core/utils"
 	"github.com/W3-Engineers-Ltd/Radiant/server/web/context"
 )
@@ -71,16 +74,16 @@ var tpl = `
 // render default application error page with error and stack string.
 func showErr(err interface{}, ctx *context.Context, stack string) {
 	t, _ := template.New("radianterrortemp").Parse(tpl)
+
 	data := map[string]string{
-		"AppError":       fmt.Sprintf("%s:%v", BConfig.AppName, err),
+		"AppError":       fmt.Sprintf("%s:%v\n%s", ctx.Input.Host(), err, stack),
 		"RequestMethod":  ctx.Input.Method(),
 		"RequestURL":     ctx.Input.URI(),
 		"RemoteAddr":     ctx.Input.IP(),
-		"Stack":          stack,
-		"RadiantVersion": radiant.VERSION,
-		"GoVersion":      runtime.Version(),
+		"UserAgent":      ctx.Input.UserAgent(),
+		"RadiantVersion": "UpNext",
 	}
-	t.Execute(ctx.ResponseWriter, data)
+	_ = t.Execute(ctx.ResponseWriter, data)
 }
 
 var errtpl = `
@@ -473,3 +476,114 @@ func executeError(err *errorInfo, ctx *context.Context, code int) {
 		execController.Finish()
 	}
 }
+
+//sentry error handling
+
+func SentryCaptureException(ctx *context.Context, err error) {
+	sentry.ConfigureScope(func(scope *sentry.Scope) {
+		scope.SetRequest(ctx.Request)
+		scope.SetRequestBody(ctx.Input.RequestBody)
+		scope.SetExtra("UserIP", ctx.Input.IP())
+	})
+
+	sentry.CaptureException(err)
+}
+
+func SentryCaptureMessage(ctx *context.Context, msg string) {
+	sentry.ConfigureScope(func(scope *sentry.Scope) {
+		scope.SetRequest(ctx.Request)
+		scope.SetRequestBody(ctx.Input.RequestBody)
+		scope.SetExtra("UserIP", ctx.Input.IP())
+	})
+
+	sentry.CaptureMessage(msg)
+}
+
+var ErrorTracker = func(ctx *context.Context, config Config) {
+	if err := recover(); err != nil {
+		if err == ErrAbort {
+			return
+		}
+
+		var stack string
+		for i := 1; ; i++ {
+			_, file, line, ok := runtime.Caller(i)
+			if !ok {
+				break
+			}
+			logs.Critical(fmt.Sprintf("%s:%d", file, line))
+			stack = stack + fmt.Sprintln(fmt.Sprintf("%s:%d", file, line))
+		}
+		if ctx.Output.Status == 0 || ctx.Output.Status > 499 {
+			sentry.ConfigureScope(func(scope *sentry.Scope) {
+				scope.SetRequest(ctx.Request)
+				scope.SetRequestBody(ctx.Input.RequestBody)
+				scope.SetExtra("UserIP", ctx.Input.IP())
+			})
+
+			sentry.CurrentHub().Recover(fmt.Sprintf("%v\n%s", err, stack))
+			sentry.Flush(time.Second * 5)
+		}
+
+		if !BConfig.RecoverPanic {
+			panic(err)
+		}
+		if BConfig.EnableErrorsShow {
+			if _, ok := ErrorMaps[fmt.Sprint(err)]; ok {
+				Exception(uint64(ctx.Output.Status), ctx)
+				return
+			}
+		}
+
+		logs.Error(err)
+		if ctx.Output.Status != 0 {
+			ctx.ResponseWriter.WriteHeader(ctx.Output.Status)
+		} else {
+			ctx.ResponseWriter.WriteHeader(500)
+		}
+		if BConfig.RunMode == DEV {
+			showErr(err, ctx, stack)
+		} else {
+			showErr(err, ctx, "No more info!")
+		}
+
+	}
+}
+
+func SentryInit() {
+	sentryDNS, _ := AppConfig.String("SentryDSN")
+	releaseVersion, _ := AppConfig.String("ASSET_HASH")
+	serverName, _ := AppConfig.String("ServerName")
+	runMode, _ := AppConfig.String("RunMode")
+	err := sentry.Init(sentry.ClientOptions{
+		Dsn:         sentryDNS,
+		Environment: runMode,
+		Release:     releaseVersion,
+		ServerName:  serverName,
+		Debug:       false,
+	})
+	if err != nil {
+		logs.Error("sentry initialization error: %s", err)
+	} else {
+		fmt.Println("sentry running....")
+	}
+	defer sentry.Flush(2 * time.Second)
+}
+
+// How to use sentry
+
+//Raise default panic error
+/*v := []string{"hello world"}
+fmt.Println(v[111])
+*/
+
+//for error log
+//_, aErr := radiant.AppConfig.String("HelloWorld")
+// utils.SentryCaptureException(ctx, aErr)
+// or,
+//sentry.CaptureException(aErr)
+
+//for any message
+// utils.SentryCaptureMessage(ctx, aErr)
+// or,
+//sentry.CaptureMessage("Your message as Hello world.")
