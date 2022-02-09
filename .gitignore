@@ -15,3 +15,7 @@ core/config/env/pkg/
 my save path/
 
 profile.out
+
+*.exe
+*.exe~
+Radiant
