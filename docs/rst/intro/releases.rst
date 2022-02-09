@@ -254,7 +254,7 @@ radiant 1.10.0
     `#3046 <https://github.com/W3-Engineers-Ltd/Radiant/pull/3046>`__
 9.  Fix the issue TaseCase TestFormatHeader_0 is failed
     `#3066 <https://github.com/W3-Engineers-Ltd/Radiant/pull/3066>`__
-10. Fix BEEGO_RUNMODE
+10. Fix RADIANT_RUNMODE
     `#3064 <https://github.com/W3-Engineers-Ltd/Radiant/pull/3064>`__
 11. Swagger: Allow example values with different types, allow example
     for enum. `#3085 <https://github.com/W3-Engineers-Ltd/Radiant/pull/3085>`__
@@ -727,7 +727,7 @@ New Features:
        appname = btest include b.conf
 
 9.  Added ``paginator`` utils.
-10. Added ``BEEGO_RUNMODE`` environment variable. You can change the
+10. Added ``RADIANT_RUNMODE`` environment variable. You can change the
     application mode by changing this environment variable.
 11. Added Json function for fetching ``statistics`` in ``toolbox``.
 12. Attachements support for mail utils.

@@ -452,8 +452,8 @@ func init() {
 		panic(err)
 	}
 	filename := "app.conf"
-	if os.Getenv("BEEGO_RUNMODE") != "" {
-		filename = os.Getenv("BEEGO_RUNMODE") + ".app.conf"
+	if os.Getenv("RADIANT_RUNMODE") != "" {
+		filename = os.Getenv("RADIANT_RUNMODE") + ".app.conf"
 	}
 	appConfigPath = filepath.Join(WorkPath, "conf", filename)
 	if !utils.FileExists(appConfigPath) {
@@ -629,7 +629,7 @@ func parseConfigForV1(ac config.Configer) {
 	}
 
 	// set the run mode first
-	if envRunMode := os.Getenv("BEEGO_RUNMODE"); envRunMode != "" {
+	if envRunMode := os.Getenv("RADIANT_RUNMODE"); envRunMode != "" {
 		BConfig.RunMode = envRunMode
 	} else if runMode, err := ac.String("RunMode"); runMode != "" && err == nil {
 		BConfig.RunMode = runMode
