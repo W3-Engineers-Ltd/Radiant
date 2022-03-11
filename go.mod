@@ -41,7 +41,7 @@ require (
 	github.com/couchbase/gomemcached v0.1.4 // indirect
 	github.com/couchbase/goutils v0.1.2 // indirect
 	github.com/edsrzf/mmap-go v1.1.0 // indirect
-	github.com/getsentry/sentry-go v0.12.0
+	github.com/getsentry/sentry-go v0.13.0
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/siddontang/go v0.0.0-20180604090527-bdc77568d726 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
